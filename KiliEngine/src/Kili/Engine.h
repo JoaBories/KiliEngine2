@@ -1,9 +1,14 @@
 ﻿#pragma once
 
+#include "Logger/ConsoleLogger.h"
+
 namespace Kili
 {
     class Engine
     {
+    private:
+        ConsoleLogger* mConsoleLogger;
+        
     public:
         Engine();
         virtual ~Engine();

@@ -4,3 +4,5 @@
 #include "Kili/Core.h"
 
 #include "Kili/EntryPoint.h"
+
+#include "Kili/Logger/Log.h"
