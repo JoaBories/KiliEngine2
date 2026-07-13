@@ -1,8 +1,10 @@
-﻿.vs
+﻿// Binaries
 bin-int
 bin
 
+// user vcxproj
 *.user
 
-*.DotSettings
+// IDE files
 .idea
+.vs
