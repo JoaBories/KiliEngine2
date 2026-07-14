@@ -14,7 +14,7 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{0C0C862F-8DB0-4AD3-9D01-E497B29B7A01}</ProjectGuid>
-    <RootNamespace>Sandbox</RootNamespace>
+    <RootNamespace>Runtime</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,12 +88,6 @@
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);KiliEngine.lib;KiliMathematics.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\KiliEngine\KiliEngine.vcxproj">
-      <Project>{07c78161-a0ab-4433-a41e-428c38c84681}</Project>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\RuntimeApp.cpp" />
   </ItemGroup>

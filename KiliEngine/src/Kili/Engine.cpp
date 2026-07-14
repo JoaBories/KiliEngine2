@@ -20,6 +20,8 @@ namespace Kili
         LOG_WARNING("test warning");
         LOG_ERROR("test error");
         
-        while (true);
+        while (true)
+        {
+        }
     }
 }

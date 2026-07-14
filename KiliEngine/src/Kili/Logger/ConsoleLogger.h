@@ -9,7 +9,7 @@ namespace Kili
         LogLevel mMinLevel;
         
     public:
-        explicit ConsoleLogger(LogLevel minLevel = LogLevel::Info);
+        explicit ConsoleLogger(LogLevel minLevel = LogLevel::Debug);
         ~ConsoleLogger() override;
     
         void receiveLog(const LogMessage& message) override;

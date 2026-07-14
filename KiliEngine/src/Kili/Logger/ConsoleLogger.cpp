@@ -21,27 +21,27 @@ namespace Kili
     {
         if (message.level < mMinLevel) return;
         
-        std::string log;
+        std::ostringstream log;
         
-        log.append("[");
-        log.append(toString(message.level));
-        log.append("] ");
+        log << "[" << toString(message.level) << "] ";
 
         const time_t time = std::chrono::system_clock::to_time_t(message.timestamp);
         std::tm tm{};
-        if (const errno_t err = localtime_s(&tm, &time); err) log.append("[timer error]");
-        std::ostringstream oss;
-        oss << std::put_time(&tm, "[%H:%M:%S] ");
-        log.append(oss.str());
-        
-        log.append("[");
-        log.append(message.file.substr(message.file.find_last_of("/\\") + 1)); // Keep only the filename and not the path
-        log.append(" at line ");
-        log.append(std::to_string(message.line));
-        log.append("] ");
-        
-        log.append(message.message);
+        if (const errno_t err = localtime_s(&tm, &time); err)
+        {
+            log << "[timer error] ";
+        }
+        else
+        {
+            log << std::put_time(&tm, "[%H:%M:%S] ");
+        }
 
-        std::cout << log << "\n";
+        const std::string filename = message.file.substr(message.file.find_last_of("/\\") + 1); // Keep only the filename and not the path
+        log << "[" << filename << " at line " << message.line << "] ";
+        
+        log << message.message;
+
+        if (message.level >= LogLevel::Warning) std::cerr << log.str() << "\n";
+        else                                    std::cout << log.str() << "\n";
     }
 }
