@@ -1,9 +1,12 @@
 ﻿// Binaries
-bin-int
-bin
+/bin-int
+/bin
 
-// user vcxproj
-*.user
+// vs2022 solution
+//*.sln
+//*.vcxproj
+//*.vcxproj.filter
+*.vcxproj.user
 
 // IDE files
 .idea
