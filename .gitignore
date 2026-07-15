@@ -3,9 +3,9 @@
 /bin
 
 // vs2022 solution
-//*.sln
-//*.vcxproj
-//*.vcxproj.filter
+*.sln
+*.vcxproj
+*.vcxproj.filters
 *.vcxproj.user
 
 // IDE files
