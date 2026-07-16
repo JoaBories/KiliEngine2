@@ -63,6 +63,9 @@ project (engine)
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+    pchheader "klpch.h"
+    pchsource "%{prj.name}/src/klpch.cpp"
+
     files
     {
         "%{prj.name}/src/**.h",

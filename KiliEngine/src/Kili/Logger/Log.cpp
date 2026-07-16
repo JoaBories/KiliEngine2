@@ -1,4 +1,5 @@
-﻿#include "Log.h"
+﻿#include "klpch.h"
+#include "Log.h"
 
 namespace Kili
 {

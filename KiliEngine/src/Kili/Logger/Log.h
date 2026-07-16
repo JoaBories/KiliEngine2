@@ -1,8 +1,5 @@
 ﻿#pragma once
-#include <cstdint>
-#include <string>
-#include <vector>
-#include <chrono>
+#include "klpch.h"
 
 /*
 *   Simple class for logging in the engine and other applications :

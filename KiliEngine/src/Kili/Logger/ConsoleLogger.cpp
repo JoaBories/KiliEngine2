@@ -1,9 +1,5 @@
+#include "klpch.h"
 #include "ConsoleLogger.h"
-
-#include <iomanip>
-#include <iostream>
-#include <sstream>
-
 
 namespace Kili
 {
