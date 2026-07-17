@@ -1,8 +1,7 @@
 workspace "KiliEngine2"
     architecture "x64"
 
-    configurations
-    {
+    configurations {
         "Debug",
         "Release",
         "Build"
@@ -24,14 +23,12 @@ project (mathlib)
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-    files
-    {
+    files {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp"
     }
 
-    includedirs
-    {
+    includedirs {
         (mathlib .. "/src")
     }
 
@@ -67,21 +64,24 @@ project (engine)
     pchheader "klpch.h"
     pchsource "%{prj.name}/src/klpch.cpp"
 
-    files
-    {
+    files {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp"
     }
 
-    includedirs
-    {
+    includedirs {
         (mathlib .. "/src"),
-        (engine .. "/src")
+        (engine .. "/src"),
+        "vendor/Sdl3/include"
     }
 
-    links
-    {
-        (mathlib)
+    libdirs {
+        "vendor/Sdl3"
+    }
+
+    links {
+        (mathlib),
+        "SDL3"
     }
 
     filter "system:windows"
@@ -112,22 +112,29 @@ project (runtime)
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-    files
-    {
+    files {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp"
     }
 
-    includedirs
-    {
+    includedirs {
         (mathlib .. "/src"),
-        (engine .. "/src")
+        (engine .. "/src"),
+        "vendor/Sdl3/include"
     }
 
-    links
-    {
+    libdirs {
+        "vendor/Sdl3"
+    }
+
+    links {
         (mathlib),
-        (engine)
+        (engine),
+        "Sdl3"
+    }
+
+    postbuildcommands {
+        "{COPYFILE} %[vendor/Sdl3/SDL3.dll] %[%{!cfg.targetdir}]"
     }
 
     filter "system:windows"

@@ -1,7 +1,6 @@
 #pragma once
 
-// ======================================
-//  Std includes
+#pragma region Std_Includes
 
 #include <utility>
 #include <functional>
@@ -21,11 +20,15 @@
 #include <unordered_map>
 #include <unordered_set>
 
-// ======================================
+#pragma endregion 
 
+#pragma region Sdl_Includes
 
-// ======================================
-//  Mathlib includes
+#include "SDL.h"
+
+#pragma endregion
+
+#pragma region Mathlib_Includes
 
 #include "Maths.h"
 
@@ -35,8 +38,7 @@
 #include "Quaternion.h"
 #include "Matrix4.h"
 
-// ======================================
-
+#pragma endregion
 
 #ifdef KL_PLATFORM_WINDOWS
     #include <Windows.h>

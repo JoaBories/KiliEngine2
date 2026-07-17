@@ -4,7 +4,7 @@
 
 extern Kili::Engine* Kili::createEngine();
 
-int main(int argc, char** argv)
+inline int main(int argc, char** argv)
 {
     auto engine = Kili::createEngine();
     engine->run();
