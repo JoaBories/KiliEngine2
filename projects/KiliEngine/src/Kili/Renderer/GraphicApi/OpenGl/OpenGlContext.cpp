@@ -41,6 +41,6 @@ void Kili::OpenGlContext::close()
 
 void Kili::OpenGlContext::setMsaa(const int samples)
 {
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1); //TODO verify if it works
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, samples);
 }

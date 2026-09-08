@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Kili/AssetManager/Asset.h"
 #include "Kili/FileReadWrite/ShaderCode.h"
 
@@ -72,5 +73,7 @@ namespace Kili
             if (extension == ".frag") return ShaderType::Fragment;
             return ShaderType::Vertex;
         }
+        
+        static Shader* create(const std::string& name, const std::vector<std::string>& paths);
     };
 }

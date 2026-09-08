@@ -182,7 +182,7 @@ namespace Kili
         
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
         
-        mShaderProgram = new OpenGlShader("Test", {"resources/Test.vert", "resources/Test.frag"});
+        mShaderProgram = Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"});
         mShaderProgram->load();
         
         // Init and config time clock
