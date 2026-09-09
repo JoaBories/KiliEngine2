@@ -33,7 +33,7 @@ namespace Kili
     private:
         std::string mTitle;
         SDL_Window* mWindow;
-        IGraphicContext* mContext;
+        GraphicContext* mContext;
         unsigned int mWidth, mHeight;
         char mFlags;
         char mMsaa;

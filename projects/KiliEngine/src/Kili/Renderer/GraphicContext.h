@@ -4,20 +4,21 @@
 
 namespace Kili
 {
-    class IGraphicContext
+    class GraphicContext
     {
     public:
-        virtual ~IGraphicContext() = default;
+        virtual ~GraphicContext() = default;
         
-        virtual void init(SDL_Window* windowHandle) = 0;
+        virtual void init() = 0;
         virtual void close() = 0;
         virtual void swapBuffers() = 0;
         
-        virtual int getWindowFlag() const = 0;
-        
         virtual void setVsync(bool enabled) = 0;
-        virtual bool getVsync() const = 0;
+        [[nodiscard]] virtual bool isVsync() const = 0;
         
-        virtual void setMsaa(int samples) = 0;
+        static void setMsaa(int samples);
+        
+        static int getWindowFlag();
+        static GraphicContext* create(SDL_Window* windowHandle);
     };
 }

@@ -3,10 +3,14 @@
 
 #include "Kili/Logger/Log.h"
 
-void Kili::OpenGlContext::init(SDL_Window* windowHandle)
+Kili::OpenGlContext::OpenGlContext(SDL_Window* windowHandle) :
+    mWindowHandle(windowHandle), mContext(nullptr)
 {
-    mWindowHandle = windowHandle;
-    
+    init();
+}
+
+void Kili::OpenGlContext::init()
+{
     // OpenGL profile
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -37,10 +41,4 @@ void Kili::OpenGlContext::init(SDL_Window* windowHandle)
 void Kili::OpenGlContext::close()
 {
     SDL_GL_DestroyContext(mContext);
-}
-
-void Kili::OpenGlContext::setMsaa(const int samples)
-{
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, samples);
 }

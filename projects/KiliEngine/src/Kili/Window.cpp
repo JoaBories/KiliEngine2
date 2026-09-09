@@ -5,26 +5,20 @@
 #include "Logger/Log.h"
 
 bool Kili::Window::init()
-{
-    if (GRAPHIC_API == GraphicApi::OpenGl) mContext = new OpenGlContext();
-    else
-    {
-        LOG_ERROR("Graphic Api None is not supported");
-        return false;
-    }
-    
-    if (mMsaa) mContext->setMsaa(mMsaa);
+{    
+    if (mMsaa) GraphicContext::setMsaa(mMsaa);
     
     int windowFlags = 0;
     if (mFlags & WindowFullscreen) windowFlags |= SDL_WINDOW_FULLSCREEN;
     if (mFlags & WindowBorderless) windowFlags |= SDL_WINDOW_BORDERLESS;
     if (mFlags & WindowResizable) windowFlags |= SDL_WINDOW_RESIZABLE;
     if (mFlags & WindowAlwaysOnTop) windowFlags |= SDL_WINDOW_ALWAYS_ON_TOP;
-    windowFlags |= mContext->getWindowFlag();
+    windowFlags |= GraphicContext::getWindowFlag();
     
     mWindow = SDL_CreateWindow(mTitle.c_str(), static_cast<int>(mWidth), static_cast<int>(mHeight), windowFlags);
     if (!mWindow) return false;
-    mContext->init(mWindow);
+    
+    mContext = GraphicContext::create(mWindow);
     if (!mContext) return false;
     
     setVsync(mVsync);
