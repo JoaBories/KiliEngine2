@@ -6,10 +6,10 @@ namespace Kili
     class OpenGlShader : public Shader
     {
     private:
-        int mId;
+        unsigned int mId;
     
         /** Compile shader and return the shader id, debug shader errors in warnings **/
-        [[nodiscard]] int compileShader(ShaderType shaderType, const std::string& code) const;
+        [[nodiscard]] unsigned int compileShader(ShaderType shaderType, const std::string& code) const;
         
     public:
         OpenGlShader(std::string name, const std::vector<std::string>& paths) :

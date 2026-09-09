@@ -160,27 +160,23 @@ namespace Kili
         //Temp
         glGenVertexArrays(1, &mVertexArray);
         glBindVertexArray(mVertexArray);
-        
-        glGenBuffers(1, &mVertexBuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
 
-        constexpr float vertices[3*3] = {
+        float vertices[3*3] = {
             -0.5f, -0.5f, 0.0f,
              0.5f, -0.5f, 0.0f,
              0.0f,  0.5f, 0.0f,
         };
         
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        unsigned long indices[3] = {
+            0, 1, 2
+        };
+        
+        mVertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
         
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), nullptr);
-        
-        glGenBuffers(1, &mIndexBuffer);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
 
-        constexpr unsigned int indices[3] = { 0, 1, 2 };
-        
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        mIndexBuffer = IndexBuffer::create(indices, sizeof(indices) / sizeof(unsigned long));
         
         mShaderProgram = Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"});
         mShaderProgram->load();
@@ -210,7 +206,7 @@ namespace Kili
             
             //render
             glBindVertexArray(mVertexArray);
-            glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, mIndexBuffer->count(), GL_UNSIGNED_INT, nullptr);
         }
         
         mWindow->update();

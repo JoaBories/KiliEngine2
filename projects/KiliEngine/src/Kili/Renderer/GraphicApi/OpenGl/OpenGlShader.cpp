@@ -1,7 +1,7 @@
 #include "klpch.h"
 #include "OpenGlShader.h"
 
-int Kili::OpenGlShader::compileShader(const ShaderType shaderType, const std::string& code) const
+unsigned int Kili::OpenGlShader::compileShader(const ShaderType shaderType, const std::string& code) const
 {
     int glShaderType = 0;
     switch (shaderType)
@@ -13,7 +13,7 @@ int Kili::OpenGlShader::compileShader(const ShaderType shaderType, const std::st
         case ShaderType::Fragment: glShaderType = GL_FRAGMENT_SHADER; break;
     }
 
-    const int id = glCreateShader(glShaderType);
+    const unsigned int id = glCreateShader(glShaderType);
     
     const GLchar* source = code.c_str();
     glShaderSource(id, 1, &source, nullptr);
@@ -53,12 +53,12 @@ bool Kili::OpenGlShader::load()
     
     mId = glCreateProgram();
     
-    std::vector<int> shaders;
-    shaders.reserve(mCode.size());
+    std::vector<unsigned int> shaders;
+    shaders.reserve(mPaths.size());
     
-    for (const auto& [type, code] : mCode)
+    for (const auto& [type, path] : mPaths)
     {
-        const int shader = compileShader(type, code);
+        const unsigned int shader = compileShader(type, ShaderCode::ReadGlsl(path));
         if (shader == 0) continue;
         shaders.emplace_back(shader);
         glAttachShader(mId, shader);
@@ -80,7 +80,7 @@ bool Kili::OpenGlShader::load()
         
         glDeleteProgram(mId);
         
-        for (const int shader : shaders)
+        for (const auto shader : shaders)
         {
             glDetachShader(mId, shader);
             glDeleteShader(shader);
@@ -90,7 +90,7 @@ bool Kili::OpenGlShader::load()
         return false;
     }
 
-    for (const int shader : shaders)
+    for (const auto shader : shaders)
     {
         glDetachShader(mId, shader);
         glDeleteShader(shader);

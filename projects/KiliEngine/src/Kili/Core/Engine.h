@@ -5,6 +5,7 @@
 #include "Kili/Logger/ConsoleLogger.h"
 #include "Kili/Events/Event.h"
 #include "Kili/Renderer/Shader.h"
+#include "Kili/Renderer/VertexArray.h"
 
 namespace Kili
 {
@@ -21,8 +22,10 @@ namespace Kili
         bool mLoggingEvents;
         int mEventLogFilter;
         
-        unsigned int mVertexArray, mVertexBuffer, mIndexBuffer; // Temp
+        unsigned int mVertexArray; // Temp
         Shader* mShaderProgram;
+        VertexBuffer* mVertexBuffer;
+        IndexBuffer* mIndexBuffer;
         
         /**
          * Init all the engine components and set them up. \n

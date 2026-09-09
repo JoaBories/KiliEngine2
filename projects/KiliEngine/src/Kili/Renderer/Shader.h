@@ -31,7 +31,7 @@ namespace Kili
     {
     protected:
         std::string mName;
-        std::unordered_map<ShaderType, std::string> mCode;
+        std::unordered_map<ShaderType, std::string> mPaths;
     
     public:
         Shader(std::string name, const std::vector<std::string>& paths) :
@@ -41,13 +41,13 @@ namespace Kili
             {
                 if (const size_t pos = path.find_last_of('.'); pos != std::string::npos)
                 {
-                    mCode[getShaderTypeFromExtension(path.substr(pos, path.length()))] = ShaderCode::ReadGlsl(path);
+                    mPaths[getShaderTypeFromExtension(path.substr(pos, path.length()))] = path;
                 }
             }
         }
     
-        [[nodiscard]] std::string getCode(const ShaderType type) const { if (mCode.find(type) != mCode.end()) return mCode.at(type); else return ""; }
-        [[nodiscard]] bool hasShaderType(const ShaderType type) const { return mCode.find(type) != mCode.end(); }
+        [[nodiscard]] std::string getPath(const ShaderType type) const { if (mPaths.find(type) != mPaths.end()) return mPaths.at(type); else return ""; }
+        [[nodiscard]] bool hasShaderType(const ShaderType type) const { return mPaths.find(type) != mPaths.end(); }
         
         virtual void setActive() = 0;
         

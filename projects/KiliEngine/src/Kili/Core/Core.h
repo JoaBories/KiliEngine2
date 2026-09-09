@@ -8,7 +8,7 @@ namespace Kili
         OpenGl,
     };
 
-    constexpr GraphicApi GRAPHIC_API = GraphicApi::OpenGl;
+    constexpr GraphicApi GRAPHIC_API = GraphicApi::OpenGl; // TODO change this in a renderer ore smth
     
 #define BIT(offset) (1 << offset)
 }
