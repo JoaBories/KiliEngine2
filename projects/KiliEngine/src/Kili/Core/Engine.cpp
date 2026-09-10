@@ -127,6 +127,27 @@ namespace Kili
         
         close();
     }
+    
+    static GLenum ShaderDataTypeToOpenGl(ShaderDataType type)
+    {
+        switch (type)
+        {
+            case ShaderDataType::Float : return GL_FLOAT;
+            case ShaderDataType::Float2 : return GL_FLOAT;
+            case ShaderDataType::Float3 : return GL_FLOAT;
+            case ShaderDataType::Float4 : return GL_FLOAT;
+            case ShaderDataType::Mat3 : return GL_FLOAT;
+            case ShaderDataType::Mat4 : return GL_FLOAT;
+            case ShaderDataType::Int : return GL_INT;
+            case ShaderDataType::Int2 : return GL_INT;
+            case ShaderDataType::Int3 : return GL_INT;
+            case ShaderDataType::Int4 : return GL_INT;
+            case ShaderDataType::Bool : return GL_BOOL;
+        }
+        
+        LOG_WARNING("Unknown ShaderDataType");
+        return 0;
+    }
 
     void Engine::init()
     {
@@ -163,25 +184,46 @@ namespace Kili
         glGenVertexArrays(1, &mVertexArray);
         glBindVertexArray(mVertexArray);
 
-        float vertices[3*3] = {
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.0f,  0.5f, 0.0f,
+        float vertices[3*7] = {
+            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+             0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+             0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
         };
         
-        unsigned long indices[3] = {
+        Uint32 indices[3] = {
             0, 1, 2
         };
         
         mVertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
         
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), nullptr);
+        BufferLayout layout = {
+            { "position", ShaderDataType::Float3 },
+            { "color", ShaderDataType::Float4, true }
+        };
+        
+        mVertexBuffer->setLayout(layout);
 
+        Uint32 index = 0;
+        for (const auto& element : mVertexBuffer->getLayout())
+        {
+            glEnableVertexAttribArray(index);
+            
+            glVertexAttribPointer(index, 
+                ShaderDataTypeCount(element.type), 
+                ShaderDataTypeToOpenGl(element.type), 
+                element.normalized ? GL_TRUE : GL_FALSE, 
+                mVertexBuffer->getLayout().getStride(), 
+                reinterpret_cast<const void*>(element.offset));
+            
+            index++;
+        }
+        
         mIndexBuffer = IndexBuffer::create(indices, sizeof(indices) / sizeof(unsigned long));
         
         mShaderProgram = Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"});
         mShaderProgram->load();
+        
+        // ==========================
         
         // Init and config time clock
         mTimeClock = new TimeClock(config.getMaxFps(), config.getMaxDeltaTime());

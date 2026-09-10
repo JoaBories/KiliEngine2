@@ -1,19 +1,26 @@
 #pragma once
+#include "Kili/Renderer/BufferLayout.h"
 
 namespace Kili
-{
+{    
     /** 
      * Vertex buffer, used to store vertices data on the gpu.
      * Mostly used in the vertex array class.
     **/
     class VertexBuffer
     {
+    protected:
+        BufferLayout mLayout = {};
+        
     public:
         virtual ~VertexBuffer() = default;
         
         virtual void use() const = 0;
         
-        static VertexBuffer* create(const float* vertices, long size);
+        void setLayout(const BufferLayout& layout) { mLayout = layout; }
+        [[nodiscard]] const BufferLayout& getLayout() const { return mLayout; }
+        
+        static VertexBuffer* create(const float* vertices, Uint32 size);
     };
     
     /**
@@ -26,9 +33,9 @@ namespace Kili
         virtual ~IndexBuffer() = default;
         
         virtual void use() const = 0;
-        [[nodiscard]] virtual unsigned long count() const = 0;
+        [[nodiscard]] virtual Uint32 count() const = 0;
         
-        static IndexBuffer* create(const unsigned long* indices, unsigned long count);
+        static IndexBuffer* create(const Uint32* indices, Uint32 count);
     };
     
     /** 

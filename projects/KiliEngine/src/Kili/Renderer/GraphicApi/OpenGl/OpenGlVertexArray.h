@@ -6,10 +6,10 @@ namespace Kili
     class OpenGlVertexBuffer : public VertexBuffer
     {
     private:
-        unsigned int mId;
+        Uint32 mId;
         
     public:
-        OpenGlVertexBuffer(const float* vertices, unsigned long size);
+        OpenGlVertexBuffer(const float* vertices, Uint32 size);
         ~OpenGlVertexBuffer() override;
         
         void use() const override;
@@ -18,15 +18,15 @@ namespace Kili
     class OpenGlIndexBuffer : public IndexBuffer
     {
     private:
-        unsigned int mId;
-        unsigned long mIndexCount;
+        Uint32 mId;
+        Uint32 mIndexCount;
         
     public:
-        OpenGlIndexBuffer(const unsigned long* indices, unsigned long count);
+        OpenGlIndexBuffer(const Uint32* indices, Uint32 count);
         ~OpenGlIndexBuffer() override;
         
         void use() const override;
-        [[nodiscard]] unsigned long count() const override { return mIndexCount; }
+        [[nodiscard]] Uint32 count() const override { return mIndexCount; }
     };
     
     class OpenGlVertexArray : public VertexArray

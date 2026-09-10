@@ -6,23 +6,22 @@
 
 #include "Kili/Core/Logger/Log.h"
 
-Kili::VertexBuffer* Kili::VertexBuffer::create(const float* vertices, const long size)
+//ADDAPI
+Kili::VertexBuffer* Kili::VertexBuffer::create(const float* vertices, const Uint32 size)
 {
     switch (Renderer::getApi())
     {
         case GraphicApi::OpenGl : return new OpenGlVertexBuffer(vertices, size); break;
-        case GraphicApi::None: return nullptr; break;
     }
     
     LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
     return nullptr;
 }
-Kili::IndexBuffer* Kili::IndexBuffer::create(const unsigned long* indices, const unsigned long count)
+Kili::IndexBuffer* Kili::IndexBuffer::create(const Uint32* indices, const Uint32 count)
 {
     switch (Renderer::getApi())
     {
         case GraphicApi::OpenGl : return new OpenGlIndexBuffer(indices, count); break;
-        case GraphicApi::None: return nullptr; break;
     }
     
     LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
