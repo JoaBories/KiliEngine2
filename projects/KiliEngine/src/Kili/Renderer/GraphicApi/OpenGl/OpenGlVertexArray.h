@@ -19,14 +19,14 @@ namespace Kili
     {
     private:
         unsigned int mId;
-        unsigned long mIndiceCount;
+        unsigned long mIndexCount;
         
     public:
         OpenGlIndexBuffer(const unsigned long* indices, unsigned long count);
         ~OpenGlIndexBuffer() override;
         
         void use() const override;
-        [[nodiscard]] unsigned long count() const override { return mIndiceCount; }
+        [[nodiscard]] unsigned long count() const override { return mIndexCount; }
     };
     
     class OpenGlVertexArray : public VertexArray

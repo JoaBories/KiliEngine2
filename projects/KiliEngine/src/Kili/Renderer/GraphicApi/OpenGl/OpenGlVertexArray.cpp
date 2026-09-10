@@ -26,7 +26,7 @@ void Kili::OpenGlVertexBuffer::use() const
 #pragma region IndexBuffer
 
 Kili::OpenGlIndexBuffer::OpenGlIndexBuffer(const unsigned long* indices, const unsigned long count) :
-    mIndiceCount(count)
+    mIndexCount(count)
 {
     glCreateBuffers(1, &mId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mId);
