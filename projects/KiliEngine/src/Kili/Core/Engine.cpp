@@ -3,9 +3,11 @@
 
 #include "Kili/Core/EngineConfig.h"
 
-#include "Kili/Events/InputEvent.h"
-#include "Kili/Events/WindowEvent.h"
+#include "Kili/Core/Events/InputEvent.h"
+#include "Kili/Core/Events/WindowEvent.h"
 #include "Kili/Renderer/GraphicApi/OpenGl/OpenGlShader.h"
+#include "Kili/Scene/DefaultScene.h"
+#include "Kili/Scene/SceneManager.h"
 
 namespace Kili
 {
@@ -186,6 +188,8 @@ namespace Kili
         mTimeClock->setLogging(config.isFpsLogging());
         mTimeClock->setLoggingInterval(config.getFpsLogInterval());
         
+        SceneManager::setScenes({new DefaultScene()});
+        
         LOG_LOADING("KiliEngine Initialized");
     }
 
@@ -196,6 +200,7 @@ namespace Kili
         pollEvents();
         
         //update
+        SceneManager::update();
         
         if (!mMinimized)
         {
@@ -209,6 +214,8 @@ namespace Kili
             glDrawElements(GL_TRIANGLES, mIndexBuffer->count(), GL_UNSIGNED_INT, nullptr);
         }
         
+        SceneManager::loadReload();
+        
         mWindow->update();
         
         mTimeClock->delayTime();
@@ -217,6 +224,8 @@ namespace Kili
     void Engine::close()
     {
         mShaderProgram->unload();
+        
+        SceneManager::close();
         
         delete mWindow;
         mWindow = nullptr;

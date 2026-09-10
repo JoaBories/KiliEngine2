@@ -2,8 +2,8 @@
 
 #include "Kili/Core/TimeClock.h"
 #include "Kili/Window.h"
-#include "Kili/Logger/ConsoleLogger.h"
-#include "Kili/Events/Event.h"
+#include "Kili/Core/Logger/ConsoleLogger.h"
+#include "Kili/Core/Events/Event.h"
 #include "Kili/Renderer/Shader.h"
 #include "Kili/Renderer/VertexArray.h"
 

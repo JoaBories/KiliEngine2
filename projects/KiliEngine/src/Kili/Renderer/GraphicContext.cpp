@@ -3,7 +3,7 @@
 
 #include "Renderer.h"
 #include "GraphicApi/OpenGl/OpenGlContext.h"
-#include "Kili/Logger/Log.h"
+#include "Kili/Core/Logger/Log.h"
 
 //ADDAPI
 void Kili::GraphicContext::setMsaa(const int samples)

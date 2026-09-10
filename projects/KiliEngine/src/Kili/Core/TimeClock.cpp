@@ -1,7 +1,7 @@
 #include "klpch.h"
 #include "TimeClock.h"
 
-#include "Kili/Logger/Log.h"
+#include "Kili/Core/Logger/Log.h"
 
 const unsigned long long Kili::TimeClock::SdlFrequency = SDL_GetPerformanceFrequency();
 

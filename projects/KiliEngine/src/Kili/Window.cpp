@@ -2,7 +2,6 @@
 #include "Window.h"
 
 #include "Kili/Renderer/GraphicApi/OpenGl/OpenGlContext.h"
-#include "Logger/Log.h"
 
 bool Kili::Window::init()
 {    

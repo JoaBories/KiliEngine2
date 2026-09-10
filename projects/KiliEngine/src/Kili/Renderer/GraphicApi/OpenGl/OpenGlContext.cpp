@@ -1,7 +1,7 @@
 #include "klpch.h"
 #include "OpenGlContext.h"
 
-#include "Kili/Logger/Log.h"
+#include "Kili/Core/Logger/Log.h"
 
 Kili::OpenGlContext::OpenGlContext(SDL_Window* windowHandle) :
     mWindowHandle(windowHandle), mContext(nullptr)

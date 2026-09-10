@@ -2,8 +2,8 @@
 #include "EngineConfig.h"
 
 #include "Kili/Window.h"
-#include "Kili/Logger/Log.h"
-#include "Kili/Events/Event.h"
+#include "Kili/Core/Logger/Log.h"
+#include "Kili/Core/Events/Event.h"
 
 char Kili::EngineConfig::getWindowFlags() const
 {

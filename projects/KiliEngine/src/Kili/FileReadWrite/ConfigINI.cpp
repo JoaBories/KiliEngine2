@@ -1,7 +1,7 @@
 #include "klpch.h"
 #include "ConfigINI.h"
 
-#include "Kili/Logger/Log.h"
+#include "Kili/Core/Logger/Log.h"
 
 std::string Kili::ConfigINI::getString(const std::string& section, const std::string& key, const std::string& defaultVal) const
 {

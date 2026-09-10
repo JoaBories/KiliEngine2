@@ -4,7 +4,7 @@
 #include "Kili/Renderer/Renderer.h"
 #include "Kili/Renderer/GraphicApi/OpenGl/OpenGlVertexArray.h"
 
-#include "Kili/Logger/Log.h"
+#include "Kili/Core/Logger/Log.h"
 
 Kili::VertexBuffer* Kili::VertexBuffer::create(const float* vertices, const long size)
 {
