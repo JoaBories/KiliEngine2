@@ -1,6 +1,8 @@
 #include "klpch.h"
 #include "OpenGlVertexArray.h"
 
+#include "Kili/Renderer/GraphicApi/OpenGl/OpenGLShader.h"
+
 #pragma region Vertex buffer
 
 Kili::OpenGlVertexBuffer::OpenGlVertexBuffer(const float* vertices, const Uint32 size)
@@ -48,6 +50,44 @@ void Kili::OpenGlIndexBuffer::use() const
 
 #pragma region VertexArray
 
+Kili::OpenGlVertexArray::OpenGlVertexArray()
+{
+    glCreateVertexArrays(1, &mId);
+}
 
+void Kili::OpenGlVertexArray::use() const
+{
+    glBindVertexArray(mId);
+}
+
+void Kili::OpenGlVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
+{
+    if (vertexBuffer->getLayout().getElements().empty()) LOG_WARNING("Vertex buffer has no layout");
+    
+    glBindVertexArray(mId);
+    vertexBuffer->use();
+    
+    Uint32 index = 0;
+    for (const auto& element : vertexBuffer->getLayout())
+    {
+        glEnableVertexAttribArray(index);
+        glVertexAttribPointer(index, 
+            ShaderDataTypeCount(element.type), ShaderDataTypeToOpenGl(element.type), 
+            element.normalized ? GL_TRUE : GL_FALSE, vertexBuffer->getLayout().getStride(), 
+            reinterpret_cast<const void*>(element.offset));
+            
+        index++;
+    }
+    
+    mVertexBuffers.push_back(vertexBuffer);
+}
+
+void Kili::OpenGlVertexArray::setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
+{
+    glBindVertexArray(mId);
+    indexBuffer->use();
+    
+    mIndexBuffer = indexBuffer;
+}
 
 #pragma endregion

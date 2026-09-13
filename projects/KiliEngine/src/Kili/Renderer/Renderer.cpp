@@ -1,4 +1,15 @@
 #include "klpch.h"
 #include "Renderer.h"
 
-Kili::GraphicApi Kili::Renderer::mGraphicApi = GraphicApi::OpenGl;
+void Kili::Renderer::beginScene()
+{
+}
+
+void Kili::Renderer::endScene()
+{
+}
+
+void Kili::Renderer::submit(const std::shared_ptr<VertexArray>& vertexArray)
+{
+    RenderCommand::drawIndexed(vertexArray);
+}

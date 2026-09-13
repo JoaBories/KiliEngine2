@@ -4,8 +4,9 @@
 #include "Kili/Window.h"
 #include "Kili/Core/Logger/ConsoleLogger.h"
 #include "Kili/Core/Events/Event.h"
-#include "Kili/Renderer/Shader.h"
-#include "Kili/Renderer/VertexArray.h"
+
+#include "Kili/Renderer/RHI/Shader.h"
+#include "Kili/Renderer/RHI/VertexArray.h"
 
 namespace Kili
 {
@@ -22,10 +23,8 @@ namespace Kili
         bool mLoggingEvents;
         int mEventLogFilter;
         
-        unsigned int mVertexArray; // Temp
-        Shader* mShaderProgram;
-        VertexBuffer* mVertexBuffer;
-        IndexBuffer* mIndexBuffer;
+        std::shared_ptr<VertexArray> mVertexArray; // Temp
+        std::shared_ptr<Shader> mShaderProgram;
         
         /**
          * Init all the engine components and set them up. \n

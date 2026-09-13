@@ -1,32 +1,19 @@
 #pragma once
+#include "Kili/Renderer/RenderCommand.h"
 
 //ADDAPI
 namespace Kili
 {
-    enum class GraphicApi : char
-    {
-        None = 0,
-        OpenGl = 1,
-    };
-    
-    inline std::string toString(const GraphicApi e)
-    {
-        switch (e)
-        {
-            case GraphicApi::None: return "None";
-            case GraphicApi::OpenGl: return "OpenGl";
-        }
-        
-        return "Unknown";
-    }
-    
     class Renderer
-    {
-    private:
-        static GraphicApi mGraphicApi;
-        
+    {        
     public:
-        static GraphicApi getApi() { return mGraphicApi; }
-        static std::string getApiName() { return toString(mGraphicApi); }
+        static RendererApi::GraphicApi getApi() { return RendererApi::getApi(); }
+        static std::string getApiName() { return toString(RendererApi::getApi()); }
+        
+        static void beginScene();
+        static void endScene();
+        
+        static void submit(const std::shared_ptr<VertexArray>& vertexArray);
+        
     };
 }

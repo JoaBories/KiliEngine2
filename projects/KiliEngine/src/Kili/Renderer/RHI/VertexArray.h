@@ -9,16 +9,13 @@ namespace Kili
     **/
     class VertexBuffer
     {
-    protected:
-        BufferLayout mLayout = {};
-        
     public:
         virtual ~VertexBuffer() = default;
         
         virtual void use() const = 0;
         
-        void setLayout(const BufferLayout& layout) { mLayout = layout; }
-        [[nodiscard]] const BufferLayout& getLayout() const { return mLayout; }
+        virtual void setLayout(const BufferLayout& layout) = 0;
+        [[nodiscard]] virtual const BufferLayout& getLayout() const = 0;
         
         static VertexBuffer* create(const float* vertices, Uint32 size);
     };
@@ -47,7 +44,17 @@ namespace Kili
     class VertexArray
     {
     public:
-        virtual ~VertexArray();
+        virtual ~VertexArray() = default;
+        
+        virtual void use() const = 0;
+        
+        virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) = 0;
+        virtual void setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) = 0;
+
+        [[nodiscard]] virtual const std::vector<std::shared_ptr<VertexBuffer>>& getVertexBuffers() const = 0;
+        [[nodiscard]] virtual const std::shared_ptr<IndexBuffer>& getIndexBuffer() const = 0;
+        
+        static VertexArray* create();
     
     };
 }

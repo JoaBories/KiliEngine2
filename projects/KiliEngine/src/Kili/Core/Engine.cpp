@@ -5,7 +5,9 @@
 
 #include "Kili/Core/Events/InputEvent.h"
 #include "Kili/Core/Events/WindowEvent.h"
-#include "Kili/Renderer/GraphicApi/OpenGl/OpenGlShader.h"
+
+#include "Kili/Renderer/Renderer.h"
+
 #include "Kili/Scene/DefaultScene.h"
 #include "Kili/Scene/SceneManager.h"
 
@@ -92,6 +94,8 @@ namespace Kili
     {
         // Catch window close event
         DispatchEvent<WindowCloseEvent>(event, [this](const WindowCloseEvent& e) { mIsRunning = false; });
+        DispatchEvent<KeyboardEvent>(event, [this](const KeyboardEvent& e) { if (e.getKey() == SDLK_ESCAPE) mIsRunning = false; } );
+        
         DispatchEvent<WindowFocusEvent>(event, [this](const WindowFocusEvent& e) { mMinimized = !e.isGained(); });
         
         //Future possible usages of events :
@@ -127,27 +131,6 @@ namespace Kili
         
         close();
     }
-    
-    static GLenum ShaderDataTypeToOpenGl(ShaderDataType type)
-    {
-        switch (type)
-        {
-            case ShaderDataType::Float : return GL_FLOAT;
-            case ShaderDataType::Float2 : return GL_FLOAT;
-            case ShaderDataType::Float3 : return GL_FLOAT;
-            case ShaderDataType::Float4 : return GL_FLOAT;
-            case ShaderDataType::Mat3 : return GL_FLOAT;
-            case ShaderDataType::Mat4 : return GL_FLOAT;
-            case ShaderDataType::Int : return GL_INT;
-            case ShaderDataType::Int2 : return GL_INT;
-            case ShaderDataType::Int3 : return GL_INT;
-            case ShaderDataType::Int4 : return GL_INT;
-            case ShaderDataType::Bool : return GL_BOOL;
-        }
-        
-        LOG_WARNING("Unknown ShaderDataType");
-        return 0;
-    }
 
     void Engine::init()
     {
@@ -181,48 +164,40 @@ namespace Kili
         else LOG_LOADING("Window initialized");
         
         //Temp
-        glGenVertexArrays(1, &mVertexArray);
-        glBindVertexArray(mVertexArray);
-
-        float vertices[3*7] = {
-            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-             0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-             0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-        };
-        
-        Uint32 indices[3] = {
-            0, 1, 2
-        };
-        
-        mVertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
-        
-        BufferLayout layout = {
-            { "position", ShaderDataType::Float3 },
-            { "color", ShaderDataType::Float4, true }
-        };
-        
-        mVertexBuffer->setLayout(layout);
-
-        Uint32 index = 0;
-        for (const auto& element : mVertexBuffer->getLayout())
         {
-            glEnableVertexAttribArray(index);
+            mVertexArray.reset(VertexArray::create());
+
+            float vertices[4*7] = {
+                -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+                 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+                 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+                -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+            };
+        
+            Uint32 indices[6] = {
+                0, 1, 2,
+                0, 2, 3
+            };
+        
+            std::shared_ptr<VertexBuffer> vertexBuffer;
+            vertexBuffer.reset(VertexBuffer::create(vertices, sizeof(vertices)));
+        
+            BufferLayout layout = {
+                { "position", ShaderDataType::Float3 },
+                { "color", ShaderDataType::Float4, true }
+            };
+        
+            vertexBuffer->setLayout(layout);
+        
+            std::shared_ptr<IndexBuffer> indexBuffer;
+            indexBuffer.reset(IndexBuffer::create(indices, sizeof(indices) / sizeof(Uint32)));
             
-            glVertexAttribPointer(index, 
-                ShaderDataTypeCount(element.type), 
-                ShaderDataTypeToOpenGl(element.type), 
-                element.normalized ? GL_TRUE : GL_FALSE, 
-                mVertexBuffer->getLayout().getStride(), 
-                reinterpret_cast<const void*>(element.offset));
-            
-            index++;
+            mVertexArray->addVertexBuffer(vertexBuffer);
+            mVertexArray->setIndexBuffer(indexBuffer);
+        
+            mShaderProgram.reset(Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"}));
+            mShaderProgram->load();
         }
-        
-        mIndexBuffer = IndexBuffer::create(indices, sizeof(indices) / sizeof(unsigned long));
-        
-        mShaderProgram = Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"});
-        mShaderProgram->load();
-        
         // ==========================
         
         // Init and config time clock
@@ -233,6 +208,8 @@ namespace Kili
         SceneManager::setScenes({new DefaultScene()});
         
         LOG_LOADING("KiliEngine Initialized");
+        
+        SceneManager::loadScene(0);
     }
 
     void Engine::loop()
@@ -246,14 +223,15 @@ namespace Kili
         
         if (!mMinimized)
         {
-            glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            RenderCommand::clear(Vector4(0.05f, 0.05f, 0.05f, 1.0f));
             
-            mShaderProgram->setActive();
+            Renderer::beginScene();
             
-            //render
-            glBindVertexArray(mVertexArray);
-            glDrawElements(GL_TRIANGLES, mIndexBuffer->count(), GL_UNSIGNED_INT, nullptr);
+            mShaderProgram->use();
+            mShaderProgram->setFloat("uTime", static_cast<float>(TimeClock::time()));
+            Renderer::submit(mVertexArray);
+            
+            Renderer::endScene();
         }
         
         SceneManager::loadReload();
@@ -266,6 +244,8 @@ namespace Kili
     void Engine::close()
     {
         mShaderProgram->unload();
+        
+        mVertexArray.reset();
         
         SceneManager::close();
         

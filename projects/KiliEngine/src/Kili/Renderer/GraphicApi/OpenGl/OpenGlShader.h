@@ -1,8 +1,29 @@
 #pragma once
-#include "Kili/Renderer/Shader.h"
+#include "Kili/Renderer/RHI/Shader.h"
 
 namespace Kili
 {
+    static GLenum ShaderDataTypeToOpenGl(ShaderDataType type)
+    {
+        switch (type)
+        {
+            case ShaderDataType::Float : return GL_FLOAT;
+            case ShaderDataType::Float2 : return GL_FLOAT;
+            case ShaderDataType::Float3 : return GL_FLOAT;
+            case ShaderDataType::Float4 : return GL_FLOAT;
+            case ShaderDataType::Mat3 : return GL_FLOAT;
+            case ShaderDataType::Mat4 : return GL_FLOAT;
+            case ShaderDataType::Int : return GL_INT;
+            case ShaderDataType::Int2 : return GL_INT;
+            case ShaderDataType::Int3 : return GL_INT;
+            case ShaderDataType::Int4 : return GL_INT;
+            case ShaderDataType::Bool : return GL_BOOL;
+        }
+        
+        LOG_WARNING("Unknown ShaderDataType");
+        return 0;
+    }
+    
     class OpenGlShader : public Shader
     {
     private:
@@ -22,7 +43,7 @@ namespace Kili
         bool load() override;
         bool unload() override;
         
-        void setActive() override;
+        void use() override;
         
         // uniforms
         void setBool(const std::string& pName, const bool pValue) override      { glUniform1i(glGetUniformLocation(mId, pName.c_str()), pValue); }

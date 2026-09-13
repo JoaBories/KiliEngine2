@@ -11,19 +11,32 @@ Kili::VertexBuffer* Kili::VertexBuffer::create(const float* vertices, const Uint
 {
     switch (Renderer::getApi())
     {
-        case GraphicApi::OpenGl : return new OpenGlVertexBuffer(vertices, size); break;
+        case RendererApi::GraphicApi::OpenGl : return new OpenGlVertexBuffer(vertices, size); break;
     }
     
     LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
     return nullptr;
 }
+
 Kili::IndexBuffer* Kili::IndexBuffer::create(const Uint32* indices, const Uint32 count)
 {
     switch (Renderer::getApi())
     {
-        case GraphicApi::OpenGl : return new OpenGlIndexBuffer(indices, count); break;
+        case RendererApi::GraphicApi::OpenGl : return new OpenGlIndexBuffer(indices, count); break;
     }
     
     LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
     return nullptr;
 }
+
+Kili::VertexArray* Kili::VertexArray::create()
+{
+    switch (Renderer::getApi())
+    {
+        case RendererApi::GraphicApi::OpenGl : return new OpenGlVertexArray(); break;
+    }
+    
+    LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
+    return nullptr;
+}
+

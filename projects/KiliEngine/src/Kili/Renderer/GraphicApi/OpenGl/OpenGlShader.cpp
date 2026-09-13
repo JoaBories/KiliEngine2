@@ -114,7 +114,7 @@ bool Kili::OpenGlShader::unload()
     return true;
 }
 
-void Kili::OpenGlShader::setActive()
+void Kili::OpenGlShader::use()
 {
     glUseProgram(mId);
 }
