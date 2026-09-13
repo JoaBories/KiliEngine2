@@ -1,24 +1,26 @@
 #include "klpch.h"
 #include "Window.h"
 
-#include "Kili/Renderer/GraphicApi/OpenGl/OpenGlContext.h"
+#include "Renderer/RenderCommand.h"
 
 bool Kili::Window::init()
 {    
-    if (mMsaa) GraphicContext::setMsaa(mMsaa);
+    if (mMsaa) RenderCommand::setMsaa(mMsaa);
     
     int windowFlags = 0;
     if (mFlags & WindowFullscreen) windowFlags |= SDL_WINDOW_FULLSCREEN;
     if (mFlags & WindowBorderless) windowFlags |= SDL_WINDOW_BORDERLESS;
     if (mFlags & WindowResizable) windowFlags |= SDL_WINDOW_RESIZABLE;
     if (mFlags & WindowAlwaysOnTop) windowFlags |= SDL_WINDOW_ALWAYS_ON_TOP;
-    windowFlags |= GraphicContext::getWindowFlag();
+    windowFlags |= RenderCommand::getWindowFlag();
     
     mWindow = SDL_CreateWindow(mTitle.c_str(), static_cast<int>(mWidth), static_cast<int>(mHeight), windowFlags);
     if (!mWindow) return false;
     
     mContext = GraphicContext::create(mWindow);
     if (!mContext) return false;
+    
+    mContext->init();
     
     setVsync(mVsync);
     
@@ -55,5 +57,5 @@ Kili::Window::~Window()
 void Kili::Window::setVsync(const bool vsync)
 {
     mVsync = vsync;
-    mContext->setVsync(mVsync);
+    RenderCommand::setVsync(mVsync);
 }

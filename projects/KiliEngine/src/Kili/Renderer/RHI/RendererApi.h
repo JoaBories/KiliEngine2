@@ -16,13 +16,17 @@ namespace Kili
         virtual ~RendererApi() = default;
         
         virtual void clear(const Vector4& clearColor) = 0;
+        
         virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
         
-        [[nodiscard]] static GraphicApi getApi() { return mGraphicApi; }
+        virtual void setVsync(bool enabled) = 0;
+        [[nodiscard]] virtual bool isVsync() const = 0;
         
-    private:
-        static GraphicApi mGraphicApi;
-    
+        virtual void setMsaa(int samples) const = 0;
+
+        [[nodiscard]] virtual int getWindowFlag() const = 0;
+        
+        [[nodiscard]] virtual GraphicApi getApi() const = 0;    
     };
     
     inline std::string toString(const RendererApi::GraphicApi e)

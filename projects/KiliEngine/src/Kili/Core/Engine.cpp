@@ -223,8 +223,6 @@ namespace Kili
         
         if (!mMinimized)
         {
-            RenderCommand::clear(Vector4(0.05f, 0.05f, 0.05f, 1.0f));
-            
             Renderer::beginScene();
             
             mShaderProgram->use();

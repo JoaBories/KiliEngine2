@@ -3,6 +3,7 @@
 
 void Kili::Renderer::beginScene()
 {
+    RenderCommand::clear(Vector4(0.05f, 0.05f, 0.05f, 1.0f));
 }
 
 void Kili::Renderer::endScene()

@@ -9,8 +9,10 @@ uniform float uTime;
 
 void main()
 {
-    float c = cos(uTime);
-    float s = sin(uTime);
+    float speed = 0.5f;
+    
+    float c = cos(uTime * speed);
+    float s = sin(uTime * speed);
 
     vec2 rotatedPosition;
     rotatedPosition.x = (c * pos.x) - (s * pos.y);

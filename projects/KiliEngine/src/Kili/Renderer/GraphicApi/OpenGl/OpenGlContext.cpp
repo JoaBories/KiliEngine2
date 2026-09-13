@@ -6,7 +6,6 @@
 Kili::OpenGlContext::OpenGlContext(SDL_Window* windowHandle) :
     mWindowHandle(windowHandle), mContext(nullptr)
 {
-    init();
 }
 
 void Kili::OpenGlContext::init()

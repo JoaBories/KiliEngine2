@@ -16,8 +16,5 @@ namespace Kili
         void close() override;
         
         void swapBuffers() override { SDL_GL_SwapWindow(mWindowHandle); }
-        
-        void setVsync(const bool enabled) override { SDL_GL_SetSwapInterval(enabled); }
-        [[nodiscard]] bool isVsync() const override { int interval; SDL_GL_GetSwapInterval(&interval); return interval;  }
     };
 }

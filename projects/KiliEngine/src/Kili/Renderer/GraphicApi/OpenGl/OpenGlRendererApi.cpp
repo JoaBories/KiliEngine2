@@ -11,3 +11,9 @@ void Kili::OpenGlRendererApi::drawIndexed(const std::shared_ptr<VertexArray>& ve
 {
     glDrawElements(GL_TRIANGLES, vertexArray->getIndexBuffer()->count(), GL_UNSIGNED_INT, nullptr);
 }
+
+void Kili::OpenGlRendererApi::setMsaa(const int samples) const
+{
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, samples);
+}
