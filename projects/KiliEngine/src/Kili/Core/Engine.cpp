@@ -20,72 +20,76 @@ namespace Kili
         {
             switch(event.type)
             {
-            case SDL_EVENT_QUIT:
-                onEvent(WindowCloseEvent());
-                break;
-                
-            case SDL_EVENT_KEY_DOWN:
-                onEvent(KeyboardEvent(event.key.key, true, event.key.repeat));
-                break;
-                
-            case SDL_EVENT_KEY_UP:
-                onEvent(KeyboardEvent(event.key.key, false, event.key.repeat));
-                break;
-                
-            case SDL_EVENT_MOUSE_BUTTON_DOWN:
-                onEvent(MouseButtonEvent(
-                    event.button.button, true, 
-                    Vector2{event.button.x, event.button.y}, 
-                    event.button.clicks));
-                break;
-                
-            case SDL_EVENT_MOUSE_BUTTON_UP:
-                onEvent(MouseButtonEvent(
-                    event.button.button, false, 
-                    Vector2{event.button.x, event.button.y}, 
-                    event.button.clicks));
-                break;
-                
-            case SDL_EVENT_MOUSE_MOTION:
-                onEvent(MouseMoveEvent(
-                    Vector2{event.motion.x, event.motion.y}, 
-                    Vector2{event.motion.xrel, event.motion.yrel}));
-                break;
-                
-            case SDL_EVENT_MOUSE_WHEEL:
-                onEvent(MouseWheelEvent(
-                    event.wheel.x, 
-                    event.wheel.y, 
-                    Vector2{event.wheel.mouse_x, event.wheel.mouse_y}, 
-                    event.wheel.direction));
-                break;
-                
-            case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
-                onEvent(GamepadButtonEvent(event.gbutton.button, true));
-                break;
-                
-            case SDL_EVENT_GAMEPAD_BUTTON_UP:
-                onEvent(GamepadButtonEvent(event.gbutton.button, false));
-                break;
-                
-            case SDL_EVENT_GAMEPAD_AXIS_MOTION:
-                onEvent(GamepadAxisEvent(event.gaxis.axis, event.gaxis.value));
-                break;
-                
-            case SDL_EVENT_WINDOW_RESIZED:
-                onEvent(WindowResizeEvent(event.window.data1, event.window.data2));
-                break;
-                
-            case SDL_EVENT_WINDOW_FOCUS_GAINED:
-                onEvent(WindowFocusEvent(true));
-                break;
-                
-            case SDL_EVENT_WINDOW_FOCUS_LOST:
-                onEvent(WindowFocusEvent(false));
-                break;
-                
-            default:
-                break;
+                case SDL_EVENT_QUIT:
+                    onEvent(WindowCloseEvent());
+                    break;
+                    
+                case SDL_EVENT_KEY_DOWN:
+                    onEvent(KeyboardEvent(event.key.key, true, event.key.repeat));
+                    break;
+                    
+                case SDL_EVENT_KEY_UP:
+                    onEvent(KeyboardEvent(event.key.key, false, event.key.repeat));
+                    break;
+                    
+                case SDL_EVENT_MOUSE_BUTTON_DOWN:
+                    onEvent(MouseButtonEvent(
+                        event.button.button, true, 
+                        Vector2{event.button.x, event.button.y}, 
+                        event.button.clicks));
+                    break;
+                    
+                case SDL_EVENT_MOUSE_BUTTON_UP:
+                    onEvent(MouseButtonEvent(
+                        event.button.button, false, 
+                        Vector2{event.button.x, event.button.y}, 
+                        event.button.clicks));
+                    break;
+                    
+                case SDL_EVENT_MOUSE_MOTION:
+                    onEvent(MouseMoveEvent(
+                        Vector2{event.motion.x, event.motion.y}, 
+                        Vector2{event.motion.xrel, event.motion.yrel}));
+                    break;
+                    
+                case SDL_EVENT_MOUSE_WHEEL:
+                    onEvent(MouseWheelEvent(
+                        event.wheel.x, 
+                        event.wheel.y, 
+                        Vector2{event.wheel.mouse_x, event.wheel.mouse_y}, 
+                        event.wheel.direction));
+                    break;
+                    
+                case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
+                    onEvent(GamepadButtonEvent(event.gbutton.button, true));
+                    break;
+                    
+                case SDL_EVENT_GAMEPAD_BUTTON_UP:
+                    onEvent(GamepadButtonEvent(event.gbutton.button, false));
+                    break;
+                    
+                case SDL_EVENT_GAMEPAD_AXIS_MOTION:
+                    onEvent(GamepadAxisEvent(event.gaxis.axis, event.gaxis.value));
+                    break;
+                    
+                case SDL_EVENT_WINDOW_RESIZED:
+                    onEvent(WindowResizeEvent(event.window.data1, event.window.data2));
+                    break;
+                    
+                case SDL_EVENT_WINDOW_FOCUS_GAINED:
+                    onEvent(WindowFocusEvent(true));
+                    break;
+                    
+                case SDL_EVENT_WINDOW_FOCUS_LOST:
+                    onEvent(WindowFocusEvent(false));
+                    break;
+                    
+                case SDL_EVENT_WINDOW_MINIMIZED:
+                    onEvent(WindowMinimizedEvent());
+                    break;
+                    
+                default:
+                    break;
             }
         }
     }
@@ -96,7 +100,8 @@ namespace Kili
         DispatchEvent<WindowCloseEvent>(event, [this](const WindowCloseEvent& e) { mIsRunning = false; });
         DispatchEvent<KeyboardEvent>(event, [this](const KeyboardEvent& e) { if (e.getKey() == SDLK_ESCAPE) mIsRunning = false; } );
         
-        DispatchEvent<WindowFocusEvent>(event, [this](const WindowFocusEvent& e) { mMinimized = !e.isGained(); });
+        DispatchEvent<WindowFocusEvent>(event, [this](const WindowFocusEvent& e) { if (e.isGained()) mMinimized = false; } );
+        DispatchEvent<WindowMinimizedEvent>(event, [this](const WindowMinimizedEvent& e) { mMinimized = true; });
         
         //Future possible usages of events :
         //mInputManager->onEvent(event);

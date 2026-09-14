@@ -9,8 +9,7 @@ Kili::Shader* Kili::Shader::create(const std::string& name, const std::vector<st
 {
     switch (Renderer::getApi())
     {
-        case RendererApi::GraphicApi::OpenGl : return new OpenGlShader(name, paths); break;
-        case RendererApi::GraphicApi::None : return nullptr;
+        case GraphicApi::OpenGl : return new OpenGlShader(name, paths); break;
     }
     
     LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());

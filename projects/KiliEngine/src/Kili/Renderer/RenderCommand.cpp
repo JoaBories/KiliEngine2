@@ -3,4 +3,4 @@
 
 #include "Kili/Renderer/GraphicApi/OpenGl/OpenGlRendererApi.h"
 
-Kili::RendererApi* Kili::RenderCommand::mApi = new OpenGlRendererApi;
+Kili::RendererApi* Kili::RenderCommand::mApi = RendererApi::create();

@@ -55,4 +55,13 @@ namespace Kili
         
         [[nodiscard]] bool isGained() const { return mGained; }
     };
+    
+    class WindowMinimizedEvent : public IEvent
+    {
+    public:
+        WindowMinimizedEvent() = default;
+        
+        EVENT_CLASS_TYPE(WindowMinimized)
+        EVENT_CLASS_CATEGORY(EventCategory::EventWindow)
+    };
 }

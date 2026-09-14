@@ -7,7 +7,7 @@ namespace Kili
     class Renderer
     {        
     public:
-        static RendererApi::GraphicApi getApi() { return RenderCommand::getApi(); }
+        static GraphicApi getApi() { return RenderCommand::getApi(); }
         static std::string getApiName() { return toString(RenderCommand::getApi()); }
         
         static void beginScene();

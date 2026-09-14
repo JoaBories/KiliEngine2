@@ -6,7 +6,7 @@ namespace Kili
 {
     enum class EventType : char
     {
-        WindowClose, WindowResize, WindowFocus,
+        WindowClose, WindowResize, WindowFocus, WindowMinimized,
         
         InputKeyboard,
         InputMouseButton, InputMouseMove, InputMouseWheel,

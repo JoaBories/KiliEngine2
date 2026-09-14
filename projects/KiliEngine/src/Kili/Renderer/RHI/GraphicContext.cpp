@@ -10,8 +10,7 @@ Kili::GraphicContext* Kili::GraphicContext::create(SDL_Window* windowHandle)
 {
     switch (Renderer::getApi())
     {
-        case RendererApi::GraphicApi::OpenGl : return new OpenGlContext(windowHandle); break;
-        case RendererApi::GraphicApi::None : return nullptr; break;
+        case GraphicApi::OpenGl : return new OpenGlContext(windowHandle); break;
     }
     
     LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
