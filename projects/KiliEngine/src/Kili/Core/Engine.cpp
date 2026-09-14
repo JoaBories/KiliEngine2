@@ -117,7 +117,6 @@ namespace Kili
     Engine::Engine() : 
         mConsoleLogger(nullptr),
         mWindow(nullptr),
-        mTimeClock(nullptr),
         mIsRunning(false), mMinimized(false), 
         mLoggingEvents(false), mEventLogFilter(0)
     {
@@ -168,9 +167,9 @@ namespace Kili
         else LOG_LOADING("Window initialized");
         
         // Init and config time clock
-        mTimeClock = new TimeClock(config.getMaxFps(), config.getMaxDeltaTime());
-        mTimeClock->setLogging(config.isFpsLogging());
-        mTimeClock->setLoggingInterval(config.getFpsLogInterval());
+        TimeClock::init(config.getMaxFps(), config.getMaxDeltaTime());
+        TimeClock::setLogging(config.isFpsLogging());
+        TimeClock::setLoggingInterval(config.getFpsLogInterval());
         
         SceneManager::setScenes({new DefaultScene()});
         
@@ -181,7 +180,7 @@ namespace Kili
 
     void Engine::loop()
     {
-        mTimeClock->computeTime();
+        TimeClock::computeTime();
         
         pollEvents();
         
@@ -201,7 +200,7 @@ namespace Kili
         
         mWindow->update();
         
-        mTimeClock->delayTime();
+        TimeClock::delayTime();
     }
 
     void Engine::close()
@@ -210,9 +209,6 @@ namespace Kili
         
         delete mWindow;
         mWindow = nullptr;
-        
-        delete mTimeClock;
-        mTimeClock = nullptr;
         
         SDL_Quit();
         

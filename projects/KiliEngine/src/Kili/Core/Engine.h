@@ -15,7 +15,6 @@ namespace Kili
     private:
         ConsoleLogger* mConsoleLogger;
         Window* mWindow;
-        TimeClock* mTimeClock;
         
         bool mIsRunning;
         bool mMinimized;
