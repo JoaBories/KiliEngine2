@@ -23,19 +23,18 @@ namespace Kili
         bool mLoggingEvents;
         int mEventLogFilter;
         
-        std::shared_ptr<VertexArray> mVertexArray; // Temp
-        std::shared_ptr<Shader> mShaderProgram;
-        
         /**
          * Init all the engine components and set them up. \n
          * Init order :
-         *  - Init log and console logger. So we can see errors.
+         *  - Init console logger first, so we can see errors.
          *  - Load Engine Config from "KiliEngine.ini".
-         *  - Config log and console with their parameters.
+         *  - Config console logger.
          *  - Config event logging.
          *  - Init SDL3 components (only VIDEO and GAMEPAD for now).
-         *  - Init and config window.
+         *  - Init and config window, window init Graphic Api context.
          *  - Init and config TimeClock.
+         *  - Config SceneManager with selection of scenes.
+         *  - Load the first scene.
          */
         void init();
         
@@ -44,6 +43,10 @@ namespace Kili
          * Loop order :
          *  - Compute Time.
          *  - Poll sdl events in EventDispatcher.
+         *  - Update scene.
+         *  - Render if not minimized.
+         *  - Reload or Load a scene if asked.
+         *  - Update window (swap buffers, vsync take place here).
          *  - Delay time if fps are locked.
          */
         void loop();

@@ -11,6 +11,13 @@ void Kili::Scene::init()
 void Kili::Scene::update()
 {
     //update actors
+    onUpdate();
+}
+
+void Kili::Scene::render()
+{
+    //render actors
+    onRender();
 }
 
 void Kili::Scene::unload()

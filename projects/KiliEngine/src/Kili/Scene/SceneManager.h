@@ -36,6 +36,7 @@ namespace Kili
     	static void loadReload();
     	
     	static void update();
+    	static void render();
     	
     public :
     	static Scene* currentScene() { return mScenes[mCurrentSceneIndex]; }

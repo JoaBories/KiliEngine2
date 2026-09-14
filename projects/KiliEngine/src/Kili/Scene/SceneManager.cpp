@@ -9,8 +9,6 @@ bool Kili::SceneManager::mPendingReload = false;
 
 void Kili::SceneManager::loadScene(const int index)
 {
-    currentScene()->unload();
-    
     mCurrentSceneIndex = index;
     currentScene()->init();
     currentScene()->load();
@@ -45,6 +43,8 @@ void Kili::SceneManager::loadReload()
 {
     if (mPendingNewScene != -1)
     {
+        currentScene()->unload();
+    
         loadScene(mPendingNewScene);
         mPendingNewScene = -1;
         return;
@@ -61,6 +61,11 @@ void Kili::SceneManager::loadReload()
 void Kili::SceneManager::update()
 {
     currentScene()->update();
+}
+
+void Kili::SceneManager::render()
+{
+    currentScene()->render();
 }
 
 bool Kili::SceneManager::nextScene(const std::string& nextScene)

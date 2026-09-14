@@ -38,7 +38,6 @@ namespace Kili
         char mFlags;
         char mMsaa;
         bool mVsync;
-    
         
     public:
         Window(std::string title, WindowParameters params);
@@ -60,10 +59,5 @@ namespace Kili
         [[nodiscard]] unsigned int getHeight() const { return mHeight; }
         
         [[nodiscard]] char getFlags() const { return mFlags; }
-        
-        [[nodiscard]] char getMsaa() const { return mMsaa; }
-        
-        [[nodiscard]] bool isVsync() const { return mVsync; }
-        void setVsync(bool vsync);
     };
 }

@@ -2,11 +2,14 @@
 
 ### Previouse version [Kili Engine I](https://github.com/JoaBories/KiliEngine).
 
+Like the previous version this engine is a personal and school project so it is heavily subject to change.
+Apis or structure may change drastically during development.
+
 ## Roadmap 🗺️
 This is a roadmap representing the features i plan to implement in the engine.
 I will update by adding, removing, or moving features during the project development.
 
-- **1.0 base** - **WIP** - *Comming back to KiliEngine I in term of features*
+- **1.0 base** - **WIP** - *Coming back to KiliEngine I in terms of features*
   - [x] Log
   - [x] EventSystem
   - [x] Config files
@@ -18,9 +21,10 @@ I will update by adding, removing, or moving features during the project develop
   - [ ] Voxel Rendering
   - [ ] Voxel Collisions
   - [ ] Procedural generation
-- **More things** - **Planned** - *Features not planned at short or mid term*
+- **More things** - **Planned** - *Features not planned at shorter or midterm*
   - [ ] Vulkan rendering
   - [ ] Multi threading
   - [ ] Support for HLSL shaders
   - [ ] Mesh blocks
   - [ ] Compute shaders for procedural generation
+  - [ ] ImGui integration

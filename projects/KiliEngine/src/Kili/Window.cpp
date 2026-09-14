@@ -22,7 +22,7 @@ bool Kili::Window::init()
     
     mContext->init();
     
-    setVsync(mVsync);
+    RenderCommand::setVsync(mVsync);
     
     return true;
 }
@@ -52,10 +52,4 @@ Kili::Window::Window(std::string title, const WindowParameters params) :
 Kili::Window::~Window()
 {
     close();
-}
-
-void Kili::Window::setVsync(const bool vsync)
-{
-    mVsync = vsync;
-    RenderCommand::setVsync(mVsync);
 }

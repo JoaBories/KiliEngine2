@@ -5,12 +5,12 @@ namespace Kili
 {
     ConsoleLogger::ConsoleLogger() : mLogLevelMask(0)
     {
-        Log::instance()->addLogger(this);
+        Log::addLogger(this);
     }
     
     ConsoleLogger::~ConsoleLogger()
     {
-        Log::instance()->removeLogger(this);
+        Log::removeLogger(this);
     }
 
     void ConsoleLogger::receiveLog(const LogMessage& message)

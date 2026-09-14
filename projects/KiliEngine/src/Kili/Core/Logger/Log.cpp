@@ -3,6 +3,8 @@
 
 namespace Kili
 {
+    std::vector<ILogger*> Log::mLoggers = {};
+    
     void Log::addLogger(ILogger* logger)
     {
         if (const auto iter = std::find(mLoggers.begin(), mLoggers.end(), logger); iter == mLoggers.end()) 
@@ -15,7 +17,7 @@ namespace Kili
             mLoggers.erase(iter);
     }
     
-    void Log::log(const LogLevel level, const std::string& message, const std::string& file, const int line) const
+    void Log::log(const LogLevel level, const std::string& message, const std::string& file, const int line)
     {
         const LogMessage logMessage{message, file, std::chrono::system_clock::now(), line, level};
 

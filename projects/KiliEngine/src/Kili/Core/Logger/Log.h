@@ -54,32 +54,20 @@ namespace Kili
     class Log
     {
     private:
-        std::vector<ILogger*> mLoggers;
-        
-        Log() = default;
-        ~Log() { mLoggers.clear(); }
+        static std::vector<ILogger*> mLoggers;
         
     public:
-        static Log* instance()
-        {
-            static Log instance;
-            return &instance;
-        }
+        static void addLogger(ILogger* logger);
+        static void removeLogger(const ILogger* logger);
         
-        Log(const Log&) = delete;
-        Log& operator=(const Log&) = delete;
-        
-        void addLogger(ILogger* logger);
-        void removeLogger(const ILogger* logger);
-        
-        void log(LogLevel level, const std::string& message, const std::string& file, int line) const;
+        static void log(LogLevel level, const std::string& message, const std::string& file, int line);
     };
 
-#define LOG_DEBUG(msg) Log::instance()->log(LogLevel::Debug, msg, __FILE__, __LINE__)
-#define LOG_INFO(msg) Log::instance()->log(LogLevel::Info, msg, __FILE__, __LINE__)
-#define LOG_LOADING(msg) Log::instance()->log(LogLevel::Loading, msg, __FILE__, __LINE__)
-#define LOG_WARNING(msg) Log::instance()->log(LogLevel::Warning, msg, __FILE__, __LINE__)
-#define LOG_ERROR(msg) Log::instance()->log(LogLevel::Error, msg, __FILE__, __LINE__)
+#define LOG_DEBUG(msg) Log::log(LogLevel::Debug, msg, __FILE__, __LINE__)
+#define LOG_INFO(msg) Log::log(LogLevel::Info, msg, __FILE__, __LINE__)
+#define LOG_LOADING(msg) Log::log(LogLevel::Loading, msg, __FILE__, __LINE__)
+#define LOG_WARNING(msg) Log::log(LogLevel::Warning, msg, __FILE__, __LINE__)
+#define LOG_ERROR(msg) Log::log(LogLevel::Error, msg, __FILE__, __LINE__)
     
 #define TEST_ALL_LOG LOG_DEBUG("Test Debug"); LOG_INFO("Test Info"); LOG_LOADING("Test Loading"); LOG_WARNING("Test Warning"); LOG_ERROR("Test Error");
 }
