@@ -5,6 +5,9 @@
 
 #include <Maths.h>
 
+struct Quaternion;
+struct Matrix4;
+
 struct Vector4
 {
     float x, y, z, w;
@@ -76,6 +79,9 @@ struct Vector4
         return false;
     }
     bool operator!=(const Vector4& rhs) const { return !(*this == rhs); }
+    
+    static Vector4 transform(const Vector4& vec, const Quaternion& quat);
+    static Vector4 transform(const Vector4& vec, const Matrix4& mat);
 
     [[nodiscard]] float lengthSquared() const   { return x * x + y * y + z * z + w * w; }
     [[nodiscard]] float length() const          { return Klm::Sqrt(lengthSquared()); }
@@ -84,7 +90,10 @@ struct Vector4
     [[nodiscard]] Vector4 normalized() const    { return *this / length(); }
     
     [[nodiscard]] float dot(const Vector4& rhs) const { return x * rhs.x + y * rhs.y + z * rhs.z; }
+    [[nodiscard]] static float dot(const Vector4& a, const Vector4& b) { return a.dot(b); }
+    
     [[nodiscard]] Vector4 cross(const Vector4& rhs) const { return Vector4(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x, 0.0f); }
+    [[nodiscard]] static Vector4 cross(const Vector4& a, const Vector4& b) { return a.cross(b); }
     
     [[nodiscard]] static Vector4 lerp(const Vector4& a, const Vector4& b, const float t) { return a + (b - a) * t; }
     [[nodiscard]] static Vector4 reflect(const Vector4& v, const Vector4& n) { return v - 2.0f * v.dot(n) * n; }
