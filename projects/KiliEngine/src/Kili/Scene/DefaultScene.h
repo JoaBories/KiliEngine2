@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Kili/Transform.h"
+#include "Kili/CameraManager.h"
 
 namespace Kili
 {
@@ -29,10 +30,10 @@ namespace Kili
             mVertexArray.reset(VertexArray::create());
             
             float vertices[4*9] = {
-                -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f, 1.0f,     0.0f, 0.0f,
-                 0.5f, -0.5f, 0.0f,     0.0f, 1.0f, 0.0f, 1.0f,     1.0f, 0.0f,
-                 0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f, 1.0f,     1.0f, 1.0f,
-                -0.5f,  0.5f, 0.0f,     1.0f, 1.0f, 0.0f, 1.0f,     0.0f, 1.0f
+                -0.5f, -0.5f, 0.0f,     0.0f, 0.0f,
+                 0.5f, -0.5f, 0.0f,     1.0f, 0.0f,
+                 0.5f,  0.5f, 0.0f,     1.0f, 1.0f,
+                -0.5f,  0.5f, 0.0f,     0.0f, 1.0f
             };
         
             Uint32 indices[2*3] = {
@@ -45,7 +46,6 @@ namespace Kili
         
             BufferLayout layout = {
                 { "position", ShaderDataType::Float3 },
-                { "color", ShaderDataType::Float4, true },
                 { "uv", ShaderDataType::Float2, false },
             };
         
@@ -59,7 +59,7 @@ namespace Kili
         
             mShaderProgram.reset(Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"}));
             
-            mTransform = Transform(Vector3(0,0,0), Quaternion(Vector3::UnitY, Klm::DEG2_RAD * 90.0f), Vector3::Unit);
+            mTransform = Transform(Vector3(1,0,0), Quaternion(Vector3::UnitY, Klm::DEG2_RAD * 90.0f), Vector3::Unit);
             
             mCamera.reset(new Camera(Transform()));
             CameraManager::addCamera(mCamera);
@@ -69,7 +69,6 @@ namespace Kili
         
         void onUpdate() override
         {
-            mTransform.setPosition(Vector3::UnitX * Klm::Sin(TimeClock::time()) * 1.0f);
         }
         
         void onRender() override

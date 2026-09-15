@@ -17,7 +17,7 @@ namespace Kili
         float mFarPane;
         
     public:
-        explicit Camera(const Transform& transform, float fov = 90.0f, float near = 0.01f, float far = 10000.0f);
+        explicit Camera(const Transform& transform, float fov = 90.0f, float near = 0.01f, float far = 1000.0f);
         
         Camera(const Camera& other) = delete;
         Camera(Camera&& other) noexcept = delete;
@@ -29,6 +29,15 @@ namespace Kili
         [[nodiscard]] Matrix4 getViewMatrix() const { return mViewMatrix; }
         [[nodiscard]] Matrix4 getProjMatrix() const { return mProjMatrix; }
         [[nodiscard]] Matrix4 getViewProjMatrix() const { return  mViewMatrix * mProjMatrix; }
+        
+        [[nodiscard]] float getFov() const { return mFov; }
+        void setFov(const float fov) { mFov = fov; }
+        
+        [[nodiscard]] float getNearPane() const { return mNearPane; }
+        void setNearPane(const float near) { mNearPane = near; }
+        
+        [[nodiscard]] float getFarPane() const { return mFarPane; }
+        void setFarPane(const float far) { mFarPane = far; }
     };
     
     class CameraManager
