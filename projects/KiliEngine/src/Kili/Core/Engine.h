@@ -13,8 +13,8 @@ namespace Kili
     class Engine
     {
     private:
-        ConsoleLogger* mConsoleLogger;
-        Window* mWindow;
+        std::shared_ptr<ConsoleLogger> mConsoleLogger;
+        std::shared_ptr<Window> mWindow;
         
         bool mIsRunning;
         bool mMinimized;

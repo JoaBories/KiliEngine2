@@ -29,6 +29,7 @@ namespace Kili
             case ShaderDataType::Int3:      return 4 * 3;
             case ShaderDataType::Int4:      return 4 * 4;
             case ShaderDataType::Bool:      return 1;
+            default: break;
         }
         
         LOG_WARNING("Unknown ShaderDataType");
@@ -50,6 +51,7 @@ namespace Kili
             case ShaderDataType::Int3:      return 3;
             case ShaderDataType::Int4:      return 4;
             case ShaderDataType::Bool:      return 1;
+            default: break;
         }
         
         LOG_WARNING("Unknown ShaderDataType");
@@ -74,31 +76,18 @@ namespace Kili
             case ShaderType::TessEval: return "TessEval";
             case ShaderType::Geometry: return "Geometry";
             case ShaderType::Fragment: return "Fragment";
-            default: return "unknown";
         }
+        
+        return "unknow";
     }
 
-    class Shader : public IAsset
-    {
-    protected:
-        std::string mName;
-        std::unordered_map<ShaderType, std::string> mPaths;
-    
+    class Shader
+    {    
     public:
-        Shader(std::string name, const std::vector<std::string>& paths) :
-            mName(std::move(name))
-        {
-            for (auto path : paths)
-            {
-                if (const size_t pos = path.find_last_of('.'); pos != std::string::npos)
-                {
-                    mPaths[getShaderTypeFromExtension(path.substr(pos, path.length()))] = path;
-                }
-            }
-        }
+        virtual ~Shader() = default;
     
-        [[nodiscard]] std::string getPath(const ShaderType type) const { if (mPaths.find(type) != mPaths.end()) return mPaths.at(type); else return ""; }
-        [[nodiscard]] bool hasShaderType(const ShaderType type) const { return mPaths.find(type) != mPaths.end(); }
+        [[nodiscard]] virtual bool hasShaderType(ShaderType type) const = 0;
+        [[nodiscard]] virtual std::string getName() const = 0;
         
         virtual void use() = 0;
         

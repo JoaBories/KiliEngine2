@@ -139,7 +139,7 @@ namespace Kili
     void Engine::init()
     {
         // Init log
-        mConsoleLogger = new ConsoleLogger();
+        mConsoleLogger.reset(new ConsoleLogger());
         
         LOG_LOADING("KiliEngine Initialization");
         
@@ -161,7 +161,7 @@ namespace Kili
         
         // Init and config window
         const WindowParameters winParams{ config.getWindowWidth(), config.getWindowHeight(), config.getWindowFlags(), config.getMsaa(), config.isVsync()};
-        mWindow = new Window(config.getWindowName(), winParams);
+        mWindow.reset(new Window(config.getWindowName(), winParams));
         
         if (!mWindow->init())  LOG_ERROR("Window could not initialize");
         else LOG_LOADING("Window initialized");
@@ -207,14 +207,12 @@ namespace Kili
     {
         SceneManager::close();
         
-        delete mWindow;
-        mWindow = nullptr;
+        mWindow.reset();
         
         SDL_Quit();
         
         LOG_LOADING("KiliEngine Ended");
         
-        delete mConsoleLogger;
-        mConsoleLogger = nullptr;
+        mConsoleLogger.reset();
     }
 }

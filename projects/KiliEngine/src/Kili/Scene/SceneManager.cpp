@@ -11,7 +11,6 @@ void Kili::SceneManager::loadScene(const int index)
 {
     mCurrentSceneIndex = index;
     currentScene()->init();
-    currentScene()->load();
 }
 
 void Kili::SceneManager::reloadScene()
@@ -19,7 +18,6 @@ void Kili::SceneManager::reloadScene()
     currentScene()->unload();
     
     currentScene()->init();
-    currentScene()->load();
 }
 
 int Kili::SceneManager::findScene(const std::string& sceneName)

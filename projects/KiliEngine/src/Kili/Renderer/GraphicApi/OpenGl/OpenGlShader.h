@@ -3,7 +3,7 @@
 
 namespace Kili
 {
-    static GLenum ShaderDataTypeToOpenGl(ShaderDataType type)
+    static GLenum ShaderDataTypeToOpenGl(const ShaderDataType type)
     {
         switch (type)
         {
@@ -27,21 +27,20 @@ namespace Kili
     class OpenGlShader : public Shader
     {
     private:
-        unsigned int mId;
+        std::string mName;
+        std::vector<ShaderType> mShaderTypes;
+        uint32_t mId;
     
         /** Compile shader and return the shader id, debug shader errors in warnings **/
         [[nodiscard]] unsigned int compileShader(ShaderType shaderType, const std::string& code) const;
         
     public:
-        OpenGlShader(std::string name, const std::vector<std::string>& paths) :
-            Shader(std::move(name), paths), mId(0)
-        {
-        }
+        OpenGlShader(std::string name, const std::vector<std::string>& paths);
         
         ~OpenGlShader() override;
         
-        bool load() override;
-        bool unload() override;
+        [[nodiscard]] bool hasShaderType(ShaderType type) const override;
+        [[nodiscard]] std::string getName() const override { return mName; }
         
         void use() override;
         

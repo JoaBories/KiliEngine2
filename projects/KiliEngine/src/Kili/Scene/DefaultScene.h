@@ -7,13 +7,13 @@ namespace Kili
     class DefaultScene : public Scene
     {
     private:
-        std::shared_ptr<VertexArray> mVertexArray; // Temp
-        std::shared_ptr<Shader> mShaderProgram; // Temp
+        std::shared_ptr<VertexArray> mVertexArray;
+        std::shared_ptr<Shader> mShaderProgram;
         
     protected:
         void onClose() override
         {
-            mShaderProgram->unload();
+            mShaderProgram.reset();
             mVertexArray.reset();
         }
         
@@ -21,15 +21,15 @@ namespace Kili
         {
             // Temp ===========================
             mVertexArray.reset(VertexArray::create());
-
-            float vertices[4*7] = {
-                -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-                 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-                 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-                -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+            
+            float vertices[4*9] = {
+                -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f, 1.0f,     0.0f, 0.0f,
+                 0.5f, -0.5f, 0.0f,     0.0f, 1.0f, 0.0f, 1.0f,     1.0f, 0.0f,
+                 0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f, 1.0f,     1.0f, 1.0f,
+                -0.5f,  0.5f, 0.0f,     1.0f, 1.0f, 0.0f, 1.0f,     0.0f, 1.0f
             };
         
-            Uint32 indices[6] = {
+            Uint32 indices[2*3] = {
                 0, 1, 2,
                 0, 2, 3
             };
@@ -39,7 +39,8 @@ namespace Kili
         
             BufferLayout layout = {
                 { "position", ShaderDataType::Float3 },
-                { "color", ShaderDataType::Float4, true }
+                { "color", ShaderDataType::Float4, true },
+                { "uv", ShaderDataType::Float2, false },
             };
         
             vertexBuffer->setLayout(layout);
@@ -51,7 +52,6 @@ namespace Kili
             mVertexArray->setIndexBuffer(indexBuffer);
         
             mShaderProgram.reset(Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"}));
-            mShaderProgram->load();
             // ================================
         }
         
