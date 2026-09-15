@@ -103,6 +103,8 @@ namespace Kili
         DispatchEvent<WindowFocusEvent>(event, [this](const WindowFocusEvent& e) { if (e.isGained()) mMinimized = false; } );
         DispatchEvent<WindowMinimizedEvent>(event, [this](const WindowMinimizedEvent& e) { mMinimized = true; });
         
+        Renderer::onEvent(event);
+        
         //Future possible usages of events :
         //mInputManager->onEvent(event);
         //mWindow->onEvent(event);
@@ -166,15 +168,16 @@ namespace Kili
         if (!mWindow->init())  LOG_ERROR("Window could not initialize");
         else LOG_LOADING("Window initialized");
         
+        Renderer::onEvent(WindowResizeEvent(winParams.width, winParams.height)); // TODO clean that shit
+        
         // Init and config time clock
         TimeClock::init(config.getMaxFps(), config.getMaxDeltaTime());
         TimeClock::setLogging(config.isFpsLogging());
         TimeClock::setLoggingInterval(config.getFpsLogInterval());
         
-        SceneManager::setScenes({new DefaultScene()});
-        
         LOG_LOADING("KiliEngine Initialized");
         
+        SceneManager::setScenes({new DefaultScene()});
         SceneManager::loadScene(0);
     }
 
@@ -189,7 +192,7 @@ namespace Kili
         
         if (!mMinimized)
         {
-            Renderer::beginScene();
+            Renderer::beginScene(CameraManager::getActiveCamera());
             
             SceneManager::render();
             

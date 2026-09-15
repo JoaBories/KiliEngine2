@@ -51,6 +51,6 @@ namespace Kili
         void setVec2(const std::string& pName, const Vector2& pValue) override  { glUniform2f(glGetUniformLocation(mId, pName.c_str()), pValue.x, pValue.y); }
         void setVec3(const std::string& pName, const Vector3& pValue) override  { glUniform3f(glGetUniformLocation(mId, pName.c_str()), pValue.x, pValue.y, pValue.z); }
         void setVec4(const std::string& pName, const Vector4& pValue) override  { glUniform4f(glGetUniformLocation(mId, pName.c_str()), pValue.x, pValue.y, pValue.z, pValue.w); }
-        void setMat4(const std::string& pName, const Matrix4& pMatrix) override { glUniformMatrix4fv(glGetUniformLocation(mId, pName.c_str()), 1, GL_FALSE, pMatrix.asFloatPtr()); }
+        void setMat4(const std::string& pName, const Matrix4& pMatrix) override { glUniformMatrix4fv(glGetUniformLocation(mId, pName.c_str()), 1, GL_TRUE, pMatrix.asFloatPtr()); }
     };
 }

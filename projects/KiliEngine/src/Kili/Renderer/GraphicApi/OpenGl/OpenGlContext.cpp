@@ -35,6 +35,8 @@ void Kili::OpenGlContext::init()
     
     LOG_LOADING("OpenGL " + openglVersion + " with GLSL " + glslVersion);
     LOG_LOADING("Running on : " + std::string(reinterpret_cast<const char*>(glGetString(GL_RENDERER))));
+    
+    glDisable(GL_CULL_FACE);
 }
 
 void Kili::OpenGlContext::close()

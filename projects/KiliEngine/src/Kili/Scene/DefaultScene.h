@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Scene.h"
+#include "Kili/Transform.h"
 
 namespace Kili
 {
@@ -9,12 +10,17 @@ namespace Kili
     private:
         std::shared_ptr<VertexArray> mVertexArray;
         std::shared_ptr<Shader> mShaderProgram;
+        std::shared_ptr<Camera> mCamera;
+        WorldTransform mTransform;
         
     protected:
         void onClose() override
         {
             mShaderProgram.reset();
             mVertexArray.reset();
+            
+            CameraManager::removeCamera(mCamera);
+            mCamera.reset();
         }
         
         void load() override
@@ -52,19 +58,23 @@ namespace Kili
             mVertexArray->setIndexBuffer(indexBuffer);
         
             mShaderProgram.reset(Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"}));
+            
+            mTransform = Transform(Vector3(0,0,0), Quaternion(Vector3::UnitY, Klm::DEG2_RAD * 90.0f), Vector3::Unit);
+            
+            mCamera.reset(new Camera(Transform()));
+            CameraManager::addCamera(mCamera);
+            CameraManager::setActiveCamera(mCamera);
             // ================================
         }
         
         void onUpdate() override
         {
-            
+            mTransform.setPosition(Vector3::UnitX * Klm::Sin(TimeClock::time()) * 1.0f);
         }
         
         void onRender() override
         {
-            mShaderProgram->use();
-            mShaderProgram->setFloat("uTime", static_cast<float>(TimeClock::time()));
-            Renderer::submit(mVertexArray);
+            Renderer::submit(mShaderProgram, mVertexArray, mTransform.getTransformMatrix());
         }
 
     public:

@@ -1,16 +1,55 @@
 #include "klpch.h"
 #include "Renderer.h"
 
-void Kili::Renderer::beginScene()
-{
-    RenderCommand::clear(Vector4(0.05f, 0.05f, 0.05f, 1.0f));
-}
+#include "Kili/Core/TimeClock.h"
+#include "Kili/Core/Events/WindowEvent.h"
 
-void Kili::Renderer::endScene()
+namespace Kili
 {
-}
+    Vector2 Renderer::mScreenSize = Vector2();
+    
+    Matrix4 Renderer::mViewMatrix = Matrix4();
+    Matrix4 Renderer::mProjMatrix = Matrix4();
+    Matrix4 Renderer::mViewProjMatrix = Matrix4();
+    
+    void Renderer::onEvent(const IEvent& event)
+    {
+        DispatchEvent<WindowResizeEvent>(event, [](const WindowResizeEvent& e)
+        {
+            mScreenSize.x = static_cast<float>(e.getWidth());
+            mScreenSize.y = static_cast<float>(e.getHeight());
+        });
+    }
 
-void Kili::Renderer::submit(const std::shared_ptr<VertexArray>& vertexArray)
-{
-    RenderCommand::drawIndexed(vertexArray);
+    void Renderer::beginScene(const std::shared_ptr<Camera>& camera)
+    {
+        RenderCommand::clear(Vector4(0.45f, 0.45f, 1.0f, 1.0f));
+        
+        if (!camera)
+        {
+            LOG_WARNING("There is no camera");
+            return;
+        }
+        
+        camera->recalculate();
+        mViewMatrix = camera->getViewMatrix();
+        mProjMatrix = camera->getProjMatrix();
+        mViewProjMatrix = camera->getViewProjMatrix();
+    }
+
+    void Renderer::endScene()
+    {
+    }
+
+    void Renderer::submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const Matrix4& transformMatrix)
+    {
+        shader->use();
+        shader->setMat4("uViewMatrix", mViewMatrix);
+        shader->setMat4("uProjMatrix", mProjMatrix);
+        shader->setMat4("uViewProjMatrix", mViewProjMatrix);
+        shader->setMat4("uTransform", transformMatrix);
+        shader->setFloat("uTime", static_cast<float>(TimeClock::time()));
+    
+        RenderCommand::drawIndexed(vertexArray);
+    }
 }

@@ -19,8 +19,8 @@ namespace Kili
     {
         if (!mNeedUpdate) return;
         mNeedUpdate = false;
-        mWorldTransformMatrix = Matrix4::createScale(mTransform.getScale());
-        mWorldTransformMatrix *= Matrix4::createFromQuaternion(mTransform.getRotation());
-        mWorldTransformMatrix *= Matrix4::createTranslation(mTransform.getPosition());
+        mTransformMatrix = Matrix4::createScale(mTransform.getScale());
+        mTransformMatrix *= Matrix4::createFromQuaternion(mTransform.getRotation());
+        mTransformMatrix *= Matrix4::createTranslation(mTransform.getPosition());
     }
 }

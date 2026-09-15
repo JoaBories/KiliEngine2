@@ -8,19 +8,16 @@ out vec4 color;
 out vec2 uv;
 
 uniform float uTime;
+uniform mat4 uTransform;
+uniform mat4 uViewProjMatrix;
+uniform mat4 uProjMatrix;
+uniform mat4 uViewMatrix;
 
 void main()
 {
-    float speed = 0.5f;
+    float speed = 0.5;
     
-    float c = cos(uTime * speed);
-    float s = sin(uTime * speed);
-
-    vec2 rotatedPosition;
-    rotatedPosition.x = (c * vPos.x) - (s * vPos.y);
-    rotatedPosition.y = (s * vPos.x) + (c * vPos.y);
-    
-    gl_Position = vec4(rotatedPosition, 0.0, 1.0);
+    gl_Position = vec4(vPos, 1.0) * uTransform * uViewProjMatrix;
     
     color = vColor;
     uv = vUv;

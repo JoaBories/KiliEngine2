@@ -17,7 +17,7 @@ namespace Kili
 
 	public:
 		Transform() : 
-			mPosition(Vector3::Zero), mRotation(Quaternion::Identity), mScale(Vector3::Unit) {}
+			mPosition(Vector3::Zero), mRotation(Quaternion(Vector3::UnitZ, 0.0f)), mScale(Vector3::Unit) {}
 	
 		Transform(const Vector3& position, const Quaternion& rotation, const Vector3& scale) :
 			mPosition(position), mRotation(rotation), mScale(scale) {}
@@ -47,7 +47,7 @@ namespace Kili
 	{
 	private :
 		Transform mTransform;
-		mutable Matrix4 mWorldTransformMatrix; // Mutable because it is cached and so th getter can be const
+		mutable Matrix4 mTransformMatrix; // Mutable because it is cached and so th getter can be const
 		mutable bool mNeedUpdate = true;
 	
 		void recomputeWorldTransformMatrix() const;
@@ -61,7 +61,7 @@ namespace Kili
 		WorldTransform(const Vector3& position, const Quaternion& rotation, const Vector3& scale) : 
 			mTransform(Transform(position, rotation, scale)) {}
 
-		[[nodiscard]] inline Matrix4 getWorldTransformMatrix() const { recomputeWorldTransformMatrix(); return mWorldTransformMatrix; }
+		[[nodiscard]] inline Matrix4 getTransformMatrix() const { recomputeWorldTransformMatrix(); return mTransformMatrix; }
 	
 		[[nodiscard]] inline Vector3 getPosition() const { return mTransform.getPosition(); }
 		[[nodiscard]] inline Quaternion getRotation() const { return mTransform.getRotation(); }
