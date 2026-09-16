@@ -56,6 +56,11 @@ void Kili::SceneManager::loadReload()
     }
 }
 
+void Kili::SceneManager::onEvent(const IEvent& event)
+{
+    if (currentScene()) currentScene()->onEvent(event);
+}
+
 void Kili::SceneManager::update()
 {
     currentScene()->update();

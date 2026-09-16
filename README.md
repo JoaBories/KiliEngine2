@@ -1,13 +1,13 @@
 # KiliEngine II
 
 ## Disclaimer 🚨
-For now the engine is in very early stage so can see the **previous version [Kili Engine I](https://github.com/JoaBories/KiliEngine)** for something more complete.
+I decided to rebuild **[Kili Engine I](https://github.com/JoaBories/KiliEngine)** to restart on good basis so for now some important part of the engine are missing or incomplete.
 Like the previous version this engine is a personal and school project so it is heavily subject to change. APIs or file structure may change drastically during development.
 
 ## Build instruction
 I use premake5 for project generation.
-You can generate a visual studio solution (`.sln` and `.vcxproj`) using `GenerateSolution.bat`.
-But you can also use any build supported by premake5. Note that i didn't tested them.
+You can generate a Visual Studio solution (`.sln` and `.vcxproj`) using `GenerateSolution.bat`.
+But you can also use any build supported by premake5. Note that I didn't test them.
 
 ## Roadmap 🗺️
 This is a roadmap representing the features I plan to implement in the engine.

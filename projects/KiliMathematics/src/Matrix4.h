@@ -158,7 +158,7 @@ struct Matrix4
 
     static Matrix4 createPerspectiveFov(const float fovY, const float width, const float height, const float near, const float far)
     {
-        const float yScale = Klm::Cot(fovY * Klm::DEG2_RAD / 2.0f);
+        const float yScale = Klm::Cot(fovY * Klm::DEG_2_RAD / 2.0f);
         const float xScale = yScale * height / width;
         float temp[4][4] =
         {

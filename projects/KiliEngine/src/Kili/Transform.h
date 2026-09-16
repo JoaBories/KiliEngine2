@@ -27,8 +27,8 @@ namespace Kili
 		[[nodiscard]] Vector3 getScale() const { return mScale; }
 
 		[[nodiscard]] Vector3 getForwardVector() const { return Vector3::transform(Vector3::UnitX, mRotation);}
-		[[nodiscard]] Vector3 getUpVector() const {return Vector3::transform(Vector3::UnitZ, mRotation);}
-		[[nodiscard]] Vector3 getRightVector() const {return Vector3::transform(Vector3::UnitY, mRotation);}
+		[[nodiscard]] Vector3 getUpVector() const {return Vector3::transform(Vector3::UnitY, mRotation);}
+		[[nodiscard]] Vector3 getRightVector() const {return Vector3::transform(Vector3::UnitZ, mRotation);}
 
 		void setPosition(const Vector3& newPos) { mPosition = newPos; }
 		void addPosition(const Vector3& movement) { mPosition += movement; }

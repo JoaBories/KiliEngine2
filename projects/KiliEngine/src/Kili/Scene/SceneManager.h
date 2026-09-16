@@ -8,7 +8,7 @@
 
 namespace Kili
 {
-    class SceneManager
+	class SceneManager
     {
     	friend class Engine;
     	
@@ -34,6 +34,8 @@ namespace Kili
     	
     	/** Load or Reload scenes depending on pending actions **/
     	static void loadReload();
+    	
+    	static void onEvent(const IEvent& event);
     	
     	static void update();
     	static void render();

@@ -104,6 +104,7 @@ namespace Kili
         DispatchEvent<WindowMinimizedEvent>(event, [this](const WindowMinimizedEvent& e) { mMinimized = true; });
         
         Renderer::onEvent(event);
+        SceneManager::onEvent(event);
         
         //Future possible usages of events :
         //mInputManager->onEvent(event);

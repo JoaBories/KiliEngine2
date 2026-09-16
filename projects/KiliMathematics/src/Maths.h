@@ -10,8 +10,8 @@ namespace Klm {
     constexpr float HALF_PI = PI / 2.0f;
     constexpr float QUARTER_PI = PI / 4.0f;
     
-    constexpr float DEG2_RAD = PI/180;
-    constexpr float RAD2_DEG = 180/PI;
+    constexpr float DEG_2_RAD = PI/180;
+    constexpr float RAD_2_DEG = 180/PI;
     
     constexpr double EPSILON = 1e-8;
     

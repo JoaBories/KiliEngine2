@@ -1,8 +1,10 @@
 #pragma once
 
+#include "DefaultScene.h"
 #include "Scene.h"
 #include "Kili/Transform.h"
 #include "Kili/CameraManager.h"
+#include "Kili/Core/Events/InputEvent.h"
 
 namespace Kili
 {
@@ -59,7 +61,7 @@ namespace Kili
         
             mShaderProgram.reset(Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"}));
             
-            mTransform = Transform(Vector3(1,0,0), Quaternion(Vector3::UnitY, Klm::DEG2_RAD * 90.0f), Vector3::Unit);
+            mTransform = Transform(Vector3(1,0,0), Quaternion(Vector3::UnitY, Klm::DEG_2_RAD * 90.0f), Vector3::Unit);
             
             mCamera.reset(new Camera(Transform()));
             CameraManager::addCamera(mCamera);
@@ -76,6 +78,10 @@ namespace Kili
             Renderer::submit(mShaderProgram, mVertexArray, mTransform.getTransformMatrix());
         }
 
+        void onEvent(const IEvent& event) override
+        {
+        }
+        
     public:
         [[nodiscard]] std::string getName() const override { return "DefaultScene"; }
     };

@@ -10,6 +10,8 @@
 
 namespace Kili
 {
+    class IEvent;
+
     class Scene
     {
         friend class SceneManager;
@@ -34,6 +36,8 @@ namespace Kili
         virtual void onUpdate() = 0;
         /** Used to add render outside actors and systems (mostly for test and debugging) **/
         virtual void onRender() = 0;
+        
+        virtual void onEvent(const IEvent& event) = 0;
     
     public:
         virtual ~Scene() = default;
