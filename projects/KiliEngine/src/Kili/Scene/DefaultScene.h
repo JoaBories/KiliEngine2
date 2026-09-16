@@ -4,13 +4,14 @@
 #include "Scene.h"
 #include "Kili/Transform.h"
 #include "Kili/CameraManager.h"
+#include "Kili/Rendering/Mesh.h"
 
 namespace Kili
 {
     class DefaultScene : public Scene
     {
     private:
-        std::shared_ptr<VertexArray> mVertexArray;
+        std::shared_ptr<Mesh> mMesh;
         std::shared_ptr<Shader> mShaderProgram;
         std::shared_ptr<Camera> mCamera;
         WorldTransform mTransform;
@@ -19,7 +20,9 @@ namespace Kili
         void onClose() override
         {
             mShaderProgram.reset();
-            mVertexArray.reset();
+            
+            mMesh->unload();
+            mMesh.reset();
             
             CameraManager::removeCamera(mCamera);
             mCamera.reset();
@@ -28,53 +31,28 @@ namespace Kili
         void load() override
         {
             // Temp ===========================
-            mVertexArray.reset(VertexArray::create());
-            
-            float vertices[4*9] = {
-                -0.5f, -0.5f, 0.0f,     0.0f, 0.0f,
-                 0.5f, -0.5f, 0.0f,     1.0f, 0.0f,
-                 0.5f,  0.5f, 0.0f,     1.0f, 1.0f,
-                -0.5f,  0.5f, 0.0f,     0.0f, 1.0f
-            };
-        
-            Uint32 indices[2*3] = {
-                0, 1, 2,
-                0, 2, 3
-            };
-        
-            std::shared_ptr<VertexBuffer> vertexBuffer;
-            vertexBuffer.reset(VertexBuffer::create(vertices, sizeof(vertices)));
-        
-            BufferLayout layout = {
-                { "position", ShaderDataType::Float3 },
-                { "uv", ShaderDataType::Float2, false },
-            };
-        
-            vertexBuffer->setLayout(layout);
-        
-            std::shared_ptr<IndexBuffer> indexBuffer;
-            indexBuffer.reset(IndexBuffer::create(indices, sizeof(indices) / sizeof(Uint32)));
-            
-            mVertexArray->addVertexBuffer(vertexBuffer);
-            mVertexArray->setIndexBuffer(indexBuffer);
         
             mShaderProgram.reset(Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"}));
             
-            mTransform = Transform(Vector3(1,0,0), Quaternion(Vector3::UnitY, Klm::DEG_2_RAD * 90.0f), Vector3::Unit);
+            mTransform = Transform(Vector3(1,0,0), Quaternion(Vector3::UnitZ, Klm::DEG_2_RAD * 0.0f), Vector3::Unit);
             
-            mCamera.reset(new Camera(Transform()));
+            mCamera.reset(new Camera(Transform(), 60.0f));
             CameraManager::addCamera(mCamera);
             CameraManager::setActiveCamera(mCamera);
+            
+            mMesh.reset(new Mesh("resources/dragon.obj", mShaderProgram));
+            mMesh->load();
             // ================================
         }
         
         void onUpdate() override
         {
+            mTransform.rotate(Quaternion(Vector3::UnitY, 10.0f * TimeClock::deltaTime() * Klm::DEG_2_RAD));
         }
         
         void onRender() override
         {
-            Renderer::submit(mShaderProgram, mVertexArray, mTransform);
+            Renderer::submit(mMesh->getShader(), mMesh->getVertexArray(), mTransform);
         }
 
         void onEvent(const IEvent& event) override

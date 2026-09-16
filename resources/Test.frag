@@ -2,9 +2,10 @@
 
 out vec4 outColor;
 
+in vec3 normal;
 in vec2 uv;
 
 void main()
 {
-    outColor = vec4(uv, 0.0f, 1.0f);
+    outColor = vec4(normal, 1.0f);
 }

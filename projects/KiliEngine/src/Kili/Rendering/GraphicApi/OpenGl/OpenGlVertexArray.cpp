@@ -5,7 +5,7 @@
 
 #pragma region Vertex buffer
 
-Kili::OpenGlVertexBuffer::OpenGlVertexBuffer(const float* vertices, const Uint32 size)
+Kili::OpenGlVertexBuffer::OpenGlVertexBuffer(const float* vertices, const uint32_t size)
 {
     glCreateBuffers(1, &mId);
     glBindBuffer(GL_ARRAY_BUFFER, mId);
@@ -27,7 +27,7 @@ void Kili::OpenGlVertexBuffer::use() const
 
 #pragma region IndexBuffer
 
-Kili::OpenGlIndexBuffer::OpenGlIndexBuffer(const Uint32* indices, const Uint32 count) :
+Kili::OpenGlIndexBuffer::OpenGlIndexBuffer(const uint32_t* indices, const uint32_t count) :
     mIndexCount(count)
 {
     glCreateBuffers(1, &mId);
@@ -67,7 +67,7 @@ void Kili::OpenGlVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer
     glBindVertexArray(mId);
     vertexBuffer->use();
     
-    Uint32 index = 0;
+    uint32_t index = 0;
     for (const auto& element : vertexBuffer->getLayout())
     {
         glEnableVertexAttribArray(index);

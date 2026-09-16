@@ -7,7 +7,7 @@
 #include "Kili/Core/Logger/Log.h"
 
 //ADDAPI
-Kili::VertexBuffer* Kili::VertexBuffer::create(const float* vertices, const Uint32 size)
+Kili::VertexBuffer* Kili::VertexBuffer::create(const float* vertices, const uint32_t size)
 {
     switch (Renderer::getApi())
     {
@@ -18,7 +18,7 @@ Kili::VertexBuffer* Kili::VertexBuffer::create(const float* vertices, const Uint
     return nullptr;
 }
 
-Kili::IndexBuffer* Kili::IndexBuffer::create(const Uint32* indices, const Uint32 count)
+Kili::IndexBuffer* Kili::IndexBuffer::create(const uint32_t* indices, const uint32_t count)
 {
     switch (Renderer::getApi())
     {
