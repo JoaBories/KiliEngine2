@@ -1,7 +1,7 @@
 #include "klpch.h"
 #include "Window.h"
 
-#include "Renderer/RenderCommand.h"
+#include "Kili/Rendering/RenderCommand.h"
 
 bool Kili::Window::init()
 {    

@@ -1,8 +1,8 @@
 #include "klpch.h"
 #include "GraphicContext.h"
 
-#include "Kili/Renderer/Renderer.h"
-#include "Kili/Renderer/GraphicApi/OpenGl/OpenGlContext.h"
+#include "Kili/Rendering/Renderer.h"
+#include "Kili/Rendering/GraphicApi/OpenGl/OpenGlContext.h"
 #include "Kili/Core/Logger/Log.h"
 
 //ADDAPI

@@ -1,6 +1,6 @@
 #pragma once
 #include "Kili/Core/Logger/Log.h"
-#include "Kili/Renderer/ShaderData.h"
+#include "Kili/Rendering/ShaderData.h"
 
 namespace Kili
 {

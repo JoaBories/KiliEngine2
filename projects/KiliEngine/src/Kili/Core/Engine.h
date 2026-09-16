@@ -1,12 +1,8 @@
 ﻿#pragma once
 
-#include "Kili/Core/TimeClock.h"
 #include "Kili/Window.h"
 #include "Kili/Core/Logger/ConsoleLogger.h"
 #include "Kili/Core/Events/Event.h"
-
-#include "Kili/Renderer/RHI/Shader.h"
-#include "Kili/Renderer/RHI/VertexArray.h"
 
 namespace Kili
 {

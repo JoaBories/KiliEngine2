@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Kili/Renderer/ShaderData.h"
+#include "Kili/Rendering/ShaderData.h"
 #include "Kili/FileReadWrite/ShaderCode.h"
 
 namespace Kili

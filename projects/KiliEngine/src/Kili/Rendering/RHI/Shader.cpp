@@ -1,8 +1,8 @@
 #include "klpch.h"
 #include "Shader.h"
 
-#include "Kili/Renderer/Renderer.h"
-#include "Kili/Renderer/GraphicApi/OpenGl/OpenGlShader.h"
+#include "Kili/Rendering/Renderer.h"
+#include "Kili/Rendering/GraphicApi/OpenGl/OpenGlShader.h"
 
 //ADDAPI
 Kili::Shader* Kili::Shader::create(const std::string& name, const std::vector<std::string>& paths)

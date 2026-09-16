@@ -1,8 +1,8 @@
 #include "klpch.h"
 #include "VertexArray.h"
 
-#include "Kili/Renderer/Renderer.h"
-#include "Kili/Renderer/GraphicApi/OpenGl/OpenGlVertexArray.h"
+#include "Kili/Rendering/Renderer.h"
+#include "Kili/Rendering/GraphicApi/OpenGl/OpenGlVertexArray.h"
 
 #include "Kili/Core/Logger/Log.h"
 

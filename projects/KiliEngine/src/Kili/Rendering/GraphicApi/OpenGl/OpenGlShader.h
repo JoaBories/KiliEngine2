@@ -1,5 +1,5 @@
 #pragma once
-#include "Kili/Renderer/RHI/Shader.h"
+#include "Kili/Rendering/RHI/Shader.h"
 
 namespace Kili
 {

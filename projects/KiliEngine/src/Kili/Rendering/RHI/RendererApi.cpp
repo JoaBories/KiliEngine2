@@ -1,7 +1,7 @@
 #include "klpch.h"
 #include "RendererApi.h"
 
-#include "Kili/Renderer/GraphicApi/OpenGl/OpenGlRendererApi.h"
+#include "Kili/Rendering/GraphicApi/OpenGl/OpenGlRendererApi.h"
 
 Kili::GraphicApi Kili::RendererApi::mApi = GraphicApi::OpenGl;
 

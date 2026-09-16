@@ -2,8 +2,8 @@
 #include "Kili/CameraManager.h"
 #include "Kili/Core/Events/Event.h"
 
-#include "Kili/Renderer/RenderCommand.h"
-#include "RHI/Shader.h"
+#include "Kili/Rendering/RenderCommand.h"
+#include "Kili/Rendering/RHI/Shader.h"
 
 //ADDAPI
 namespace Kili
@@ -28,7 +28,7 @@ namespace Kili
         static void beginScene(const std::shared_ptr<Camera>& camera);
         static void endScene();
         
-        static void submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const Matrix4& transformMatrix);
+        static void submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const WorldTransform& transform);
         
-    };
+    };    
 }

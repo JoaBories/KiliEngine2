@@ -4,7 +4,6 @@
 #include "Scene.h"
 #include "Kili/Transform.h"
 #include "Kili/CameraManager.h"
-#include "Kili/Core/Events/InputEvent.h"
 
 namespace Kili
 {
@@ -75,7 +74,7 @@ namespace Kili
         
         void onRender() override
         {
-            Renderer::submit(mShaderProgram, mVertexArray, mTransform.getTransformMatrix());
+            Renderer::submit(mShaderProgram, mVertexArray, mTransform);
         }
 
         void onEvent(const IEvent& event) override

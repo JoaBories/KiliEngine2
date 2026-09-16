@@ -1,5 +1,5 @@
 #pragma once
-#include "Kili/Renderer/RHI/GraphicContext.h"
+#include "Kili/Rendering/RHI/GraphicContext.h"
 
 namespace Kili
 {

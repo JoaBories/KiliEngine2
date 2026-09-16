@@ -1,7 +1,7 @@
 #include "klpch.h"
 #include "CameraManager.h"
 
-#include "Renderer/Renderer.h"
+#include "Kili/Rendering/Renderer.h"
 
 namespace Kili
 {

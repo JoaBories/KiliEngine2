@@ -1,7 +1,7 @@
 #include "klpch.h"
 #include "OpenGlVertexArray.h"
 
-#include "Kili/Renderer/GraphicApi/OpenGl/OpenGLShader.h"
+#include "Kili/Rendering/GraphicApi/OpenGl/OpenGLShader.h"
 
 #pragma region Vertex buffer
 

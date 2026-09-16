@@ -1,5 +1,5 @@
 #pragma once
-#include "Kili/Renderer/BufferLayout.h"
+#include "Kili/Rendering/BufferLayout.h"
 
 namespace Kili
 {    

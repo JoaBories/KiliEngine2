@@ -41,13 +41,13 @@ namespace Kili
     {
     }
 
-    void Renderer::submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const Matrix4& transformMatrix)
+    void Renderer::submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const WorldTransform& transform)
     {
         shader->use();
         shader->setMat4("uViewMatrix", mViewMatrix);
         shader->setMat4("uProjMatrix", mProjMatrix);
         shader->setMat4("uViewProjMatrix", mViewProjMatrix);
-        shader->setMat4("uTransform", transformMatrix);
+        shader->setMat4("uTransform", transform.getTransformMatrix());
         shader->setFloat("uTime", static_cast<float>(TimeClock::time()));
     
         RenderCommand::drawIndexed(vertexArray);

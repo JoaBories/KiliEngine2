@@ -1,12 +1,14 @@
 ﻿#include "klpch.h"
 #include "Engine.h"
 
+#include "Kili/Core/TimeClock.h"
+
 #include "Kili/Core/EngineConfig.h"
 
 #include "Kili/Core/Events/InputEvent.h"
 #include "Kili/Core/Events/WindowEvent.h"
 
-#include "Kili/Renderer/Renderer.h"
+#include "Kili/Rendering/Renderer.h"
 
 #include "Kili/Scene/DefaultScene.h"
 #include "Kili/Scene/SceneManager.h"

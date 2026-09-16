@@ -1,6 +1,6 @@
 #pragma once
-#include "VertexArray.h"
 
+#include "Kili/Rendering/RHI/VertexArray.h"
 
 namespace Kili
 {    
