@@ -31,10 +31,9 @@ namespace Kili
         void load() override
         {
             // Temp ===========================
-        
             mShaderProgram.reset(Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"}));
             
-            mTransform = Transform(Vector3(1,0,0), Quaternion(Vector3::UnitZ, Klm::DEG_2_RAD * 0.0f), Vector3::Unit);
+            mTransform = Transform(Vector3(1,0,0), Quaternion(Vector3::UnitY, Klm::DEG_2_RAD * 0.0f), Vector3::Unit);
             
             mCamera.reset(new Camera(Transform(), 60.0f));
             CameraManager::addCamera(mCamera);

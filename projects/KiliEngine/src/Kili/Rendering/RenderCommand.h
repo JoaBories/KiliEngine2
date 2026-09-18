@@ -13,6 +13,7 @@ namespace Kili
         inline static GraphicApi getApi() { return RendererApi::getApi(); }
         
         // Draw
+        inline static void draw(const std::shared_ptr<VertexArray>& vertexArray) { mApi->draw(vertexArray); }
         inline static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) { mApi->drawIndexed(vertexArray); }
         
         // Clear

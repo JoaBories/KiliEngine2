@@ -50,6 +50,7 @@ namespace Kili
         shader->setMat4("uTransform", transform.getTransformMatrix());
         shader->setFloat("uTime", static_cast<float>(TimeClock::time()));
     
-        RenderCommand::drawIndexed(vertexArray);
+        if (vertexArray->getIndexBuffer()) RenderCommand::drawIndexed(vertexArray);
+        if (vertexArray->getVertexCount()) RenderCommand::draw(vertexArray);
     }
 }

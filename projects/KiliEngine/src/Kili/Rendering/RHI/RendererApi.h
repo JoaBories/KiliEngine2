@@ -33,6 +33,7 @@ namespace Kili
         [[nodiscard]] static RendererApi* create();
         
         // Draw
+        virtual void draw(const std::shared_ptr<VertexArray>& vertexArray) = 0;
         virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
         
         // Clear

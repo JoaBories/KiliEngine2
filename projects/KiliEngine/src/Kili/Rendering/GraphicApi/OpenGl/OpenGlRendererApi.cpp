@@ -9,6 +9,11 @@ void Kili::OpenGlRendererApi::clear(const Vector4& clearColor)
     glEnable(GL_DEPTH_TEST);
 }
 
+void Kili::OpenGlRendererApi::draw(const std::shared_ptr<VertexArray>& vertexArray)
+{
+    glDrawArrays(GL_TRIANGLES, 0, vertexArray->getVertexCount());
+}
+
 void Kili::OpenGlRendererApi::drawIndexed(const std::shared_ptr<VertexArray>& vertexArray)
 {
     glDrawElements(GL_TRIANGLES, vertexArray->getIndexBuffer()->count(), GL_UNSIGNED_INT, nullptr);
