@@ -171,6 +171,7 @@ namespace Kili
         if (!mWindow->init())  LOG_ERROR("Window could not initialize");
         else LOG_LOADING("Window initialized");
         
+        // initialize renderer size
         Renderer::onEvent(WindowResizeEvent(winParams.width, winParams.height)); // TODO clean that shit
         
         // Init and config time clock
@@ -179,6 +180,7 @@ namespace Kili
         TimeClock::setLoggingInterval(config.getFpsLogInterval());
         
         LOG_LOADING("KiliEngine Initialized");
+        LOG_LOADING("==========================================");
         
         SceneManager::setScenes({new DefaultScene()});
         SceneManager::loadScene(0);
@@ -211,6 +213,8 @@ namespace Kili
 
     void Engine::close()
     {
+        LOG_LOADING("==========================================");
+        
         SceneManager::close();
         
         mWindow.reset();

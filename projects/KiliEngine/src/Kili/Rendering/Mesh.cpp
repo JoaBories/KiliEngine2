@@ -11,11 +11,10 @@ Kili::Mesh::Mesh(std::string path, const std::shared_ptr<Shader>& shader) :
 }
 
 bool Kili::Mesh::load()
-{    
-    const tinyobj::ObjReaderConfig readerConfig;
+{
     tinyobj::ObjReader reader;
     
-    if (!reader.ParseFromFile(mPath, readerConfig)) {
+    if (const tinyobj::ObjReaderConfig readerConfig; !reader.ParseFromFile(mPath, readerConfig)) {
         if (!reader.Error().empty()) {
            LOG_ERROR("TinyObjReader: " + reader.Error());
         }
@@ -30,15 +29,18 @@ bool Kili::Mesh::load()
     auto& shapes = reader.GetShapes();
     
     std::vector<float> vertices; 
-    std::vector<uint32_t> indices;
     
-    uint32_t indiceCount = 0;
-    for (size_t shape = 0; shape < shapes.size(); shape++)
+    uint32_t indexCount = 0;
+    
+    for (const auto& shape : shapes)
     {
         size_t indexOffset = 0;
         
-        auto& mesh = shapes[shape].mesh;
-        vertices.reserve(mesh.num_face_vertices.size() * 3 * 8);
+        auto& mesh = shape.mesh;
+        
+        // Reserve memory space so it makes fewer memory allocation
+        // Assume face are always 3 vertex.
+        vertices.reserve(vertices.size() + mesh.num_face_vertices.size() * 3 * 8);
         
         // iterate trough faces
         for (size_t face = 0; face < mesh.num_face_vertices.size(); face++)
@@ -78,30 +80,26 @@ bool Kili::Mesh::load()
                     vertices.emplace_back(0.0f);
                 }
                 
-                indices.emplace_back(indiceCount);
-                indiceCount++;
+                indexCount++;
             }
             indexOffset += faceVertices;
         }
     }
     
     std::shared_ptr<VertexBuffer> vertexBuffer;
-    std::shared_ptr<IndexBuffer> indexBuffer;
     
     mVertexArray.reset(VertexArray::create());
     
-    vertexBuffer.reset(VertexBuffer::create(vertices.data(), vertices.size() * sizeof(float)));
-    BufferLayout layout = {
+    vertexBuffer.reset(VertexBuffer::create(vertices.data(), static_cast<uint32_t>(vertices.size() * sizeof(float))));
+    const BufferLayout layout = {
         { "position", ShaderDataType::Float3 },
         { "normal", ShaderDataType::Float3 },
         { "uv", ShaderDataType::Float2},
     };
     vertexBuffer->setLayout(layout);
     
-    indexBuffer.reset(IndexBuffer::create(indices.data(), indiceCount - 1));
-    
     mVertexArray->addVertexBuffer(vertexBuffer);
-    mVertexArray->setIndexBuffer(indexBuffer);
+    mVertexArray->setVertexCount(indexCount);
     
     mLoaded = true;
     return true;
@@ -109,6 +107,10 @@ bool Kili::Mesh::load()
 
 bool Kili::Mesh::unload()
 {
+    // This will delete them if there is no other references
+    mVertexArray.reset();
+    mShader.reset();
+    
     mLoaded = false;
     return true;
 }

@@ -5,6 +5,7 @@
 #include "Kili/Transform.h"
 #include "Kili/CameraManager.h"
 #include "Kili/Rendering/Mesh.h"
+#include "Kili/Rendering/RHI/Texture.h"
 
 namespace Kili
 {
@@ -13,6 +14,7 @@ namespace Kili
     private:
         std::shared_ptr<Mesh> mMesh;
         std::shared_ptr<Shader> mShaderProgram;
+        std::shared_ptr<Texture> mTexture;
         std::shared_ptr<Camera> mCamera;
         WorldTransform mTransform;
         
@@ -30,19 +32,21 @@ namespace Kili
         
         void load() override
         {
-            // Temp ===========================
-        
+            // Temp =====================================
             mShaderProgram.reset(Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"}));
             
-            mTransform = Transform(Vector3(1,0,0), Quaternion(Vector3::UnitZ, Klm::DEG_2_RAD * 0.0f), Vector3::Unit);
+            mTransform = Transform(Vector3(5,0,0), Quaternion(Vector3::UnitZ, Klm::DEG_2_RAD * 45.0f), Vector3::Unit);
             
             mCamera.reset(new Camera(Transform(), 60.0f));
             CameraManager::addCamera(mCamera);
             CameraManager::setActiveCamera(mCamera);
             
-            mMesh.reset(new Mesh("resources/dragon.obj", mShaderProgram));
+            mTexture.reset(Texture::create({true, WrapMode::Repeat, TextureFilterMethod::Linear}, "resources/kili.png"));
+            mTexture->load();
+            
+            mMesh.reset(new Mesh("resources/cube.obj", mShaderProgram));
             mMesh->load();
-            // ================================
+            // ==========================================
         }
         
         void onUpdate() override
@@ -52,6 +56,7 @@ namespace Kili
         
         void onRender() override
         {
+            mTexture->use();
             Renderer::submit(mMesh->getShader(), mMesh->getVertexArray(), mTransform);
         }
 

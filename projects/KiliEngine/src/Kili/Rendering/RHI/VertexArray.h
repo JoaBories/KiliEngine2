@@ -17,7 +17,7 @@ namespace Kili
         virtual void setLayout(const BufferLayout& layout) = 0;
         [[nodiscard]] virtual const BufferLayout& getLayout() const = 0;
         
-        static VertexBuffer* create(const float* vertices, Uint32 size);
+        static VertexBuffer* create(const float* vertices, uint32_t size);
     };
     
     /**
@@ -30,9 +30,9 @@ namespace Kili
         virtual ~IndexBuffer() = default;
         
         virtual void use() const = 0;
-        [[nodiscard]] virtual Uint32 count() const = 0;
+        [[nodiscard]] virtual uint32_t count() const = 0;
         
-        static IndexBuffer* create(const Uint32* indices, Uint32 count);
+        static IndexBuffer* create(const uint32_t* indices, uint32_t count);
     };
     
     /** 
@@ -50,6 +50,11 @@ namespace Kili
         
         virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) = 0;
         virtual void setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) = 0;
+
+        /** Used for draw mesh without index buffers **/
+        virtual void setVertexCount(uint32_t count) = 0;
+        /** Used for draw mesh without index buffers **/
+        [[nodiscard]] virtual uint32_t getVertexCount() const = 0;
 
         [[nodiscard]] virtual const std::vector<std::shared_ptr<VertexBuffer>>& getVertexBuffers() const = 0;
         [[nodiscard]] virtual const std::shared_ptr<IndexBuffer>& getIndexBuffer() const = 0;
