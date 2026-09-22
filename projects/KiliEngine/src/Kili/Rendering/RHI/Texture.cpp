@@ -8,17 +8,6 @@
 #include "Vendor/stb_image.h"
 
 // ADDAPI
-Kili::Texture* Kili::Texture::create(const TextureParameter& textureParameter)
-{
-    switch (Renderer::getApi())
-    {
-        case GraphicApi::OpenGl : return new OpenGlTexture(textureParameter); break;
-    }
-    
-    LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
-    return nullptr;
-}
-
 Kili::Texture* Kili::Texture::create(const TextureParameter& textureParameter, std::string path)
 {
     switch (Renderer::getApi())

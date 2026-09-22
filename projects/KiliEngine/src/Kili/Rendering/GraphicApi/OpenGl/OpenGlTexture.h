@@ -17,19 +17,14 @@ namespace Kili
         ImageFormat mImageFormat;
     
     public:
-        explicit OpenGlTexture(const TextureParameter& parameter);
         explicit OpenGlTexture(const TextureParameter& textureParameter, std::string path);
         
         bool load() override;
         bool unload() override;
         
         void use(uint8_t index = 0) override;
-        void setData(void* data, uint32_t dataSize) override;
         
         [[nodiscard]] std::string getPath() const override { return mPath; }
-        
-        void setSize(const int width, const int height) override { mWidth = width; mHeight = height; }
-        void setFormat(const ImageFormat format) override { mImageFormat = format; }
         
         void getSize(int& width, int& height) const override { width = mWidth; height = mHeight; }
         [[nodiscard]] uint32_t getWidth() const override { return mWidth; }

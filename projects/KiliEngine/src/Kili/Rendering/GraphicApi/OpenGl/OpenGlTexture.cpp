@@ -37,38 +37,25 @@ int Kili::ImageFormatToOpenGl(const ImageFormat& format, const bool data)
         case ImageFormat::RGB : return data ? GL_RGB : GL_RGB8; break;
         case ImageFormat::RGBA : return data ? GL_RGBA : GL_RGBA8; break;
     }
-}
-
-Kili::OpenGlTexture::OpenGlTexture(const TextureParameter& parameter) :
-    mId(0), mParameter(parameter)
-{
+    
+    LOG_WARNING("Unknown image format");
+    return GL_RGB;
 }
 
 Kili::OpenGlTexture::OpenGlTexture(const TextureParameter& textureParameter, std::string path) :
-    mPath(std::move(path)), mId(0), mParameter(textureParameter)
+    mPath(std::move(path)), 
+    mWidth(0), mHeight(0), mId(0), 
+    mParameter(textureParameter), mImageFormat(ImageFormat::R)
 {
 }
 
 bool Kili::OpenGlTexture::load()
-{
-    if (mPath.empty() && mWidth == 0 && mHeight == 0)
-    {
-        LOG_WARNING("Attempt to load a texture without path or parameters");
-        return false;
-    }
-    
-    unsigned char* data = nullptr;
-    
-    if (!mPath.empty())
-    {
-        int width, height;
-        ImageFormat imageFormat;
-        data = Texture::loadTextureFromFile(mPath, width, height, imageFormat);
+{    
+    if (mPath.empty()) { LOG_WARNING("Attempted to load texture without path"); return false; }
         
-        mWidth = width;
-        mHeight = height;
-        mImageFormat = imageFormat;
-    }
+    unsigned char* data = Texture::loadTextureFromFile(mPath, mWidth, mHeight, mImageFormat);
+    
+    if (!data) { LOG_WARNING("Image load error, maybe bad texture path"); return false; }
     
     glGenTextures(1, &mId);
     glBindTexture(GL_TEXTURE_2D, mId);
@@ -79,22 +66,19 @@ bool Kili::OpenGlTexture::load()
     glTextureParameteri(mId, GL_TEXTURE_WRAP_S, WrapModeToOpenGl(mParameter.wrapMode));
     glTextureParameteri(mId, GL_TEXTURE_WRAP_T, WrapModeToOpenGl(mParameter.wrapMode));
     
-    if (data)
+    glTexImage2D(
+        GL_TEXTURE_2D, 0, 
+        ImageFormatToOpenGl(mImageFormat, false), 
+        mWidth, mHeight, 0, 
+        ImageFormatToOpenGl(mImageFormat, true), GL_UNSIGNED_BYTE, 
+        data);
+    
+    if (mParameter.useMipMap)
     {
-        glTexImage2D(
-            GL_TEXTURE_2D, 0, 
-            ImageFormatToOpenGl(mImageFormat, false), 
-            mWidth, mHeight, 0, 
-            ImageFormatToOpenGl(mImageFormat, true), GL_UNSIGNED_BYTE, 
-            data);
-        
-        if (mParameter.useMipMap)
-        {
-            glGenerateMipmap(GL_TEXTURE_2D);
-        }
-        
-        stbi_image_free(data);
+        glGenerateMipmap(GL_TEXTURE_2D);
     }
+    
+    stbi_image_free(data);
     
     mLoaded = true;
     return true;
@@ -113,32 +97,4 @@ void Kili::OpenGlTexture::use(const uint8_t index)
 {
     glActiveTexture(GL_TEXTURE0 + index);
     glBindTexture(GL_TEXTURE_2D, mId);
-}
-
-void Kili::OpenGlTexture::setData(void* data, const uint32_t dataSize)
-{
-    if (const uint32_t expectedSize = mWidth * mHeight * static_cast<uint8_t>(mImageFormat); 
-        dataSize != expectedSize)
-    {
-        LOG_WARNING("Data size mismatch texture parameters height width and channels : " + std::to_string(expectedSize) + " expected, " + std::to_string(dataSize) + " given");
-    }
-    
-    if (data)
-    {
-        glTexImage2D(
-            GL_TEXTURE_2D, 0, 
-            ImageFormatToOpenGl(mImageFormat, false), 
-            mWidth, mHeight, 0, 
-            ImageFormatToOpenGl(mImageFormat, true), GL_UNSIGNED_BYTE, 
-            data);
-        
-        if (mParameter.useMipMap)
-        {
-            glGenerateMipmap(GL_TEXTURE_2D);
-        }
-    }
-    else
-    {
-        LOG_WARNING("Data pointer is null");
-    }
 }
