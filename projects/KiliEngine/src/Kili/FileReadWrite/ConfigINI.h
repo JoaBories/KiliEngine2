@@ -1,6 +1,6 @@
 #pragma once
 
-//  INI Config File Format
+//  INI Config File Format .ini
 //
 //  Grammar :
 //  - KEY-value: key = value

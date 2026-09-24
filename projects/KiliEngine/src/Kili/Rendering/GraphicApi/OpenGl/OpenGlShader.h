@@ -35,8 +35,7 @@ namespace Kili
         [[nodiscard]] unsigned int compileShader(ShaderType shaderType, const std::string& code) const;
         
     public:
-        OpenGlShader(std::string name, const std::vector<std::string>& paths);
-        
+        OpenGlShader(std::string name, const std::string& path);
         ~OpenGlShader() override;
         
         [[nodiscard]] bool hasShaderType(ShaderType type) const override;

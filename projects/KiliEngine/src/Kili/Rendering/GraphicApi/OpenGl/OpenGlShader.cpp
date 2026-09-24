@@ -40,29 +40,25 @@ unsigned int Kili::OpenGlShader::compileShader(const ShaderType shaderType, cons
     return id;
 }
 
-Kili::OpenGlShader::OpenGlShader(std::string name, const std::vector<std::string>& paths) :
+Kili::OpenGlShader::OpenGlShader(std::string name, const std::string& path) :
     mName(std::move(name))
 {
     mId = glCreateProgram();
     
     std::vector<uint32_t> shaders;
-    shaders.reserve(paths.size());
-    mShaderTypes.reserve(paths.size());
+    shaders.reserve(path.size());
+    mShaderTypes.reserve(path.size());
     
-    for (const auto& path : paths)
+    for (const auto& shader : ShaderFile::readGlsl(path))
     {
-        if (const size_t pos = path.find_last_of('.'); pos != std::string::npos)
-        {
-            const ShaderType type = getShaderTypeFromExtension(path.substr(pos, path.length()));
-            const uint32_t shader = compileShader(type, ShaderCode::ReadGlsl(path));
-            
-            if (shader == 0) continue;
-            
-            shaders.emplace_back(shader);
-            mShaderTypes.emplace_back(type);
-            
-            glAttachShader(mId, shader);
-        }
+        const uint32_t shaderId = compileShader(shader.getType(), shader.getCode());
+        
+        if (shaderId == 0) continue;
+        
+        shaders.emplace_back(shaderId);
+        mShaderTypes.emplace_back(shader.getType());
+        
+        glAttachShader(mId, shaderId);
     }
     
     glLinkProgram(mId);

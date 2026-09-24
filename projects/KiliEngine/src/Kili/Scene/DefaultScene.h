@@ -33,7 +33,7 @@ namespace Kili
         void load() override
         {
             // Temp =====================================
-            mShaderProgram.reset(Shader::create("Test", {"resources/Test.vert", "resources/Test.frag"}));
+            mShaderProgram.reset(Shader::create("Test", "resources/Test.shader"));
             
             mTransform = Transform(Vector3(5,0,0), Quaternion(Vector3::UnitZ, Klm::DEG_2_RAD * 45.0f), Vector3::Unit);
             

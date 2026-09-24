@@ -27,8 +27,8 @@ namespace Kili
     public:
         Material() = delete;
         explicit Material(std::string path);
-        
-        std::shared_ptr<Shader> getShader() const { return mShader; }
+
+        [[nodiscard]] std::shared_ptr<Shader> getShader() const { return mShader; }
         
         bool load() override;
         bool unload() override;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Kili/Rendering/ShaderData.h"
-#include "Kili/FileReadWrite/ShaderCode.h"
+#include "Kili/FileReadWrite/ShaderFile.h"
 
 namespace Kili
 {
@@ -46,6 +46,6 @@ namespace Kili
             return ShaderType::Vertex;
         }
         
-        static Shader* create(const std::string& name, const std::vector<std::string>& paths);
+        static Shader* create(const std::string& name, const std::string& path);
     };
 }

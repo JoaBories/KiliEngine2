@@ -111,12 +111,6 @@ project (engine)
         "resources/**"
     }
 
-    vpaths {
-        ["Resources/*"] = "resources/**",
-        ["Docs"] = { "README.md", "premake5.lua" },
-        ["Config"] = "config/**"
-    }
-
     includedirs {
         ("projects/" .. mathLib .. "/src"),
         ("projects/" .. engine .. "/src"),
