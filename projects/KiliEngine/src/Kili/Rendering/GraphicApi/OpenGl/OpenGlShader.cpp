@@ -40,23 +40,29 @@ unsigned int Kili::OpenGlShader::compileShader(const ShaderType shaderType, cons
     return id;
 }
 
-Kili::OpenGlShader::OpenGlShader(std::string name, const std::string& path) :
-    mName(std::move(name))
+bool Kili::OpenGlShader::hasShaderType(const ShaderType type) const
+{
+    const auto it = std::find(mShaderTypes.begin(), mShaderTypes.end(), type);
+    return it != mShaderTypes.end();
+}
+
+bool Kili::OpenGlShader::load()
 {
     mId = glCreateProgram();
+
+    const std::vector<ShaderFile> files = ShaderFile::readGlsl(mPath);
     
     std::vector<uint32_t> shaders;
-    shaders.reserve(path.size());
-    mShaderTypes.reserve(path.size());
+    shaders.reserve(files.size());
     
-    for (const auto& shader : ShaderFile::readGlsl(path))
+    for (const auto& file : files)
     {
-        const uint32_t shaderId = compileShader(shader.getType(), shader.getCode());
+        const uint32_t shaderId = compileShader(file.getType(), file.getCode());
         
         if (shaderId == 0) continue;
         
         shaders.emplace_back(shaderId);
-        mShaderTypes.emplace_back(shader.getType());
+        mShaderTypes.emplace_back(file.getType());
         
         glAttachShader(mId, shaderId);
     }
@@ -83,7 +89,7 @@ Kili::OpenGlShader::OpenGlShader(std::string name, const std::string& path) :
             glDeleteShader(shader);
         }
         
-        return;
+        return false;
     }
 
     for (const auto shader : shaders)
@@ -92,20 +98,18 @@ Kili::OpenGlShader::OpenGlShader(std::string name, const std::string& path) :
         glDeleteShader(shader);
     }
     
-    shaders.clear();
-    
     LOG_LOADING("Successfully loaded Shader " + mName);
+    mLoaded = true;
+    return true;
 }
 
-Kili::OpenGlShader::~OpenGlShader()
+bool Kili::OpenGlShader::unload()
 {
+    mShaderTypes.clear();
     glDeleteProgram(mId);
-}
-
-bool Kili::OpenGlShader::hasShaderType(const ShaderType type) const
-{
-    const auto it = std::find(mShaderTypes.begin(), mShaderTypes.end(), type);
-    return it != mShaderTypes.end();
+    
+    mLoaded = false;
+    return true;
 }
 
 void Kili::OpenGlShader::use()

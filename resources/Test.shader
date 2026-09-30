@@ -1,2 +1,2 @@
-Test.vert
-Test.frag
+resources/Test.vert
+resources/Test.frag

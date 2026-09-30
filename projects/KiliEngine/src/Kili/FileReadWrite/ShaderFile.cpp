@@ -3,6 +3,25 @@
 
 #include "Kili/Rendering/ShaderData.h"
 
+std::string Kili::ShaderFile::readCode(const std::string& path)
+{
+    std::ifstream file(path);
+    
+    if (!file.is_open())
+    {
+        LOG_WARNING("Shader File not found or corrupted at " + path);
+        return {};
+    }
+    
+    std::string line;
+    std::string code;
+    
+    while (std::getline(file, line)) code += line + "\n";
+        
+    file.close();
+    return code;
+}
+
 std::vector<Kili::ShaderFile> Kili::ShaderFile::readGlsl(const std::string& path)
 {
     std::ifstream file(path);
@@ -14,42 +33,41 @@ std::vector<Kili::ShaderFile> Kili::ShaderFile::readGlsl(const std::string& path
     }
         
     std::vector<ShaderFile> shaders;
-
-    auto lastType = ShaderType::Vertex;
-    auto currentType = ShaderType::Vertex;
-    std::string currentCode;
-        
     std::string line;
     
     while (std::getline(file, line))
     {
-        bool newShader = false;
-        if (line.find("#vertex") != std::string::npos) { lastType = currentType; currentType = ShaderType::Vertex; newShader = true; }
-        else if (line.find("#tess_control") != std::string::npos) { lastType = currentType; currentType = ShaderType::TessControl; newShader = true; }
-        else if (line.find("#tess_eval") != std::string::npos) { lastType = currentType; currentType = ShaderType::TessEval; newShader = true; }
-        else if (line.find("#geometry") != std::string::npos) { lastType = currentType; currentType = ShaderType::Geometry; newShader = true; }
-        else if (line.find("#fragment") != std::string::npos) { lastType = currentType; currentType = ShaderType::Fragment; newShader = true; }
-        
-        if (newShader)
+        if (const size_t pos = line.find_last_of('.'); pos != std::string::npos)
         {
-            if (!currentCode.empty())
+            const std::string extension = line.substr(pos, line.length());
+            if (!isSupportedExtension(extension))
             {
-                shaders.emplace_back(lastType, currentCode);
-                currentCode.clear();
+                LOG_WARNING("Unknown extension " + extension + " in shader file : " + path);
+                continue;
             }
-            continue;
-        }
             
-        currentCode += line + "\n";
-    }
-    
-    // For the last shader of the file
-    if (!currentCode.empty())
-    {
-        shaders.emplace_back(currentType, currentCode);
-        currentCode.clear();
+            const ShaderType type = getShaderTypeFromExtension(extension);
+            const std::string code = readCode(line);
+            
+            shaders.emplace_back(type, code);
+        }
     }
         
     file.close();
     return shaders;
+}
+
+bool Kili::ShaderFile::isSupportedExtension(const std::string& extension)
+{
+    return extension == ".vert" || extension == ".tesc" || extension == ".tese" || extension == ".geom" || extension == ".frag";
+}
+
+Kili::ShaderType Kili::ShaderFile::getShaderTypeFromExtension(const std::string& extension)
+{
+    if (extension == ".vert") return ShaderType::Vertex;
+    if (extension == ".tesc") return ShaderType::TessControl;
+    if (extension == ".tese") return ShaderType::TessEval;
+    if (extension == ".geom") return ShaderType::Geometry;
+    if (extension == ".frag") return ShaderType::Fragment;
+    return ShaderType::Vertex;
 }

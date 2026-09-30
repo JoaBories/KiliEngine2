@@ -2,19 +2,16 @@
 
 #include "Kili/Core/Logger/Log.h"
 
-//  Shader File Format .glsl
+//  Shader File Format .shader
 //
-//  All shaders are packed in one file.
-//  Separated by #type macros.
-//  Just put a #type at the beginning of a sub shader
+//  A file giving a path for each shader composing a shader program 
 //
 //  Types :
-//  #vertex
-//  #tess_control
-//  #tess_eval
-//  #geometry
-//  #fragment
-//
+//  .vert
+//  .tesc
+//  .tese
+//  .geom
+//  .frag
 
 namespace Kili
 {
@@ -30,11 +27,17 @@ namespace Kili
         ShaderFile() = default;
         ShaderFile(const ShaderType type, std::string code) : mType(type), mCode(std::move(code)) {}
         
-        [[nodiscard]] static std::vector<ShaderFile> readGlsl(const std::string& path);
-        [[nodiscard]] static std::vector<std::string> readShader(const std::string& path);
-        
         [[nodiscard]] ShaderType getType() const { return mType; }
         [[nodiscard]] const std::string& getCode() const { return mCode; }
+        
+        // statics
+    private:
+        [[nodiscard]] static std::string readCode(const std::string& path);
+        
+    public:
+        [[nodiscard]] static std::vector<ShaderFile> readGlsl(const std::string& path);
+        [[nodiscard]] static bool isSupportedExtension(const std::string& extension);
+        [[nodiscard]] static ShaderType getShaderTypeFromExtension(const std::string& extension);
     };
     
     

@@ -34,6 +34,7 @@ namespace Kili
         {
             // Temp =====================================
             mShaderProgram.reset(Shader::create("Test", "resources/Test.shader"));
+            mShaderProgram->load();
             
             mTransform = Transform(Vector3(5,0,0), Quaternion(Vector3::UnitZ, Klm::DEG_2_RAD * 45.0f), Vector3::Unit);
             

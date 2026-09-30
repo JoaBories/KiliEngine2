@@ -1,17 +1,17 @@
 #pragma once
 
+#include "Kili/AssetManager/Asset.h"
 #include "Kili/Rendering/ShaderData.h"
 #include "Kili/FileReadWrite/ShaderFile.h"
 
 namespace Kili
 {
-    class Shader
+    class Shader : public IAsset
     {    
-    public:
-        virtual ~Shader() = default;
-    
+    public:    
         [[nodiscard]] virtual bool hasShaderType(ShaderType type) const = 0;
         [[nodiscard]] virtual std::string getName() const = 0;
+        [[nodiscard]] virtual std::string getPath() const = 0;
         
         virtual void use() = 0;
         
