@@ -1,5 +1,5 @@
-#Testing Material
+# Material for testing
+# .mat parser version 1.0
 
-shader = Test.glsl
-
-texture = kili.png
+shader = resources/Test.shader
+texture = resources/kili.png

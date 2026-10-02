@@ -1,6 +1,7 @@
 #include "klpch.h"
 #include "ConfigINI.h"
 
+#include "ReadWriteUtils.h"
 #include "Kili/Core/Logger/Log.h"
 
 std::string Kili::ConfigINI::getString(const std::string& section, const std::string& key, const std::string& defaultVal) const
@@ -21,13 +22,17 @@ std::string Kili::ConfigINI::getString(const std::string& section, const std::st
 bool Kili::ConfigINI::getBool(const std::string& section, const std::string& key, const bool defaultVal) const
 {
     const std::string value = getString(section, key);
-    if (value.empty()) return defaultVal;
     
-    if (value == "0" || value == "false") return false;
-    if (value == "1" || value == "true") return true;
+    bool val;
     
-    LOG_WARNING("Not a bool at key:" + key + " in Section: " + section + " of file: " + mName);
-    return defaultVal;
+    try { val = Util::ToBool(value); }
+    catch (std::invalid_argument const&)
+    {
+        LOG_WARNING("Not a bool at key:" + key + " in Section: " + section + " of file: " + mName);
+        return defaultVal;
+    }
+    
+    return val;
 }
 
 int Kili::ConfigINI::getInt(const std::string& section, const std::string& key, const int defaultVal) const
@@ -73,7 +78,7 @@ Kili::ConfigINI Kili::ConfigINI::readFile(const std::string& path, const std::st
     
     if (!file.is_open())
     {
-        LOG_WARNING("Config File : " + name + " not found or corrupted at " + path);
+        LOG_WARNING("Config file : " + name + " not found or corrupted at " + path);
         return configFile;
     }
     
@@ -98,12 +103,12 @@ Kili::ConfigINI Kili::ConfigINI::readFile(const std::string& path, const std::st
             if (const size_t close = line.find(']', 1); close != std::string::npos) 
                 currentSection = line.substr(1, close - 1);
             else 
-                LOG_WARNING("Section malformed at line " + std::to_string(lineCount) + " in : " + name);
+                LOG_WARNING("Section malformed at line " + std::to_string(lineCount) + " in " + path);
         }
         else if (const size_t separator = line.find('='); separator != std::string::npos)
             configFile.setString(currentSection, line.substr(0, separator), line.substr(separator+1, line.length()));
 
-        else LOG_WARNING("Line " + std::to_string(lineCount) + " malformed");
+        else LOG_WARNING("Line " + std::to_string(lineCount) + " malformed in " + path);
         
         if (debugLines) LOG_INFO(line);
     }

@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Kili/Transform.h"
 #include "Kili/CameraManager.h"
+#include "Kili/FileReadWrite/MaterialFile.h"
 #include "Kili/Rendering/Mesh.h"
 #include "Kili/Rendering/RHI/Texture.h"
 
@@ -35,6 +36,8 @@ namespace Kili
             // Temp =====================================
             mShaderProgram.reset(Shader::create("Test", "resources/Test.shader"));
             mShaderProgram->load();
+            
+            MaterialFile test = MaterialFile::readMaterial("Test", "resources/Test.mat");
             
             mTransform = Transform(Vector3(5,0,0), Quaternion(Vector3::UnitZ, Klm::DEG_2_RAD * 45.0f), Vector3::Unit);
             
