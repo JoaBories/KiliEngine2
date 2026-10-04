@@ -12,9 +12,9 @@ std::string Kili::ConfigINI::getString(const std::string& section, const std::st
         {
             return mValues.at(section).at(key);
         }
-        else LOG_WARNING("No Key: " + key + " in Section: " + section + " of file: " + mName);
+        else LOG_WARNING("No Key: " + key + " in Section: " + section + " of file: " + mPath);
     }
-    else LOG_WARNING("No Section: " + section + " in file: " + mName);
+    else LOG_WARNING("No Section: " + section + " in file: " + mPath);
     
     return defaultVal;
 }
@@ -28,7 +28,7 @@ bool Kili::ConfigINI::getBool(const std::string& section, const std::string& key
     try { val = Util::ToBool(value); }
     catch (std::invalid_argument const&)
     {
-        LOG_WARNING("Not a bool at key:" + key + " in Section: " + section + " of file: " + mName);
+        LOG_WARNING("Not a bool at key:" + key + " in Section: " + section + " of file: " + mPath);
         return defaultVal;
     }
     
@@ -44,11 +44,11 @@ int Kili::ConfigINI::getInt(const std::string& section, const std::string& key, 
     
     try { val = std::stoi(value); }
     catch (std::invalid_argument const&) {
-        LOG_WARNING("Not a int at key:" + key + " in Section: " + section + " of file: " + mName);
+        LOG_WARNING("Not a int at key:" + key + " in Section: " + section + " of file: " + mPath);
         return defaultVal;
     }
     catch (std::out_of_range const&) {
-        LOG_WARNING("Integer out of range at key:" + key + " in Section: " + section + " of file: " + mName);
+        LOG_WARNING("Integer out of range at key:" + key + " in Section: " + section + " of file: " + mPath);
         return defaultVal;
     }
     
@@ -64,21 +64,21 @@ float Kili::ConfigINI::getFloat(const std::string& section, const std::string& k
     
     try { val = std::stof(value); }
     catch (std::invalid_argument) { 
-        LOG_WARNING("Not a float at key:" + key + " in Section: " + section + " of file: " + mName);
+        LOG_WARNING("Not a float at key:" + key + " in Section: " + section + " of file: " + mPath);
         return defaultVal;
     }
     
     return val;
 }
 
-Kili::ConfigINI Kili::ConfigINI::readFile(const std::string& path, const std::string& name, const bool debugLines)
+Kili::ConfigINI Kili::ConfigINI::readFile(const std::string& path, const bool debugLines)
 {
-    ConfigINI configFile(name);
+    ConfigINI configFile(path);
     std::ifstream file(path);
     
     if (!file.is_open())
     {
-        LOG_WARNING("Config file : " + name + " not found or corrupted at " + path);
+        LOG_WARNING("Config file not found or corrupted at " + path);
         return configFile;
     }
     

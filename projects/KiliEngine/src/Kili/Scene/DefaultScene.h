@@ -24,7 +24,6 @@ namespace Kili
         {
             mShaderProgram.reset();
             
-            mMesh->unload();
             mMesh.reset();
             
             CameraManager::removeCamera(mCamera);
@@ -33,11 +32,9 @@ namespace Kili
         
         void load() override
         {
-            // Temp =====================================
-            mShaderProgram.reset(Shader::create("Test", "resources/Test.shader"));
-            mShaderProgram->load();
+            mShaderProgram.reset(Shader::create("resources/Test.shader"));
             
-            MaterialFile test = MaterialFile::readMaterial("Test", "resources/Test.mat");
+            MaterialFile test = MaterialFile::readMaterial("resources/Test.mat");
             
             mTransform = Transform(Vector3(5,0,0), Quaternion(Vector3::UnitZ, Klm::DEG_2_RAD * 45.0f), Vector3::Unit);
             
@@ -46,11 +43,7 @@ namespace Kili
             CameraManager::setActiveCamera(mCamera);
             
             mTexture.reset(Texture::create({true, WrapMode::Repeat, TextureFilterMethod::Linear}, "resources/kili.png"));
-            mTexture->load();
-            
-            mMesh.reset(new Mesh("resources/cube.obj", mShaderProgram));
-            mMesh->load();
-            // ==========================================
+            mMesh.reset(Mesh::create("resources/cube.obj", mShaderProgram));
         }
         
         void onUpdate() override

@@ -14,10 +14,8 @@ unsigned int Kili::OpenGlShader::compileShader(const ShaderType shaderType, cons
     }
 
     const unsigned int id = glCreateShader(glShaderType);
-    
     const GLchar* source = code.c_str();
     glShaderSource(id, 1, &source, nullptr);
-    
     glCompileShader(id);
     
     int isCompiled = 0;
@@ -26,27 +24,17 @@ unsigned int Kili::OpenGlShader::compileShader(const ShaderType shaderType, cons
     {
         int maxLength = 0;
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);
-        
         std::vector<char> infoLog(maxLength);
         glGetShaderInfoLog(id, maxLength, &maxLength, infoLog.data());
         
-        LOG_WARNING("Error compiling " + toString(shaderType) + " Shader " + mName + " : " + std::string(infoLog.data()));
-        
+        LOG_WARNING("Error compiling " + toString(shaderType) + " Shader " + mPath + " : " + std::string(infoLog.data()));
         glDeleteShader(id);
-        
         return 0;
     }
     
     return id;
 }
-
-bool Kili::OpenGlShader::hasShaderType(const ShaderType type) const
-{
-    const auto it = std::find(mShaderTypes.begin(), mShaderTypes.end(), type);
-    return it != mShaderTypes.end();
-}
-
-bool Kili::OpenGlShader::load()
+Kili::OpenGlShader::OpenGlShader(std::string path) : mPath(std::move(path))
 {
     mId = glCreateProgram();
 
@@ -75,12 +63,10 @@ bool Kili::OpenGlShader::load()
     {
         int maxLength = 0;
         glGetProgramiv(mId, GL_INFO_LOG_LENGTH, &maxLength);
-        
         std::vector<char> infoLog(maxLength);
         glGetProgramInfoLog(mId, maxLength, &maxLength, infoLog.data());
         
-        LOG_WARNING("Error linking Shader " + mName + " : " + std::string(infoLog.data()));
-        
+        LOG_WARNING("Error linking Shader " + mPath + " : " + std::string(infoLog.data()));
         glDeleteProgram(mId);
         
         for (const auto shader : shaders)
@@ -88,8 +74,7 @@ bool Kili::OpenGlShader::load()
             glDetachShader(mId, shader);
             glDeleteShader(shader);
         }
-        
-        return false;
+        return;
     }
 
     for (const auto shader : shaders)
@@ -98,18 +83,19 @@ bool Kili::OpenGlShader::load()
         glDeleteShader(shader);
     }
     
-    LOG_LOADING("Successfully loaded Shader " + mName);
-    mLoaded = true;
-    return true;
+    LOG_LOADING("Successfully loaded Shader " + mPath);
 }
 
-bool Kili::OpenGlShader::unload()
+Kili::OpenGlShader::~OpenGlShader()
 {
     mShaderTypes.clear();
     glDeleteProgram(mId);
-    
-    mLoaded = false;
-    return true;
+}
+
+bool Kili::OpenGlShader::hasShaderType(const ShaderType type) const
+{
+    const auto it = std::find(mShaderTypes.begin(), mShaderTypes.end(), type);
+    return it != mShaderTypes.end();
 }
 
 void Kili::OpenGlShader::use()

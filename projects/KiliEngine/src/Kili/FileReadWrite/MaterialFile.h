@@ -26,8 +26,6 @@ namespace Kili
 {
     class MaterialFile
     {
-        std::string mName;
-        
         std::string mShader;
         
         // Pair name - path
@@ -44,10 +42,7 @@ namespace Kili
         static bool handleTypes(const std::string& type, const std::string& value, const std::string& paramName, MaterialFile& material);
         
     public:
-        MaterialFile() = delete;
-        explicit MaterialFile(std::string name) : mName(std::move(name)) {}
-        
-        [[nodiscard]] const std::string& getName() const                    { return mName; }
+        MaterialFile() = default;
         
         void setShader(std::string shader)                                  { mShader = std::move(shader); }
         [[nodiscard]] const std::string& getShader() const                  { return mShader; }
@@ -69,6 +64,6 @@ namespace Kili
         [[nodiscard]] const std::vector<std::pair<std::string, Vector3>>& getVec3Parameters() const { return mVec3Parameters; }
         [[nodiscard]] const std::vector<std::pair<std::string, Vector4>>& getVec4Parameters() const { return mVec4Parameters; }
         
-        static MaterialFile readMaterial(const std::string& name, const std::string& path);
+        static MaterialFile readMaterial(const std::string& path);
     };
 }

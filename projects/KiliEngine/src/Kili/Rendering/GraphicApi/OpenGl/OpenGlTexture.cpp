@@ -1,6 +1,7 @@
 #include "klpch.h"
 #include "OpenGlTexture.h"
 
+#include "Kili/Core/Logger/Log.h"
 #include "Vendor/stb_image.h"
 
 int Kili::WrapModeToOpenGl(const WrapMode& wrapMode)
@@ -43,19 +44,11 @@ int Kili::ImageFormatToOpenGl(const ImageFormat& format, const bool data)
 }
 
 Kili::OpenGlTexture::OpenGlTexture(const TextureParameter& textureParameter, std::string path) :
-    mPath(std::move(path)), 
-    mWidth(0), mHeight(0), mId(0), 
-    mParameter(textureParameter), mImageFormat(ImageFormat::R)
+    mPath(std::move(path)), mParameter(textureParameter)
 {
-}
-
-bool Kili::OpenGlTexture::load()
-{    
-    if (mPath.empty()) { LOG_WARNING("Attempted to load texture without path"); return false; }
-        
-    unsigned char* data = Texture::loadTextureFromFile(mPath, mWidth, mHeight, mImageFormat);
+    unsigned char* data = loadTextureFromFile(mPath, mWidth, mHeight, mImageFormat);
     
-    if (!data) { LOG_WARNING("Image load error, maybe bad texture path"); return false; }
+    if (!data) { LOG_WARNING("Image load error, maybe bad texture path"); return; }
     
     glGenTextures(1, &mId);
     glBindTexture(GL_TEXTURE_2D, mId);
@@ -73,24 +66,20 @@ bool Kili::OpenGlTexture::load()
         ImageFormatToOpenGl(mImageFormat, true), GL_UNSIGNED_BYTE, 
         data);
     
+    stbi_image_free(data);
+    
     if (mParameter.useMipMap)
     {
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     
-    stbi_image_free(data);
-    
-    mLoaded = true;
-    return true;
+    LOG_LOADING("Successfully loaded Texture " + mPath);
 }
 
-bool Kili::OpenGlTexture::unload()
+Kili::OpenGlTexture::~OpenGlTexture()
 {
     glDeleteTextures(1, &mId);
     mId = 0;
-    
-    mLoaded = false;
-    return true;
 }
 
 void Kili::OpenGlTexture::use(const uint8_t index)

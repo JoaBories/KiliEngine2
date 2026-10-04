@@ -24,14 +24,14 @@ namespace Kili
     class ConfigINI
     {
     private:
-        std::string mName;
+        std::string mPath;
         
         /** Container for INI values. mValues[section][key] */
         std::unordered_map<std::string, std::unordered_map<std::string, std::string>> mValues;
         
     public:
-        ConfigINI() = default;
-        explicit ConfigINI(std::string name) : mName(std::move(name)) {}
+        ConfigINI() = delete;
+        explicit ConfigINI(std::string path) : mPath(std::move(path)) {}
         ~ConfigINI() = default;
         
         /** Return DefaultVal if key or section not found **/
@@ -58,6 +58,6 @@ namespace Kili
         void setFloat(const std::string& section, const std::string& key, const float value) {
             mValues[section][key] = std::to_string(value); }
         
-        [[nodiscard]] static ConfigINI readFile(const std::string& path, const std::string& name, bool debugLines = false);
+        [[nodiscard]] static ConfigINI readFile(const std::string& path, bool debugLines = false);
     };
 }

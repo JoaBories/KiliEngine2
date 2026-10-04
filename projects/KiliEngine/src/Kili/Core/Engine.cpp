@@ -149,7 +149,7 @@ namespace Kili
         LOG_LOADING("KiliEngine Initialization");
         
         // Load config
-        const EngineConfig config("config/KiliEngine.ini", "KiliEngine");
+        const EngineConfig config("config/KiliEngine.ini");
         LOG_LOADING("Config loaded");
         
         // Config logs and events

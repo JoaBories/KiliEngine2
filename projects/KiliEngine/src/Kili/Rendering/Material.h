@@ -8,7 +8,7 @@ namespace Kili
      * Material, abstracting Shader, Textures and parameters for shaders. \n
      * It loads from a .mat files that reference a set of different sub Shaders (vertex, fragment, etc.), a set of Textures and a set of Parameters by types.
      **/
-    class Material : public IAsset
+    class Material
     {
     private:
         std::shared_ptr<Shader> mShader;
@@ -29,9 +29,6 @@ namespace Kili
         explicit Material(std::string path);
 
         [[nodiscard]] std::shared_ptr<Shader> getShader() const { return mShader; }
-        
-        bool load() override;
-        bool unload() override;
         
         void use();
     };

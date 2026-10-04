@@ -17,10 +17,8 @@ namespace Kili
         ImageFormat mImageFormat;
     
     public:
-        explicit OpenGlTexture(const TextureParameter& textureParameter, std::string path);
-        
-        bool load() override;
-        bool unload() override;
+        OpenGlTexture(const TextureParameter& textureParameter, std::string path);
+        ~OpenGlTexture() override;
         
         void use(uint8_t index = 0) override;
         

@@ -10,7 +10,7 @@ namespace Kili
         ConfigINI mConfig;
         
     public:
-        explicit EngineConfig(const std::string& path, const std::string& name) : mConfig(ConfigINI::readFile(path, name)) {}
+        explicit EngineConfig(const std::string& path) : mConfig(ConfigINI::readFile(path)) {}
         ~EngineConfig() = default;
         
         // Rule of zero

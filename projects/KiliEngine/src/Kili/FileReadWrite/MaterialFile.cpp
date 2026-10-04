@@ -143,9 +143,9 @@ namespace Kili
         return false;
     }
     
-    MaterialFile MaterialFile::readMaterial(const std::string& name, const std::string& path)
+    MaterialFile MaterialFile::readMaterial(const std::string& path)
     {
-        MaterialFile material(name);
+        MaterialFile material;
     
         std::ifstream file(path);
     

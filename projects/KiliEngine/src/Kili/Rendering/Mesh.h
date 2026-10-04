@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Kili/AssetManager/Asset.h"
 #include "RHI/Shader.h"
 #include "RHI/VertexArray.h"
 
 namespace Kili
 {
-    class Mesh : public IAsset
+    class Mesh
     {
     private:
         std::string mPath;
@@ -16,9 +15,7 @@ namespace Kili
     public:
         Mesh() = delete;
         Mesh(std::string path, const std::shared_ptr<Shader>& shader);
-        
-        bool load() override;
-        bool unload() override;
+        ~Mesh();
         
         [[nodiscard]] std::string getPath() const { return mPath; }
         
@@ -26,5 +23,7 @@ namespace Kili
         void setShader(const std::shared_ptr<Shader>& shader) { mShader = shader; }
         
         [[nodiscard]] std::shared_ptr<VertexArray> getVertexArray() const { return mVertexArray; }
+        
+        static Mesh* create(const std::string& path, const std::shared_ptr<Shader>& shader);
     };
 }

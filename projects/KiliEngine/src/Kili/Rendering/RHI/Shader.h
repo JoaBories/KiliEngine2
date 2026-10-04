@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Kili/AssetManager/Asset.h"
 #include "Kili/Rendering/ShaderData.h"
 #include "Kili/FileReadWrite/ShaderFile.h"
 
 namespace Kili
 {
-    class Shader : public IAsset
+    class Shader
     {    
     public:    
+        virtual ~Shader() = default;
+        
         [[nodiscard]] virtual bool hasShaderType(ShaderType type) const = 0;
-        [[nodiscard]] virtual std::string getName() const = 0;
         [[nodiscard]] virtual std::string getPath() const = 0;
         
         virtual void use() = 0;
@@ -46,6 +46,6 @@ namespace Kili
             return ShaderType::Vertex;
         }
         
-        static Shader* create(const std::string& name, const std::string& path);
+        static Shader* create(const std::string& path);
     };
 }

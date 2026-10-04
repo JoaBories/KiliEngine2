@@ -1,6 +1,4 @@
 #pragma once
-#include "Kili/AssetManager/Asset.h"
-#include "Kili/Core/Logger/Log.h"
 
 namespace Kili
 {    
@@ -39,9 +37,11 @@ namespace Kili
      * You can use it to fetch (through the constructor) textures from files and load/unload them later.
      * This will be mainly used by the Asset Manager.
      */
-    class Texture : public IAsset
+    class Texture
     {
     public:
+        virtual ~Texture() = default;
+        
         virtual void use(uint8_t index = 0) = 0;
         
         [[nodiscard]] virtual std::string getPath() const = 0;

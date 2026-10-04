@@ -27,7 +27,6 @@ namespace Kili
     class OpenGlShader : public Shader
     {
     private:
-        std::string mName;
         std::string mPath;
         std::vector<ShaderType> mShaderTypes;
         uint32_t mId;
@@ -36,15 +35,11 @@ namespace Kili
         [[nodiscard]] unsigned int compileShader(ShaderType shaderType, const std::string& code) const;
         
     public:
-        OpenGlShader(std::string name, std::string path) : mName(std::move(name)), mPath(std::move(path)), mId(0) {}
-        ~OpenGlShader() override { if (mLoaded) OpenGlShader::unload();}
+        OpenGlShader(std::string path);
+        ~OpenGlShader() override;
         
         [[nodiscard]] bool hasShaderType(ShaderType type) const override;
-        [[nodiscard]] std::string getName() const override { return mName; }
         [[nodiscard]] std::string getPath() const override { return mPath; }
-        
-        bool load() override;
-        bool unload() override;
         
         void use() override;
         

@@ -3,14 +3,11 @@
 
 #define TINYOBJLOADER_IMPLEMENTATION
 
+#include "Renderer.h"
 #include "Vendor/tiny_obj_loader.h"
 
 Kili::Mesh::Mesh(std::string path, const std::shared_ptr<Shader>& shader) :
     mPath(std::move(path)), mShader(shader)
-{
-}
-
-bool Kili::Mesh::load()
 {
     tinyobj::ObjReader reader;
     
@@ -18,7 +15,7 @@ bool Kili::Mesh::load()
         if (!reader.Error().empty()) {
            LOG_ERROR("TinyObjReader: " + reader.Error());
         }
-        return false;
+        return;
     }
     
     if (!reader.Warning().empty()) {
@@ -101,16 +98,16 @@ bool Kili::Mesh::load()
     mVertexArray->addVertexBuffer(vertexBuffer);
     mVertexArray->setVertexCount(indexCount);
     
-    mLoaded = true;
-    return true;
+    LOG_LOADING("Successfully loaded Mesh " + mPath);
 }
 
-bool Kili::Mesh::unload()
+Kili::Mesh::~Mesh()
 {
-    // This will delete them if there is no other references
     mVertexArray.reset();
     mShader.reset();
-    
-    mLoaded = false;
-    return true;
+}
+
+Kili::Mesh* Kili::Mesh::create(const std::string& path, const std::shared_ptr<Shader>& shader)
+{
+    return new Mesh(path, shader);
 }
