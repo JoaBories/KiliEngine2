@@ -17,7 +17,7 @@ namespace Kili
         virtual void setLayout(const BufferLayout& layout) = 0;
         [[nodiscard]] virtual const BufferLayout& getLayout() const = 0;
         
-        static VertexBuffer* create(const float* vertices, uint32_t size);
+        static std::unique_ptr<VertexBuffer> create(const float* vertices, uint32_t size);
     };
     
     /**
@@ -32,7 +32,7 @@ namespace Kili
         virtual void use() const = 0;
         [[nodiscard]] virtual uint32_t count() const = 0;
         
-        static IndexBuffer* create(const uint32_t* indices, uint32_t count);
+        static std::unique_ptr<IndexBuffer> create(const uint32_t* indices, uint32_t count);
     };
     
     /** 
@@ -59,7 +59,7 @@ namespace Kili
         [[nodiscard]] virtual const std::vector<std::shared_ptr<VertexBuffer>>& getVertexBuffers() const = 0;
         [[nodiscard]] virtual const std::shared_ptr<IndexBuffer>& getIndexBuffer() const = 0;
         
-        static VertexArray* create();
+        static std::unique_ptr<VertexArray> create();
     
     };
 }

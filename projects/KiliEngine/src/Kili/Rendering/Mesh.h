@@ -24,6 +24,6 @@ namespace Kili
         
         [[nodiscard]] std::shared_ptr<VertexArray> getVertexArray() const { return mVertexArray; }
         
-        static Mesh* create(const std::string& path, const std::shared_ptr<Shader>& shader);
+        static std::unique_ptr<Mesh> create(const std::string& path, const std::shared_ptr<Shader>& shader);
     };
 }

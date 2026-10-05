@@ -32,7 +32,7 @@ namespace Kili
         
         void load() override
         {
-            mShaderProgram.reset(Shader::create("resources/Test.shader"));
+            mShaderProgram = Shader::create("resources/Test.shader");
             
             MaterialFile test = MaterialFile::readMaterial("resources/Test.mat");
             
@@ -42,8 +42,8 @@ namespace Kili
             CameraManager::addCamera(mCamera);
             CameraManager::setActiveCamera(mCamera);
             
-            mTexture.reset(Texture::create({true, WrapMode::Repeat, TextureFilterMethod::Linear}, "resources/kili.png"));
-            mMesh.reset(Mesh::create("resources/cube.obj", mShaderProgram));
+            mTexture =Texture::create({true, WrapMode::Repeat, TextureFilterMethod::Linear}, "resources/kili.png");
+            mMesh = Mesh::create("resources/cube.obj", mShaderProgram);
         }
         
         void onUpdate() override

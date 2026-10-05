@@ -42,6 +42,7 @@ namespace Kili
         [[nodiscard]] std::string getPath() const override { return mPath; }
         
         void use() override;
+        bool isLoaded() override { return mId != 0; }
         
         // uniforms
         void setBool(const std::string& pName, const bool value) override       { glUniform1i(glGetUniformLocation(mId, pName.c_str()), value); }

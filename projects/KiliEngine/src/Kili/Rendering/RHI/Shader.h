@@ -14,6 +14,7 @@ namespace Kili
         [[nodiscard]] virtual std::string getPath() const = 0;
         
         virtual void use() = 0;
+        virtual bool isLoaded() = 0;
         
         // uniform functions
         virtual void setBool(const std::string& pName, bool value) = 0;
@@ -46,6 +47,6 @@ namespace Kili
             return ShaderType::Vertex;
         }
         
-        static Shader* create(const std::string& path);
+        static std::unique_ptr<Shader> create(const std::string& path);
     };
 }

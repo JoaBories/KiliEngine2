@@ -13,6 +13,6 @@ namespace Kili
         virtual void close() = 0;
         virtual void swapBuffers() = 0;
         
-        static GraphicContext* create(SDL_Window* windowHandle);
+        static std::unique_ptr<GraphicContext> create(SDL_Window* windowHandle);
     };
 }

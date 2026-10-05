@@ -68,6 +68,7 @@ Kili::OpenGlShader::OpenGlShader(std::string path) : mPath(std::move(path))
         
         LOG_WARNING("Error linking Shader " + mPath + " : " + std::string(infoLog.data()));
         glDeleteProgram(mId);
+        mId = 0;
         
         for (const auto shader : shaders)
         {

@@ -5,13 +5,16 @@
 #include "Kili/Rendering/GraphicApi/OpenGl/OpenGlShader.h"
 
 //ADDAPI
-Kili::Shader* Kili::Shader::create(const std::string& path)
+namespace Kili
 {
-    switch (Renderer::getApi())
+    std::unique_ptr<Shader> Shader::create(const std::string& path)
     {
-        case GraphicApi::OpenGl : return new OpenGlShader(path); break;
-    }
+        switch (Renderer::getApi())
+        {
+            case GraphicApi::OpenGl : return std::make_unique<OpenGlShader>(path); break;
+        }
     
-    LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
-    return nullptr;
+        LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
+        return nullptr;
+    }
 }

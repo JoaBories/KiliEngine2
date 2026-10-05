@@ -34,8 +34,7 @@ void Kili::Window::update()
 
 void Kili::Window::close()
 {
-    delete mContext;
-    mContext = nullptr;
+    mContext->close();
     
     SDL_DestroyWindow(mWindow);
     mWindow = nullptr;

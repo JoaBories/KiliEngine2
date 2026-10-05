@@ -50,7 +50,7 @@ namespace Kili
         [[nodiscard]] virtual uint32_t getWidth() const = 0;
         [[nodiscard]] virtual uint32_t getHeight() const = 0;
 
-        static Texture* create(const TextureParameter& textureParameter, std::string path);
+        static std::unique_ptr<Texture> create(const TextureParameter& textureParameter, std::string path);
         
         /** Abstract stbi_image **/
         static uint8_t* loadTextureFromFile(const std::string& path, int& widthOut, int& heightOut, ImageFormat& formatOut);

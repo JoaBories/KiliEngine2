@@ -8,23 +8,26 @@
 #include "Vendor/stb_image.h"
 
 // ADDAPI
-Kili::Texture* Kili::Texture::create(const TextureParameter& textureParameter, std::string path)
+namespace Kili
 {
-    switch (Renderer::getApi())
+    std::unique_ptr<Texture> Texture::create(const TextureParameter& textureParameter, std::string path)
     {
-        case GraphicApi::OpenGl : return new OpenGlTexture(textureParameter, std::move(path)); break;
+        switch (Renderer::getApi())
+        {
+            case GraphicApi::OpenGl : return std::make_unique<OpenGlTexture>(textureParameter, std::move(path)); break;
+        }
+    
+        LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
+        return nullptr;
     }
-    
-    LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
-    return nullptr;
-}
 
-uint8_t* Kili::Texture::loadTextureFromFile(const std::string& path, int& widthOut, int& heightOut, ImageFormat& formatOut)
-{
-    stbi_set_flip_vertically_on_load(true);
+    uint8_t* Texture::loadTextureFromFile(const std::string& path, int& widthOut, int& heightOut, ImageFormat& formatOut)
+    {
+        stbi_set_flip_vertically_on_load(true);
     
-    int channels;
-    uint8_t* data = stbi_load(path.c_str(), &widthOut, &heightOut, &channels, 0);
-    formatOut = static_cast<ImageFormat>(channels);
-    return data;
+        int channels;
+        uint8_t* data = stbi_load(path.c_str(), &widthOut, &heightOut, &channels, 0);
+        formatOut = static_cast<ImageFormat>(channels);
+        return data;
+    }
 }

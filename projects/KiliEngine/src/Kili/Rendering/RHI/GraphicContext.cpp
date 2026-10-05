@@ -6,13 +6,16 @@
 #include "Kili/Core/Logger/Log.h"
 
 //ADDAPI
-Kili::GraphicContext* Kili::GraphicContext::create(SDL_Window* windowHandle)
+namespace Kili
 {
-    switch (Renderer::getApi())
+    std::unique_ptr<GraphicContext> GraphicContext::create(SDL_Window* windowHandle)
     {
-        case GraphicApi::OpenGl : return new OpenGlContext(windowHandle); break;
-    }
+        switch (Renderer::getApi())
+        {
+            case GraphicApi::OpenGl : return std::make_unique<OpenGlContext>(windowHandle); break;
+        }
     
-    LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
-    return nullptr;
+        LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());
+        return nullptr;
+    }
 }
