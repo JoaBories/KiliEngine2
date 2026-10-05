@@ -174,6 +174,9 @@ namespace Kili
         // initialize renderer size
         Renderer::onEvent(WindowResizeEvent(winParams.width, winParams.height)); // TODO clean that shit
         
+        // initialize asset manager
+        AssetManager::init();
+        
         // Init and config time clock
         TimeClock::init(config.getMaxFps(), config.getMaxDeltaTime());
         TimeClock::setLogging(config.isFpsLogging());
@@ -216,6 +219,7 @@ namespace Kili
         LOG_LOADING("==========================================");
         
         SceneManager::close();
+        AssetManager::close();
         
         mWindow.reset();
         

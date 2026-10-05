@@ -2,14 +2,11 @@
 #include "Mesh.h"
 
 #define TINYOBJLOADER_IMPLEMENTATION
-
-#include "Renderer.h"
 #include "Vendor/tiny_obj_loader.h"
 
 namespace Kili
 {
-    Mesh::Mesh(std::string path, const std::shared_ptr<Shader>& shader) :
-        mPath(std::move(path)), mShader(shader)
+    Mesh::Mesh(std::string path) : mPath(std::move(path))
     {
         tinyobj::ObjReader reader;
     
@@ -100,16 +97,5 @@ namespace Kili
         mVertexArray->setVertexCount(indexCount);
     
         LOG_LOADING("Successfully loaded Mesh " + mPath);
-    }
-
-    Mesh::~Mesh()
-    {
-        mVertexArray.reset();
-        mShader.reset();
-    }
-
-    std::unique_ptr<Mesh> Mesh::create(const std::string& path, const std::shared_ptr<Shader>& shader)
-    {
-        return std::make_unique<Mesh>(path, shader);
     }
 }

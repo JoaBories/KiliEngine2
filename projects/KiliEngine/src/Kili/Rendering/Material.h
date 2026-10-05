@@ -31,5 +31,8 @@ namespace Kili
         [[nodiscard]] std::shared_ptr<Shader> getShader() const { return mShader; }
         
         void use();
+        bool isLoaded() { return true; }
+        
+        static std::unique_ptr<Material> create(const std::string& path) { return std::make_unique<Material>(path); }
     };
 }

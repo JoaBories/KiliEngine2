@@ -3,54 +3,50 @@
 
 namespace Kili
 {
-    std::unordered_map<std::string, std::shared_ptr<Shader>> AssetManager::mShaders{};
-    std::unordered_map<std::string, std::shared_ptr<Texture>> AssetManager::mTextures{};
-    std::unordered_map<std::string, std::shared_ptr<Mesh>> AssetManager::mMeshes{};
-    std::unordered_map<std::string, std::shared_ptr<Material>> AssetManager::mMaterials{};
-
-    bool AssetManager::loadShader(const std::string& path)
+    ASSET_STATICS(Material)
+    ASSET_STATICS(Mesh)
+    ASSET_STATICS(Shader)
+    ASSET_STATICS(Texture)
+    
+    ASSET_IMPLEMENTATION(Material)
+    ASSET_IMPLEMENTATION(Mesh)
+    ASSET_IMPLEMENTATION(Shader)
+    
+    bool AssetManager::loadTexture(const std::string& path)
     {
-        if (mShaders.find(path) != mShaders.end()) return true;
-        if (std::unique_ptr<Shader> asset = Shader::create(path); asset && asset->isLoaded())
+        if (mTextureMap.contains(path)) return true;
+        if (std::unique_ptr<Texture> asset = Texture::create(TextureParameter() , path); asset && asset->isLoaded())
         {
-            mShaders.emplace(path, std::move(asset));
+            mTextureMap.emplace(path, std::move(asset)); 
             return true;
         }
         return false;
     }
 
-    bool AssetManager::loadTexture(std::string path)
+    std::shared_ptr<Texture> AssetManager::getTexture(const std::string& path)
     {
-        return true;
+        if (loadTexture(path)) return mTextureMap.at(path);
+        return mDefaultTexture;
     }
 
-    bool AssetManager::loadMesh(std::string path)
+    void AssetManager::init()
     {
-        return true;
+        mDefaultShader = Shader::create("resources/default/default.shader");
+        mDefaultTexture = Texture::create(TextureParameter(), "resources/default/default.png");
+        mDefaultMaterial = nullptr;
+        mDefaultMesh = Mesh::create("resources/default/cube.obj");
     }
 
-    bool AssetManager::loadMaterial(std::string path)
+    void AssetManager::close()
     {
-        return true;
-    }
-
-    std::shared_ptr<Shader> AssetManager::getShader(std::string path)
-    {
-        return nullptr;
-    }
-
-    std::shared_ptr<Texture> AssetManager::getTexture(std::string path)
-    {
-        return nullptr;
-    }
-
-    std::shared_ptr<Mesh> AssetManager::getMesh(std::string path)
-    {
-        return nullptr;
-    }
-
-    std::shared_ptr<Material> AssetManager::getMaterial(std::string path)
-    {
-        return nullptr;
+        mDefaultMaterial.reset();
+        mDefaultMesh.reset();
+        mDefaultShader.reset();
+        mDefaultTexture.reset();
+        
+        mMaterialMap.clear();
+        mMeshMap.clear();
+        mShaderMap.clear();
+        mTextureMap.clear();
     }
 }

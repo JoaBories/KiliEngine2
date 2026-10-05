@@ -43,6 +43,7 @@ namespace Kili
         virtual ~Texture() = default;
         
         virtual void use(uint8_t index = 0) = 0;
+        virtual bool isLoaded() = 0;
         
         [[nodiscard]] virtual std::string getPath() const = 0;
         
@@ -50,7 +51,7 @@ namespace Kili
         [[nodiscard]] virtual uint32_t getWidth() const = 0;
         [[nodiscard]] virtual uint32_t getHeight() const = 0;
 
-        static std::unique_ptr<Texture> create(const TextureParameter& textureParameter, std::string path);
+        static std::unique_ptr<Texture> create(const TextureParameter& textureParameter, const std::string& path);
         
         /** Abstract stbi_image **/
         static uint8_t* loadTextureFromFile(const std::string& path, int& widthOut, int& heightOut, ImageFormat& formatOut);

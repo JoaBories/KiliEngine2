@@ -9,21 +9,17 @@ namespace Kili
     {
     private:
         std::string mPath;
-        std::shared_ptr<Shader> mShader;
         std::shared_ptr<VertexArray> mVertexArray;
     
     public:
         Mesh() = delete;
-        Mesh(std::string path, const std::shared_ptr<Shader>& shader);
-        ~Mesh();
+        explicit Mesh(std::string path);
+
+        [[nodiscard]] bool isLoaded() const { return mVertexArray != nullptr; }
         
         [[nodiscard]] std::string getPath() const { return mPath; }
-        
-        [[nodiscard]] std::shared_ptr<Shader> getShader() const { return mShader; }
-        void setShader(const std::shared_ptr<Shader>& shader) { mShader = shader; }
-        
         [[nodiscard]] std::shared_ptr<VertexArray> getVertexArray() const { return mVertexArray; }
         
-        static std::unique_ptr<Mesh> create(const std::string& path, const std::shared_ptr<Shader>& shader);
+        static std::unique_ptr<Mesh> create(const std::string& path) { return std::make_unique<Mesh>(path); }
     };
 }

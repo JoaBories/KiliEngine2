@@ -48,7 +48,12 @@ Kili::OpenGlTexture::OpenGlTexture(const TextureParameter& textureParameter, std
 {
     unsigned char* data = loadTextureFromFile(mPath, mWidth, mHeight, mImageFormat);
     
-    if (!data) { LOG_WARNING("Image load error, maybe bad texture path"); return; }
+    if (!data)
+    {
+        LOG_WARNING("Image load error, maybe bad texture path"); 
+        mId = 0; 
+        return;
+    }
     
     glGenTextures(1, &mId);
     glBindTexture(GL_TEXTURE_2D, mId);

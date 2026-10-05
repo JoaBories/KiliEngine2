@@ -21,6 +21,7 @@ namespace Kili
         ~OpenGlTexture() override;
         
         void use(uint8_t index = 0) override;
+        bool isLoaded() override { return mId != 0; }
         
         [[nodiscard]] std::string getPath() const override { return mPath; }
         

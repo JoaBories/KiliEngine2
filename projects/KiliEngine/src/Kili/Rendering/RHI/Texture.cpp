@@ -10,11 +10,11 @@
 // ADDAPI
 namespace Kili
 {
-    std::unique_ptr<Texture> Texture::create(const TextureParameter& textureParameter, std::string path)
+    std::unique_ptr<Texture> Texture::create(const TextureParameter& textureParameter, const std::string& path)
     {
         switch (Renderer::getApi())
         {
-            case GraphicApi::OpenGl : return std::make_unique<OpenGlTexture>(textureParameter, std::move(path)); break;
+            case GraphicApi::OpenGl : return std::make_unique<OpenGlTexture>(textureParameter, path); break;
         }
     
         LOG_WARNING("Unknown GraphicApi : " + Renderer::getApiName());

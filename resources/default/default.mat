@@ -1,0 +1,5 @@
+# Default material
+# .mat parser version 1.0
+
+shader = resources/default/default.shader
+texture = resources/default/kili.png

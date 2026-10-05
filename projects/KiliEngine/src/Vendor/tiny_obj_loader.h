@@ -1428,7 +1428,7 @@ inline void fill(ForwardIt first, ForwardIt last, const T &value) {
 // --- distance ---
 template <typename It>
 inline typename conditional<true, long long, It>::type
-distance(It first, It last) {
+constexpr distance(It first, It last) {
   return last - first;
 }
 

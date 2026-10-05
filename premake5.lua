@@ -128,7 +128,7 @@ project (engine)
         "SDL3"
     }
 
-    cppdialect "c++17"
+    cppdialect "c++20"
     staticruntime "On"
     systemversion "latest"
 

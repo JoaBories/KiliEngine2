@@ -5,8 +5,7 @@
 #include "Kili/Transform.h"
 #include "Kili/CameraManager.h"
 #include "Kili/FileReadWrite/MaterialFile.h"
-#include "Kili/Rendering/Mesh.h"
-#include "Kili/Rendering/RHI/Texture.h"
+#include "Kili/AssetManager/AssetManager.h"
 
 namespace Kili
 {
@@ -32,7 +31,7 @@ namespace Kili
         
         void load() override
         {
-            mShaderProgram = Shader::create("resources/Test.shader");
+            mShaderProgram = AssetManager::getShader("resources/Test.shader");
             
             MaterialFile test = MaterialFile::readMaterial("resources/Test.mat");
             
@@ -42,8 +41,8 @@ namespace Kili
             CameraManager::addCamera(mCamera);
             CameraManager::setActiveCamera(mCamera);
             
-            mTexture =Texture::create({true, WrapMode::Repeat, TextureFilterMethod::Linear}, "resources/kili.png");
-            mMesh = Mesh::create("resources/cube.obj", mShaderProgram);
+            mTexture = AssetManager::getTexture("resources/kili.png");
+            mMesh = AssetManager::getMesh("resources/cube.obj");
         }
         
         void onUpdate() override
@@ -54,7 +53,7 @@ namespace Kili
         void onRender() override
         {
             mTexture->use();
-            Renderer::submit(mMesh->getShader(), mMesh->getVertexArray(), mTransform);
+            Renderer::submit(mShaderProgram, mMesh->getVertexArray(), mTransform);
         }
 
         void onEvent(const IEvent& event) override
