@@ -1,7 +1,9 @@
 #include "klpch.h"
 #include "Window.h"
 
+#include "Core/Events/WindowEvent.h"
 #include "Kili/Rendering/RenderCommand.h"
+#include "Rendering/Renderer.h"
 
 bool Kili::Window::init()
 {    
@@ -38,6 +40,17 @@ void Kili::Window::close()
     
     SDL_DestroyWindow(mWindow);
     mWindow = nullptr;
+}
+
+void Kili::Window::onEvent(const IEvent& event)
+{
+    DispatchEvent<WindowResizeEvent>(event,[this](const WindowResizeEvent& e)
+    {
+        mWidth = e.getWidth();
+        mHeight = e.getHeight();
+        
+        Renderer::resizeRenderer(mWidth, mHeight);
+    });
 }
 
 Kili::Window::Window(std::string title, const WindowParameters params) :

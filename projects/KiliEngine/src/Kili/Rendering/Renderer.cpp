@@ -14,13 +14,16 @@ namespace Kili
     
     void Renderer::onEvent(const IEvent& event)
     {
-        DispatchEvent<WindowResizeEvent>(event, [](const WindowResizeEvent& e)
-        {
-            mScreenSize.x = static_cast<float>(e.getWidth());
-            mScreenSize.y = static_cast<float>(e.getHeight());
-        });
     }
 
+    void Renderer::resizeRenderer(const uint32_t width, const uint32_t height)
+    {
+        mScreenSize.x = static_cast<float>(width);
+        mScreenSize.y = static_cast<float>(height);
+        
+        RenderCommand::resizeRenderBuffer(width, height);
+    }
+    
     void Renderer::beginScene(const std::shared_ptr<Camera>& camera)
     {
         RenderCommand::clear(Vector4(0.45f, 0.45f, 1.0f, 1.0f));

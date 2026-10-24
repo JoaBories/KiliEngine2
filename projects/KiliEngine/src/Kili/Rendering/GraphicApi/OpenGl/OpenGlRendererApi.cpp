@@ -24,3 +24,8 @@ void Kili::OpenGlRendererApi::setMsaa(const int samples) const
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, samples);
 }
+
+void Kili::OpenGlRendererApi::resizeRenderBuffer(const uint32_t width, const uint32_t height)
+{
+    glViewport(0, 0, width, height);
+}

@@ -6,6 +6,8 @@
 #include "SDL.h"
 #include <string>
 
+#include "Core/Events/Event.h"
+
 namespace Kili
 {
     enum EnumWindowFlags : char
@@ -46,6 +48,8 @@ namespace Kili
         bool init();
         void update();
         void close();
+        
+        void onEvent(const IEvent& event);
         
         // Rule of zero
         Window(const Window& other) = delete;

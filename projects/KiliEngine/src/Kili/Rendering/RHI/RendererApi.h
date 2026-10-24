@@ -44,6 +44,8 @@ namespace Kili
         [[nodiscard]] virtual bool isVsync() const = 0;
         
         virtual void setMsaa(int samples) const = 0;
+        
+        virtual void resizeRenderBuffer(uint32_t width, uint32_t height) = 0;
 
         [[nodiscard]] virtual int getWindowFlag() const = 0;
     };

@@ -107,10 +107,10 @@ namespace Kili
         
         Renderer::onEvent(event);
         SceneManager::onEvent(event);
+        mWindow->onEvent(event);
         
         //Future possible usages of events :
         //mInputManager->onEvent(event);
-        //mWindow->onEvent(event);
         
         if (mLoggingEvents)
         {
@@ -172,7 +172,7 @@ namespace Kili
         else LOG_LOADING("Window initialized");
         
         // initialize renderer size
-        Renderer::onEvent(WindowResizeEvent(winParams.width, winParams.height)); // TODO clean that shit
+        mWindow->onEvent(WindowResizeEvent(winParams.width, winParams.height));
         
         // initialize asset manager
         AssetManager::init();

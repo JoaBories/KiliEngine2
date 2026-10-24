@@ -24,6 +24,8 @@ namespace Kili
         [[nodiscard]] inline static bool isVsync() { return mApi->isVsync(); }
         
         inline static void setMsaa(const int samples) { mApi->setMsaa(samples); }
+        
+        inline static void resizeRenderBuffer(const uint32_t width, const uint32_t height) { mApi->resizeRenderBuffer(width, height); }
 
         [[nodiscard]] inline static int getWindowFlag() { return mApi->getWindowFlag(); }
     };

@@ -16,6 +16,8 @@ namespace Kili
         
         void setMsaa(int samples) const override;
         
+        void resizeRenderBuffer(uint32_t width, uint32_t height) override;
+        
         [[nodiscard]] int getWindowFlag() const override { return SDL_WINDOW_OPENGL; }
     };
 }

@@ -2,6 +2,9 @@
 #include "RHI/Shader.h"
 #include "RHI/Texture.h"
 
+/** !!!!!!!!
+ * This class is nor implemented nor used in the engine for the moment
+ * !!!!!!!! **/
 namespace Kili
 {
     /** 

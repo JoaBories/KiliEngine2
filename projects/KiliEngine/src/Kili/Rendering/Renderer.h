@@ -23,6 +23,7 @@ namespace Kili
         static GraphicApi getApi() { return RenderCommand::getApi(); }
         static std::string getApiName() { return toString(RenderCommand::getApi()); }
         
+        static void resizeRenderer(uint32_t width, uint32_t height);
         static Vector2 getScreenSize() { return mScreenSize; }
         
         static void beginScene(const std::shared_ptr<Camera>& camera);
