@@ -3,7 +3,7 @@
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Names
-local mathLib = "KiliMathematics"
+local mathLib = "Glm"
 local glad = "Glad"
 local engine = "KiliEngine"
 local runtime = "Runtime"
