@@ -9,8 +9,8 @@ namespace Kili
     private:
         Transform mTransform;
         
-        Matrix4 mViewMatrix;
-        Matrix4 mProjMatrix;
+        glm::mat4 mViewMatrix;
+        glm::mat4 mProjMatrix;
 
         float mFov;
         float mNearPane;
@@ -26,9 +26,9 @@ namespace Kili
         
         void recalculate();
         
-        [[nodiscard]] Matrix4 getViewMatrix() const { return mViewMatrix; }
-        [[nodiscard]] Matrix4 getProjMatrix() const { return mProjMatrix; }
-        [[nodiscard]] Matrix4 getViewProjMatrix() const { return  mViewMatrix * mProjMatrix; }
+        [[nodiscard]] glm::mat4 getViewMatrix() const { return mViewMatrix; }
+        [[nodiscard]] glm::mat4 getProjMatrix() const { return mProjMatrix; }
+        [[nodiscard]] glm::mat4 getViewProjMatrix() const { return  mProjMatrix * mViewMatrix; }
         
         [[nodiscard]] float getFov() const { return mFov; }
         void setFov(const float fov) { mFov = fov; }

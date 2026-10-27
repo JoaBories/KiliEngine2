@@ -40,7 +40,7 @@ void Kili::TimeClock::computeTime()
     mLastFrameStart = mFrameStart;
     
     // Compute Delta time.
-    mDeltaTime = Klm::Min(static_cast<float>(mFrameTime) / static_cast<float>(mSdlFrequency), mMaxDeltaTime);
+    mDeltaTime = glm::min(static_cast<float>(mFrameTime) / static_cast<float>(mSdlFrequency), mMaxDeltaTime);
     
     // Update time and frame count.
     mTime += mFrameTime;

@@ -6,11 +6,11 @@
 
 namespace Kili
 {
-    Vector2 Renderer::mScreenSize = Vector2();
+    glm::vec2 Renderer::mScreenSize = glm::vec2();
     
-    Matrix4 Renderer::mViewMatrix = Matrix4();
-    Matrix4 Renderer::mProjMatrix = Matrix4();
-    Matrix4 Renderer::mViewProjMatrix = Matrix4();
+    glm::mat4 Renderer::mViewMatrix = glm::mat4();
+    glm::mat4 Renderer::mProjMatrix = glm::mat4();
+    glm::mat4 Renderer::mViewProjMatrix = glm::mat4();
     
     void Renderer::onEvent(const IEvent& event)
     {
@@ -26,7 +26,7 @@ namespace Kili
     
     void Renderer::beginScene(const std::shared_ptr<Camera>& camera)
     {
-        RenderCommand::clear(Vector4(0.45f, 0.45f, 1.0f, 1.0f));
+        RenderCommand::clear(glm::vec4(0.45f, 0.45f, 1.0f, 1.0f));
         
         if (!camera)
         {

@@ -1,43 +1,37 @@
 #pragma once
 
-#pragma once
-
-#include "Vector3.h"
-#include "Matrix4.h"
-#include "Quaternion.h"
-
 namespace Kili
 {
 	class Transform
 	{
 	protected:
-		Vector3 mPosition;
-		Quaternion mRotation; //Quaternion mRotation
-		Vector3 mScale;
+		glm::vec3 mPosition;
+		glm::quat mRotation; //Quaternion mRotation
+		glm::vec3 mScale;
 
 	public:
 		Transform() : 
-			mPosition(Vector3::Zero), mRotation(Quaternion(Vector3::UnitZ, 0.0f)), mScale(Vector3::Unit) {}
+			mPosition(glm::vec3()), mRotation(glm::quat()), mScale(glm::vec3(1.0f,1.0f,1.0f)) {}
 	
-		Transform(const Vector3& position, const Quaternion& rotation, const Vector3& scale) :
+		Transform(const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale) :
 			mPosition(position), mRotation(rotation), mScale(scale) {}
 
-		[[nodiscard]] Vector3 getPosition() const { return mPosition; }
-		[[nodiscard]] Quaternion getRotation() const { return mRotation; }
-		[[nodiscard]] Vector3 getScale() const { return mScale; }
+		[[nodiscard]] constexpr glm::vec3 getPosition() const { return mPosition; }
+		[[nodiscard]] constexpr glm::quat getRotation() const { return mRotation; }
+		[[nodiscard]] constexpr glm::vec3 getScale() const { return mScale; }
 
-		[[nodiscard]] Vector3 getForwardVector() const { return Vector3::transform(Vector3::UnitX, mRotation);}
-		[[nodiscard]] Vector3 getUpVector() const {return Vector3::transform(Vector3::UnitY, mRotation);}
-		[[nodiscard]] Vector3 getRightVector() const {return Vector3::transform(Vector3::UnitZ, mRotation);}
+		[[nodiscard]] constexpr glm::vec3 getForwardVector() const { return mRotation * glm::vec3(1.0f, 0.0f, 0.0f); }
+		[[nodiscard]] constexpr glm::vec3 getUpVector() const {return mRotation * glm::vec3(0.0f,1.0f,0.0f); }
+		[[nodiscard]] constexpr glm::vec3 getRightVector() const {return mRotation * glm::vec3(0.0f,0.0f,1.0f); }
 
-		void setPosition(const Vector3& newPos) { mPosition = newPos; }
-		void addPosition(const Vector3& movement) { mPosition += movement; }
+		constexpr void setPosition(const glm::vec3& newPos) { mPosition = newPos; }
+		constexpr void addPosition(const glm::vec3& movement) { mPosition += movement; }
 
-		void setRotation(const Quaternion& newRot) { mRotation = newRot; }
-		void rotate(const Quaternion& rotation);
-		void rotate(const Vector3& axis, float angle);
+		constexpr void setRotation(const glm::quat& newRot) { mRotation = newRot; }
+		void rotate(const glm::quat& rotation);
+		void rotate(const glm::vec3& axis, float angle);
 
-		void setScale(const Vector3& newScale) { mScale = newScale; }
+		constexpr void setScale(const glm::vec3& newScale) { mScale = newScale; }
 	};
 
 	/** 
@@ -47,7 +41,7 @@ namespace Kili
 	{
 	private :
 		Transform mTransform;
-		mutable Matrix4 mTransformMatrix; // Mutable because it is cached and so th getter can be const
+		mutable glm::mat4 mTransformMatrix; // Mutable because it is cached and so th getter can be const
 		mutable bool mNeedUpdate = true;
 	
 		void recomputeWorldTransformMatrix() const;
@@ -58,26 +52,26 @@ namespace Kili
 		WorldTransform(const Transform& transform) : 
 			mTransform(transform) {}
 	
-		WorldTransform(const Vector3& position, const Quaternion& rotation, const Vector3& scale) : 
+		WorldTransform(const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale) : 
 			mTransform(Transform(position, rotation, scale)) {}
 
-		[[nodiscard]] inline Matrix4 getTransformMatrix() const { recomputeWorldTransformMatrix(); return mTransformMatrix; }
+		[[nodiscard]] inline glm::mat4 getTransformMatrix() const { recomputeWorldTransformMatrix(); return mTransformMatrix; }
 	
-		[[nodiscard]] inline Vector3 getPosition() const { return mTransform.getPosition(); }
-		[[nodiscard]] inline Quaternion getRotation() const { return mTransform.getRotation(); }
-		[[nodiscard]] inline Vector3 getScale() const { return mTransform.getScale(); }
+		[[nodiscard]] constexpr glm::vec3 getPosition() const { return mTransform.getPosition(); }
+		[[nodiscard]] constexpr glm::quat getRotation() const { return mTransform.getRotation(); }
+		[[nodiscard]] constexpr glm::vec3 getScale() const { return mTransform.getScale(); }
 	
-		[[nodiscard]] inline Vector3 getForwardVector() const { return mTransform.getForwardVector(); }
-		[[nodiscard]] inline Vector3 getUpVector() const  { return mTransform.getUpVector(); }
-		[[nodiscard]] inline Vector3 getRightVector() const { return mTransform.getRightVector(); }
+		[[nodiscard]] constexpr glm::vec3 getForwardVector() const { return mTransform.getForwardVector(); }
+		[[nodiscard]] constexpr glm::vec3 getUpVector() const  { return mTransform.getUpVector(); }
+		[[nodiscard]] constexpr glm::vec3 getRightVector() const { return mTransform.getRightVector(); }
 	
-		inline void setPosition(const Vector3& newPos) { mNeedUpdate = true; mTransform.setPosition(newPos); }
-		inline void addPosition(const Vector3& movement) { mNeedUpdate = true; mTransform.addPosition(movement); }
+		constexpr void setPosition(const glm::vec3& newPos) { mNeedUpdate = true; mTransform.setPosition(newPos); }
+		constexpr void addPosition(const glm::vec3& movement) { mNeedUpdate = true; mTransform.addPosition(movement); }
 
-		inline void setRotation(const Quaternion& newRot) { mNeedUpdate = true; mTransform.setRotation(newRot); }
-		inline void rotate(const Quaternion& rotation) { mNeedUpdate = true; mTransform.rotate(rotation); }
-		inline void rotate(const Vector3& axis, const float angle) { mNeedUpdate = true; mTransform.rotate(axis, angle); }
+		constexpr void setRotation(const glm::quat& newRot) { mNeedUpdate = true; mTransform.setRotation(newRot); }
+		void rotate(const glm::quat& rotation) { mNeedUpdate = true; mTransform.rotate(rotation); }
+		void rotate(const glm::vec3& axis, const float angle) { mNeedUpdate = true; mTransform.rotate(axis, angle); }
 
-		inline void setScale(const Vector3& newScale) { mNeedUpdate = true; mTransform.setScale(newScale); }
+		constexpr void setScale(const glm::vec3& newScale) { mNeedUpdate = true; mTransform.setScale(newScale); }
 	};
 }

@@ -1,7 +1,7 @@
 #include "klpch.h"
 #include "OpenGlRendererApi.h"
 
-void Kili::OpenGlRendererApi::clear(const Vector4& clearColor)
+void Kili::OpenGlRendererApi::clear(const glm::vec4& clearColor)
 {
     glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

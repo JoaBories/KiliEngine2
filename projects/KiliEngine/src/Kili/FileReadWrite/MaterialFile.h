@@ -35,9 +35,9 @@ namespace Kili
         std::vector<std::pair<std::string, bool>> mBoolParameters;
         std::vector<std::pair<std::string, int>> mIntParameters;
         std::vector<std::pair<std::string, float>> mFloatParameters;
-        std::vector<std::pair<std::string, Vector2>> mVec2Parameters;
-        std::vector<std::pair<std::string, Vector3>> mVec3Parameters;
-        std::vector<std::pair<std::string, Vector4>> mVec4Parameters;
+        std::vector<std::pair<std::string, glm::vec2>> mVec2Parameters;
+        std::vector<std::pair<std::string, glm::vec3>> mVec3Parameters;
+        std::vector<std::pair<std::string, glm::vec4>> mVec4Parameters;
         
         static bool handleTypes(const std::string& type, const std::string& value, const std::string& paramName, MaterialFile& material);
         
@@ -53,16 +53,16 @@ namespace Kili
         void addBoolParameter(std::string name, bool value)     { mBoolParameters.emplace_back(std::move(name), value); }
         void addIntParameter(std::string name, int value)       { mIntParameters.emplace_back(std::move(name), value); }
         void addFloatParameter(std::string name, float value)   { mFloatParameters.emplace_back(std::move(name), value); }
-        void addVec2Parameter(std::string name, Vector2 value)  { mVec2Parameters.emplace_back(std::move(name), value); }
-        void addVec3Parameter(std::string name, Vector3 value)  { mVec3Parameters.emplace_back(std::move(name), value); }
-        void addVec4Parameter(std::string name, Vector4 value)  { mVec4Parameters.emplace_back(std::move(name), value); }
+        void addVec2Parameter(std::string name, glm::vec2 value)  { mVec2Parameters.emplace_back(std::move(name), value); }
+        void addVec3Parameter(std::string name, glm::vec3 value)  { mVec3Parameters.emplace_back(std::move(name), value); }
+        void addVec4Parameter(std::string name, glm::vec4 value)  { mVec4Parameters.emplace_back(std::move(name), value); }
         
         [[nodiscard]] const std::vector<std::pair<std::string, bool>>& getBoolParameters() const    { return mBoolParameters; }
         [[nodiscard]] const std::vector<std::pair<std::string, int>>& getIntParameters() const      { return mIntParameters; }
         [[nodiscard]] const std::vector<std::pair<std::string, float>>& getFloatParameters() const  { return mFloatParameters; }
-        [[nodiscard]] const std::vector<std::pair<std::string, Vector2>>& getVec2Parameters() const { return mVec2Parameters; }
-        [[nodiscard]] const std::vector<std::pair<std::string, Vector3>>& getVec3Parameters() const { return mVec3Parameters; }
-        [[nodiscard]] const std::vector<std::pair<std::string, Vector4>>& getVec4Parameters() const { return mVec4Parameters; }
+        [[nodiscard]] const std::vector<std::pair<std::string, glm::vec2>>& getVec2Parameters() const { return mVec2Parameters; }
+        [[nodiscard]] const std::vector<std::pair<std::string, glm::vec3>>& getVec3Parameters() const { return mVec3Parameters; }
+        [[nodiscard]] const std::vector<std::pair<std::string, glm::vec4>>& getVec4Parameters() const { return mVec4Parameters; }
         
         static MaterialFile readMaterial(const std::string& path);
     };

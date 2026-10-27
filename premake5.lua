@@ -29,15 +29,17 @@ project (mathLib)
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
     files {
-        "projects/%{prj.name}/src/**.h",
-        "projects/%{prj.name}/src/**.cpp"
+        "vendor/%{prj.name}/src/**.h",
+        "vendor/%{prj.name}/src/**.cpp",
+        "vendor/%{prj.name}/src/**.inl",
+        "vendor/%{prj.name}/src/**.hpp"
     }
 
     includedirs {
-        ("projects/" .. mathLib .. "/src")
+        ("vendor/" .. mathLib .. "/src")
     }
 
-    cppdialect "c++17"
+    cppdialect "c++20"
     staticruntime "On"
     systemversion "latest"
 
@@ -112,7 +114,7 @@ project (engine)
     }
 
     includedirs {
-        ("projects/" .. mathLib .. "/src"),
+        ("vendor/" .. mathLib .. "/src"),
         ("projects/" .. engine .. "/src"),
         ("vendor/" .. glad .. "/include"),
         "vendor/Sdl3/include"
@@ -160,7 +162,7 @@ project (runtime)
     }
 
     includedirs {
-        ("projects/" .. mathLib .. "/src"),
+        ("vendor/" .. mathLib .. "/src"),
         ("projects/" .. engine .. "/src"),
         ("vendor/" .. glad .. "/include"),
         "vendor/Sdl3/include"

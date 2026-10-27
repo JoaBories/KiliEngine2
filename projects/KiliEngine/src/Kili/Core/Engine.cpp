@@ -37,28 +37,28 @@ namespace Kili
                 case SDL_EVENT_MOUSE_BUTTON_DOWN:
                     onEvent(MouseButtonEvent(
                         event.button.button, true, 
-                        Vector2{event.button.x, event.button.y}, 
+                        glm::vec2{event.button.x, event.button.y}, 
                         event.button.clicks));
                     break;
                     
                 case SDL_EVENT_MOUSE_BUTTON_UP:
                     onEvent(MouseButtonEvent(
                         event.button.button, false, 
-                        Vector2{event.button.x, event.button.y}, 
+                        glm::vec2{event.button.x, event.button.y}, 
                         event.button.clicks));
                     break;
                     
                 case SDL_EVENT_MOUSE_MOTION:
                     onEvent(MouseMoveEvent(
-                        Vector2{event.motion.x, event.motion.y}, 
-                        Vector2{event.motion.xrel, event.motion.yrel}));
+                        glm::vec2{event.motion.x, event.motion.y}, 
+                        glm::vec2{event.motion.xrel, event.motion.yrel}));
                     break;
                     
                 case SDL_EVENT_MOUSE_WHEEL:
                     onEvent(MouseWheelEvent(
                         event.wheel.x, 
                         event.wheel.y, 
-                        Vector2{event.wheel.mouse_x, event.wheel.mouse_y}, 
+                        glm::vec2{event.wheel.mouse_x, event.wheel.mouse_y}, 
                         event.wheel.direction));
                     break;
                     
