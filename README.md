@@ -9,6 +9,17 @@ I use premake5 for project generation.
 You can generate a Visual Studio solution (`.sln` and `.vcxproj`) using `GenerateSolution.bat`.
 But you can also use any build supported by premake5. Note that I didn't test them.
 
+## Vendors
+This project use multiple open software. You can find their license in their respective folder in `/vendor`
+or in their header for header only libraries `/projects/KiliEngine/src/Vendor`.
+
+- [Premake 5](https://github.com/premake/premake-core)
+- [SDL 3](https://github.com/libsdl-org/SDL)
+- [Glad](https://github.com/Dav1dde/glad)
+- [GLM](https://github.com/g-truc/glm)
+- [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h)
+- [tiny_obj_loader](https://github.com/tinyobjloader/tinyobjloader)
+
 ## Roadmap 🗺️
 This is a roadmap representing the features I plan to implement in the engine.
 I will update by adding, removing, or moving features during the project development.
