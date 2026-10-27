@@ -15,8 +15,8 @@ void main()
 {
     float speed = 0.5;
     
-    gl_Position = vec4(vPos, 1.0) * uTransform * uViewProjMatrix;
+    gl_Position = uViewProjMatrix * uTransform * vec4(vPos, 1.0);
     
-    normal = (vec4(vNormal, 0.0) * uTransform).xyz;
+    normal = (uTransform * vec4(vNormal, 0.0)).xyz;
     uv = vUv;
 }

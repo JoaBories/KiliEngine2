@@ -32,11 +32,11 @@ namespace Kili
     protected:
         Uint8 mButton;
         bool mDown;
-        Vector2 mMousePos;
+        glm::vec2 mMousePos;
         Uint8 mClicks;
 
     public:
-        MouseButtonEvent(const Uint8 button, const bool down, const Vector2 mousePos, const Uint8 clicks) :
+        MouseButtonEvent(const Uint8 button, const bool down, const glm::vec2 mousePos, const Uint8 clicks) :
             mButton(button), mDown(down), mMousePos(mousePos), mClicks(clicks) {}
         
         EVENT_CLASS_TYPE(InputMouseButton)
@@ -44,24 +44,24 @@ namespace Kili
         
         [[nodiscard]] std::string toString() const override
         {
-            return "Mouse button input event : " + std::to_string(mButton) + (mDown ? " Down" : " Up") + " at " + mMousePos.toString() + " / " + std::to_string(mClicks);
+            return "Mouse button input event : " + std::to_string(mButton) + (mDown ? " Down" : " Up") + " at " + std::format("({}, {})", mMousePos.x, mMousePos.y) + " / " + std::to_string(mClicks);
         }
         
         /** Return an unsigned int with the index of the button.\n 1 is left, 2 is middle and 3 is right */
         [[nodiscard]] Uint8 getButton() const { return mButton; }
         [[nodiscard]] bool isDown() const { return mDown; }
-        [[nodiscard]] Vector2 getMousePos() const { return mMousePos; }
+        [[nodiscard]] glm::vec2 getMousePos() const { return mMousePos; }
         [[nodiscard]] Uint8 getClicks() const { return mClicks; }
     };
     
     class MouseMoveEvent : public IEvent
     {
     protected:
-        Vector2 mMousePos;
-        Vector2 mMouseMove;
+        glm::vec2 mMousePos;
+        glm::vec2 mMouseMove;
         
     public:
-        MouseMoveEvent(const Vector2 mousePos, const Vector2 mouseMove) : 
+        MouseMoveEvent(const glm::vec2 mousePos, const glm::vec2 mouseMove) : 
             mMousePos(mousePos), mMouseMove(mouseMove) {}
         
         EVENT_CLASS_TYPE(InputMouseMove)
@@ -69,22 +69,22 @@ namespace Kili
         
         [[nodiscard]] std::string toString() const override
         {
-            return "Mouse move input event : " + mMousePos.toString() + " / " + mMouseMove.toString();
+            return "Mouse move input event : " + std::format("({}, {})", mMousePos.x, mMousePos.y) + " / " + std::format("({}, {})", mMouseMove.x, mMouseMove.y);
         }
         
-        [[nodiscard]] Vector2 getMousePos() const { return mMousePos; }
-        [[nodiscard]] Vector2 getMouseMove() const { return mMouseMove; }
+        [[nodiscard]] glm::vec2 getMousePos() const { return mMousePos; }
+        [[nodiscard]] glm::vec2 getMouseMove() const { return mMouseMove; }
     };
     
     class MouseWheelEvent : public IEvent
     {
     protected:
         float mMouseScrollX, mMouseScrollY;
-        Vector2 mMousePos;
+        glm::vec2 mMousePos;
         bool mFlipped;
         
     public:
-        MouseWheelEvent(const float mouseScrollX, const float mouseScrollY, const Vector2 mousePos, const bool flipped) : 
+        MouseWheelEvent(const float mouseScrollX, const float mouseScrollY, const glm::vec2 mousePos, const bool flipped) : 
             mMouseScrollX(mouseScrollX), mMouseScrollY(mouseScrollY), mMousePos(mousePos), mFlipped(flipped) {}
         
         EVENT_CLASS_TYPE(InputMouseWheel)
@@ -92,12 +92,12 @@ namespace Kili
         
         [[nodiscard]] std::string toString() const override
         {
-            return "Mouse wheel input event : x : " + std::to_string(mMouseScrollX) + " y : " + std::to_string(mMouseScrollY) + " / " + mMousePos.toString();
+            return "Mouse wheel input event : x : " + std::to_string(mMouseScrollX) + " y : " + std::to_string(mMouseScrollY) + " / " + std::format("({}, {})", mMousePos.x, mMousePos.y);
         }
         
         [[nodiscard]] float getMouseScrollX() const { return mMouseScrollX; } /* Right positive, left negative. */
         [[nodiscard]] float getMouseScrollY() const { return mMouseScrollY; } /* Away from the user positive, toward the user negative. */
-        [[nodiscard]] Vector2 getMousePos() const { return mMousePos; }
+        [[nodiscard]] glm::vec2 getMousePos() const { return mMousePos; }
         [[nodiscard]] bool isFlipped() const { return mFlipped; }
     };
     

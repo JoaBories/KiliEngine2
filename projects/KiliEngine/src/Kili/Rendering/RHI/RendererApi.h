@@ -37,7 +37,7 @@ namespace Kili
         virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
         
         // Clear
-        virtual void clear(const Vector4& clearColor) = 0;
+        virtual void clear(const glm::vec4& clearColor) = 0;
         
         // Utils
         virtual void setVsync(bool enabled) = 0;

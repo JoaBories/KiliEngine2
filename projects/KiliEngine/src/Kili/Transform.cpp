@@ -3,24 +3,25 @@
 
 namespace Kili
 {
-    void Transform::rotate(const Quaternion& rotation)
+    void Transform::rotate(const glm::quat& rotation)
     {
-        mRotation = Quaternion::concatenate(mRotation, rotation);
-        mRotation.normalize();
+        mRotation = rotation * mRotation;
+        mRotation = glm::normalize(mRotation);
     }
 
-    void Transform::rotate(const Vector3& axis, const float angle)
+    void Transform::rotate(const glm::vec3& axis, const float angle)
     {
-        const Quaternion increment(axis, angle);
-        mRotation = Quaternion::concatenate(mRotation, increment);
+        const glm::quat increment(angle, axis);
+        mRotation = increment * mRotation;
+        mRotation = glm::normalize(mRotation);
     }
 
     void WorldTransform::recomputeWorldTransformMatrix() const
     {
         if (!mNeedUpdate) return;
         mNeedUpdate = false;
-        mTransformMatrix = Matrix4::createScale(mTransform.getScale());
-        mTransformMatrix *= Matrix4::createFromQuaternion(mTransform.getRotation());
-        mTransformMatrix *= Matrix4::createTranslation(mTransform.getPosition());
+        mTransformMatrix = glm::translate(glm::mat4(1.0f), mTransform.getPosition());
+        mTransformMatrix *= glm::mat4_cast(mTransform.getRotation());
+        mTransformMatrix = glm::scale(mTransformMatrix, mTransform.getScale());
     }
 }

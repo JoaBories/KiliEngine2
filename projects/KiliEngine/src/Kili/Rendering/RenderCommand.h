@@ -17,7 +17,7 @@ namespace Kili
         inline static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) { mApi->drawIndexed(vertexArray); }
         
         // Clear
-        inline static void clear(const Vector4& clearColor) { mApi->clear(clearColor); }
+        inline static void clear(const glm::vec4& clearColor) { mApi->clear(clearColor); }
         
         // Utils
         inline static void setVsync(const bool enabled) { mApi->setVsync(enabled); }

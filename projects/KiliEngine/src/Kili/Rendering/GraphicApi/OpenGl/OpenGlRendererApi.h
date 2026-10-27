@@ -6,7 +6,7 @@ namespace Kili
     class OpenGlRendererApi : public RendererApi
     {
     public:
-        void clear(const Vector4& clearColor) override;
+        void clear(const glm::vec4& clearColor) override;
         
         void draw(const std::shared_ptr<VertexArray>& vertexArray) override;
         void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;

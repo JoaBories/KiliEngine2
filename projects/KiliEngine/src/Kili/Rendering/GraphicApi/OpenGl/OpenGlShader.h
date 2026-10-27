@@ -48,17 +48,17 @@ namespace Kili
         void setBool(const std::string& pName, const bool value) override       { glUniform1i(glGetUniformLocation(mId, pName.c_str()), value); }
         void setInt(const std::string& pName, const int value) override         { glUniform1i(glGetUniformLocation(mId, pName.c_str()), value); }
         void setFloat(const std::string& pName, const float value) override     { glUniform1f(glGetUniformLocation(mId, pName.c_str()), value); }
-        void setVec2(const std::string& pName, const Vector2& value) override   { glUniform2f(glGetUniformLocation(mId, pName.c_str()), value.x, value.y); }
-        void setVec3(const std::string& pName, const Vector3& value) override   { glUniform3f(glGetUniformLocation(mId, pName.c_str()), value.x, value.y, value.z); }
-        void setVec4(const std::string& pName, const Vector4& value) override   { glUniform4f(glGetUniformLocation(mId, pName.c_str()), value.x, value.y, value.z, value.w); }
-        void setMat4(const std::string& pName, const Matrix4& matrix) override  { glUniformMatrix4fv(glGetUniformLocation(mId, pName.c_str()), 1, GL_TRUE, matrix.asFloatPtr()); }
+        void setVec2(const std::string& pName, const glm::vec2& value) override   { glUniform2f(glGetUniformLocation(mId, pName.c_str()), value.x, value.y); }
+        void setVec3(const std::string& pName, const glm::vec3& value) override   { glUniform3f(glGetUniformLocation(mId, pName.c_str()), value.x, value.y, value.z); }
+        void setVec4(const std::string& pName, const glm::vec4& value) override   { glUniform4f(glGetUniformLocation(mId, pName.c_str()), value.x, value.y, value.z, value.w); }
+        void setMat4(const std::string& pName, const glm::mat4& matrix) override  { glUniformMatrix4fv(glGetUniformLocation(mId, pName.c_str()), 1, GL_FALSE, glm::value_ptr(matrix)); }
         
         void uploadBool(const int location, const bool value) override          { glUniform1i(location, value); }
         void uploadInt(const int location, const int value) override            { glUniform1i(location, value); }
         void uploadFloat(const int location, const float value) override        { glUniform1f(location, value); }
-        void uploadVec2(const int location, const Vector2& value) override      { glUniform2f(location, value.x, value.y); }
-        void uploadVec3(const int location, const Vector3& value) override      { glUniform3f(location, value.x, value.y, value.z); }
-        void uploadVec4(const int location, const Vector4& value) override      { glUniform4f(location, value.x, value.y, value.z, value.w); }
-        void uploadMat4(const int location, const Matrix4& matrix) override     { glUniformMatrix4fv(location, 1, GL_TRUE, matrix.asFloatPtr()); }
+        void uploadVec2(const int location, const glm::vec2& value) override      { glUniform2f(location, value.x, value.y); }
+        void uploadVec3(const int location, const glm::vec3& value) override      { glUniform3f(location, value.x, value.y, value.z); }
+        void uploadVec4(const int location, const glm::vec4& value) override      { glUniform4f(location, value.x, value.y, value.z, value.w); }
+        void uploadMat4(const int location, const glm::mat4& matrix) override     { glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix)); }
     };
 }

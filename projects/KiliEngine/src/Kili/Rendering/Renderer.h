@@ -11,11 +11,11 @@ namespace Kili
     class Renderer
     {     
     private:
-        static Vector2 mScreenSize;
+        static glm::vec2 mScreenSize;
         
-        static Matrix4 mViewMatrix;
-        static Matrix4 mProjMatrix;
-        static Matrix4 mViewProjMatrix;
+        static glm::mat4 mViewMatrix;
+        static glm::mat4 mProjMatrix;
+        static glm::mat4 mViewProjMatrix;
         
     public:
         static void onEvent(const IEvent& event);
@@ -24,7 +24,7 @@ namespace Kili
         static std::string getApiName() { return toString(RenderCommand::getApi()); }
         
         static void resizeRenderer(uint32_t width, uint32_t height);
-        static Vector2 getScreenSize() { return mScreenSize; }
+        static glm::vec2 getScreenSize() { return mScreenSize; }
         
         static void beginScene(const std::shared_ptr<Camera>& camera);
         static void endScene();

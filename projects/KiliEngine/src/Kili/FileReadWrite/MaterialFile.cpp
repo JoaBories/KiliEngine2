@@ -64,7 +64,7 @@ namespace Kili
                     LOG_WARNING("Invalid float for vec2, parameter 1");
                     return false;
                 }
-                material.addVec2Parameter(paramName, Vector2(val0, val1));
+                material.addVec2Parameter(paramName, glm::vec2(val0, val1));
                 return true;
             }
             else
@@ -94,7 +94,7 @@ namespace Kili
                     LOG_WARNING("Invalid float for vec3, parameter 2");
                     return false;
                 }
-                material.addVec3Parameter(paramName, Vector3(val0, val1, val2));
+                material.addVec3Parameter(paramName, glm::vec3(val0, val1, val2));
                 return true;
             }
             else
@@ -129,7 +129,7 @@ namespace Kili
                     LOG_WARNING("Invalid float for vec4, parameter 3");
                     return false;
                 }
-                material.addVec4Parameter(paramName, Vector4(val0, val1, val2, val3));
+                material.addVec4Parameter(paramName, glm::vec4(val0, val1, val2, val3));
                 return true;
             }
             else

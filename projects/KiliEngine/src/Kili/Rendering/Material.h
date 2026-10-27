@@ -23,9 +23,9 @@ namespace Kili
         std::vector<std::pair<int, bool>> mBoolParameters;
         std::vector<std::pair<int, int>> mIntParameters;
         std::vector<std::pair<int, float>> mFloatParameters;
-        std::vector<std::pair<int, Vector2>> mVec2TextureParameters;
-        std::vector<std::pair<int, Vector3>> mVec3TextureParameters;
-        std::vector<std::pair<int, Vector4>> mVec4TextureParameters;
+        std::vector<std::pair<int, glm::vec2>> mVec2TextureParameters;
+        std::vector<std::pair<int, glm::vec3>> mVec3TextureParameters;
+        std::vector<std::pair<int, glm::vec4>> mVec4TextureParameters;
         
     public:
         Material() = delete;

@@ -35,9 +35,9 @@ namespace Kili
             
             MaterialFile test = MaterialFile::readMaterial("resources/Test.mat");
             
-            mTransform = Transform(Vector3(5,0,0), Quaternion(Vector3::UnitZ, Klm::DEG_2_RAD * 45.0f), Vector3::Unit);
+            mTransform = Transform(glm::vec3(4,0,0), glm::quat(glm::vec3(0.0f,0.0f,45.0f)), glm::vec3(1.0f, 1.0f, 1.0f));
             
-            mCamera.reset(new Camera(Transform(), 60.0f));
+            mCamera.reset(new Camera(Transform(), 90.0f));
             CameraManager::addCamera(mCamera);
             CameraManager::setActiveCamera(mCamera);
             
@@ -47,7 +47,7 @@ namespace Kili
         
         void onUpdate() override
         {
-            mTransform.rotate(Quaternion(Vector3::UnitY, 10.0f * TimeClock::deltaTime() * Klm::DEG_2_RAD));
+            mTransform.rotate(glm::quat(glm::vec3(0.0f, glm::radians(30.0f * TimeClock::deltaTime()) ,0.0f)));
         }
         
         void onRender() override
