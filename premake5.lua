@@ -3,7 +3,7 @@
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Names
-local mathLib = "Glm"
+local glm = "Glm"
 local glad = "Glad"
 local engine = "KiliEngine"
 local runtime = "Runtime"
@@ -19,9 +19,9 @@ workspace "KiliEngine2"
 
     debugdir "%{wks.location}"
 
--- =========== Math lib
-project (mathLib)
-    location "projects/%{prj.name}"
+-- =========== GLM
+project (glm)
+    location "vendor/%{prj.name}"
     kind "StaticLib"
     language "C++"
 
@@ -36,7 +36,7 @@ project (mathLib)
     }
 
     includedirs {
-        ("vendor/" .. mathLib .. "/src")
+        ("vendor/" .. glm .. "/src")
     }
 
     cppdialect "c++20"
@@ -114,7 +114,7 @@ project (engine)
     }
 
     includedirs {
-        ("vendor/" .. mathLib .. "/src"),
+        ("vendor/" .. glm .. "/src"),
         ("projects/" .. engine .. "/src"),
         ("vendor/" .. glad .. "/include"),
         "vendor/Sdl3/include"
@@ -125,7 +125,7 @@ project (engine)
     }
 
     links {
-        (mathLib),
+        (glm),
         (glad),
         "SDL3"
     }
@@ -162,7 +162,7 @@ project (runtime)
     }
 
     includedirs {
-        ("vendor/" .. mathLib .. "/src"),
+        ("vendor/" .. glm .. "/src"),
         ("projects/" .. engine .. "/src"),
         ("vendor/" .. glad .. "/include"),
         "vendor/Sdl3/include"
@@ -173,7 +173,7 @@ project (runtime)
     }
 
     links {
-        (mathLib),
+        (glm),
         (engine),
         (glad),
         "Sdl3"
