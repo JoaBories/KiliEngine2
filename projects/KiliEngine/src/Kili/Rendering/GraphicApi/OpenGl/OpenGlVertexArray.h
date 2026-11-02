@@ -44,7 +44,7 @@ namespace Kili
         
     public:
         OpenGlVertexArray();
-        ~OpenGlVertexArray() override = default;
+        ~OpenGlVertexArray() override;
         
         void use() const override;
         

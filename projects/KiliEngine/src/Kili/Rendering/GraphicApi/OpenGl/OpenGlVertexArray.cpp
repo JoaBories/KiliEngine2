@@ -50,9 +50,14 @@ void Kili::OpenGlIndexBuffer::use() const
 
 #pragma region VertexArray
 
-Kili::OpenGlVertexArray::OpenGlVertexArray()
+Kili::OpenGlVertexArray::OpenGlVertexArray() : mVertexCount(0)
 {
     glCreateVertexArrays(1, &mId);
+}
+
+Kili::OpenGlVertexArray::~OpenGlVertexArray()
+{
+    glDeleteVertexArrays(1, &mId);
 }
 
 void Kili::OpenGlVertexArray::use() const
