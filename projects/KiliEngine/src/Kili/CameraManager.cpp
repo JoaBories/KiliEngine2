@@ -31,13 +31,13 @@ namespace Kili
 
     void CameraManager::removeCamera(const std::shared_ptr<Camera>& camera)
     {
-        if (const auto iter = std::find(mCameras.begin(), mCameras.end(), camera); iter == mCameras.end())
+        if (const auto iter = std::find(mCameras.begin(), mCameras.end(), camera); iter != mCameras.end())
             mCameras.erase(iter);
     }
 
     bool CameraManager::setActiveCamera(const std::shared_ptr<Camera>& camera)
     {
-        if (const auto iter = std::find(mCameras.begin(), mCameras.end(), camera); iter == mCameras.end())
+        if (const auto iter = std::find(mCameras.begin(), mCameras.end(), camera); iter != mCameras.end())
         {
             mActiveCamera = static_cast<uint32_t>(std::distance(mCameras.begin(), iter));
             return true;

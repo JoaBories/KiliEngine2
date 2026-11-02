@@ -73,7 +73,7 @@ void Kili::SceneManager::render()
 
 bool Kili::SceneManager::nextScene(const std::string& nextScene)
 {
-    if (const int index = findScene(nextScene) != -1)
+    if (const int index = findScene(nextScene); index != -1)
     {
         mPendingNewScene = index;
         return true;

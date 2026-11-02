@@ -58,13 +58,18 @@ int Kili::ConfigINI::getInt(const std::string& section, const std::string& key, 
 float Kili::ConfigINI::getFloat(const std::string& section, const std::string& key, const float defaultVal) const
 {
     const std::string value = getString(section, key);
-    if (value.empty()) return false;
+    if (value.empty()) return defaultVal;
     
     float val;
     
     try { val = std::stof(value); }
     catch (std::invalid_argument) { 
         LOG_WARNING("Not a float at key:" + key + " in Section: " + section + " of file: " + mPath);
+        return defaultVal;
+    }
+    catch (std::out_of_range const&)
+    {
+        LOG_WARNING("Float out of range at key:" + key + " in Section: " + section + " of file: " + mPath);
         return defaultVal;
     }
     
