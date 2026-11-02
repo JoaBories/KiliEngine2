@@ -30,7 +30,6 @@ namespace Kili
         
         if (!camera)
         {
-            LOG_WARNING("There is no camera");
             return;
         }
         

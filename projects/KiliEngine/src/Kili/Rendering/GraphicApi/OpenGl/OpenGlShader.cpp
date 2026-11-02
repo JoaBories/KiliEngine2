@@ -67,14 +67,16 @@ Kili::OpenGlShader::OpenGlShader(std::string path) : mPath(std::move(path))
         glGetProgramInfoLog(mId, maxLength, &maxLength, infoLog.data());
         
         LOG_WARNING("Error linking Shader " + mPath + " : " + std::string(infoLog.data()));
-        glDeleteProgram(mId);
-        mId = 0;
         
         for (const auto shader : shaders)
         {
             glDetachShader(mId, shader);
             glDeleteShader(shader);
         }
+        
+        glDeleteProgram(mId);
+        mId = 0;
+        
         return;
     }
 

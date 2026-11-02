@@ -20,7 +20,7 @@ namespace Kili
         mViewMatrix = glm::lookAt(camPosition, target, mTransform.getUpVector());
 
         const glm::vec2 screenSize = Renderer::getScreenSize();
-        mProjMatrix = glm::perspectiveFov(mFov, screenSize.x, screenSize.y, mNearPane, mFarPane);
+        mProjMatrix = glm::perspectiveFov(glm::radians(mFov), screenSize.x, screenSize.y, mNearPane, mFarPane);
     }
 
     void CameraManager::addCamera(const std::shared_ptr<Camera>& camera)

@@ -5,8 +5,6 @@ void Kili::OpenGlRendererApi::clear(const glm::vec4& clearColor)
 {
     glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    glEnable(GL_DEPTH_TEST);
 }
 
 void Kili::OpenGlRendererApi::draw(const std::shared_ptr<VertexArray>& vertexArray)

@@ -1,10 +1,8 @@
 #pragma once
 
-#include "DefaultScene.h"
 #include "Scene.h"
 #include "Kili/Transform.h"
 #include "Kili/CameraManager.h"
-#include "Kili/FileReadWrite/MaterialFile.h"
 #include "Kili/AssetManager/AssetManager.h"
 
 namespace Kili
@@ -33,9 +31,7 @@ namespace Kili
         {
             mShaderProgram = AssetManager::getShader("resources/Test.shader");
             
-            MaterialFile test = MaterialFile::readMaterial("resources/Test.mat");
-            
-            mTransform = Transform(glm::vec3(4,0,0), glm::quat(glm::vec3(0.0f,0.0f,45.0f)), glm::vec3(1.0f, 1.0f, 1.0f));
+            mTransform = Transform(glm::vec3(4,0,0), glm::quat(glm::vec3(0.0f,0.0f,glm::radians(45.0f))), glm::vec3(1.0f, 1.0f, 1.0f));
             
             mCamera.reset(new Camera(Transform(), 90.0f));
             CameraManager::addCamera(mCamera);

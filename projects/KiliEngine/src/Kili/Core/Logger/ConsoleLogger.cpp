@@ -33,7 +33,7 @@ namespace Kili
         }
 
         const std::string filename = message.file.substr(message.file.find_last_of("/\\") + 1); // Keep only the filename and not the path
-        log << "[" << filename << " at line " << message.line << "] ";
+        log << "[" << filename << " l:" << message.line << "] ";
         
         log << message.message;
 

@@ -3,7 +3,6 @@
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Names
-local glm = "Glm"
 local glad = "Glad"
 local engine = "KiliEngine"
 local runtime = "Runtime"
@@ -18,43 +17,6 @@ workspace "KiliEngine2"
     }
 
     debugdir "%{wks.location}"
-
--- =========== GLM
-project (glm)
-    location "vendor/%{prj.name}"
-    kind "StaticLib"
-    language "C++"
-
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
-    files {
-        "vendor/%{prj.name}/src/**.h",
-        "vendor/%{prj.name}/src/**.cpp",
-        "vendor/%{prj.name}/src/**.inl",
-        "vendor/%{prj.name}/src/**.hpp"
-    }
-
-    includedirs {
-        ("vendor/" .. glm .. "/src")
-    }
-
-    cppdialect "c++20"
-    staticruntime "On"
-    systemversion "latest"
-
-    filter "configurations:Debug"
-        defines "KL_DEBUG"
-        symbols "On"
-        
-    filter "configurations:Release"
-        defines "KL_REL"
-        optimize "On"
-        symbols "On"
-
-    filter "configurations:Build"
-        defines "KL_BUILD"
-        optimize "On"
 
 -- =========== Glad
 project (glad)
@@ -74,7 +36,7 @@ project (glad)
         ("vendor/" .. glad .. "/include")
     }
 
-    cppdialect "c++17"
+    cppdialect "c++20"
     staticruntime "On"
     systemversion "latest"
     
@@ -114,9 +76,9 @@ project (engine)
     }
 
     includedirs {
-        ("vendor/" .. glm .. "/src"),
         ("projects/" .. engine .. "/src"),
         ("vendor/" .. glad .. "/include"),
+        "vendor/Glm/src",
         "vendor/Sdl3/include"
     }
 
@@ -125,9 +87,8 @@ project (engine)
     }
 
     links {
-        (glm),
         (glad),
-        "SDL3"
+        "Sdl3"
     }
 
     cppdialect "c++20"
@@ -162,9 +123,9 @@ project (runtime)
     }
 
     includedirs {
-        ("vendor/" .. glm .. "/src"),
         ("projects/" .. engine .. "/src"),
         ("vendor/" .. glad .. "/include"),
+        "vendor/Glm/src",
         "vendor/Sdl3/include"
     }
 
@@ -173,7 +134,6 @@ project (runtime)
     }
 
     links {
-        (glm),
         (engine),
         (glad),
         "Sdl3"
@@ -186,7 +146,7 @@ project (runtime)
         "{COPYDIR} %[config] %[%{!cfg.targetdir}/config]"
     }
 
-    cppdialect "c++17"
+    cppdialect "c++20"
     staticruntime "On"
     systemversion "latest"
 

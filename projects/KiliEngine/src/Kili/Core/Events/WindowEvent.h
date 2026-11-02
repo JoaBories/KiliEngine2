@@ -64,4 +64,13 @@ namespace Kili
         EVENT_CLASS_TYPE(WindowMinimized)
         EVENT_CLASS_CATEGORY(EventCategory::EventWindow)
     };
+    
+    class WindowRestoredEvent : public IEvent
+    {
+    public:
+        WindowRestoredEvent() = default;
+        
+        EVENT_CLASS_TYPE(WindowRestored)
+        EVENT_CLASS_CATEGORY(EventCategory::EventWindow)
+    };
 }

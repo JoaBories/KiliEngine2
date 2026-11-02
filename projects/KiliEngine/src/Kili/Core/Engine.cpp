@@ -90,6 +90,9 @@ namespace Kili
                     onEvent(WindowMinimizedEvent());
                     break;
                     
+                case SDL_EVENT_WINDOW_RESTORED:
+                    onEvent(WindowRestoredEvent());
+                    
                 default:
                     break;
             }
@@ -102,7 +105,7 @@ namespace Kili
         DispatchEvent<WindowCloseEvent>(event, [this](const WindowCloseEvent& e) { mIsRunning = false; });
         DispatchEvent<KeyboardEvent>(event, [this](const KeyboardEvent& e) { if (e.getKey() == SDLK_ESCAPE) mIsRunning = false; } );
         
-        DispatchEvent<WindowFocusEvent>(event, [this](const WindowFocusEvent& e) { if (e.isGained()) mMinimized = false; } );
+        DispatchEvent<WindowRestoredEvent>(event, [this](const WindowRestoredEvent& e) { mMinimized = false; } );
         DispatchEvent<WindowMinimizedEvent>(event, [this](const WindowMinimizedEvent& e) { mMinimized = true; });
         
         Renderer::onEvent(event);
@@ -207,9 +210,9 @@ namespace Kili
             Renderer::endScene();
         }
         
-        SceneManager::loadReload();
-        
         mWindow->update();
+        
+        SceneManager::loadReload();
         
         TimeClock::delayTime();
     }

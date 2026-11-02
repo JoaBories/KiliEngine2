@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Kili/Core/Core.h"
-
 #pragma // Std includes
 #include <utility>
 #include <functional>

@@ -31,12 +31,12 @@ bool Kili::Window::init()
 
 void Kili::Window::update()
 {
-    mContext->swapBuffers();
+    if (mContext) mContext->swapBuffers();
 }
 
 void Kili::Window::close()
 {
-    mContext->close();
+    if (mContext) mContext->close();
     
     SDL_DestroyWindow(mWindow);
     mWindow = nullptr;

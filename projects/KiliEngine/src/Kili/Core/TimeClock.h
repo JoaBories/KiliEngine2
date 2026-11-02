@@ -10,17 +10,17 @@ namespace Kili
         friend class Engine; // So only Engine can access Clocking methods
 
     private:
-        static Uint64 mFrameStart; /* Tick from Sdl clock */
+        static uint64_t mFrameStart; /* Tick from Sdl clock */
         
-        static Uint64 mFrameTime;
-        static Uint64 mLastFrameStart;
+        static uint64_t mFrameTime;
+        static uint64_t mLastFrameStart;
         
-        static Uint64 mSdlFrequency; /* From Sdl clock frequency. Usually return 10,000,000 on Windows so 10 tick is 1 micro seconds. */
-        static Uint32 mMaxFps;
-        static Uint64 mTicksPerFrame; /* Number of tick for each frame to pass. Only used if fps are capped and vsync off. */
+        static uint64_t mSdlFrequency; /* From Sdl clock frequency. Usually return 10,000,000 on Windows so 10 tick is 1 micro seconds. */
+        static uint32_t mMaxFps;
+        static uint64_t mTicksPerFrame; /* Number of tick for each frame to pass. Only used if fps are capped. */
         
-        static Uint64 mTime; /* Time elapsed since app start. */
-        static Uint32 mFrameCount; /* Number of frame since app start */
+        static uint64_t mTime; /* Time elapsed since app start. */
+        static uint32_t mFrameCount; /* Number of frame since app start */
         
         static float mMaxDeltaTime;
         static float mDeltaTime;
@@ -41,8 +41,8 @@ namespace Kili
         TimeClock(TimeClock&& pOther) noexcept = delete;
         TimeClock& operator=(TimeClock&& pOther) noexcept = delete;
         
-        [[nodiscard]] static Uint32 getMaxFps() { return mMaxFps; }
-        static void setMaxFps(const Uint32 maxFps) { mMaxFps = maxFps; }
+        [[nodiscard]] static uint32_t getMaxFps() { return mMaxFps; }
+        static void setMaxFps(const uint32_t maxFps) { mMaxFps = maxFps; }
         
         [[nodiscard]] static float getMaxDeltaTime() { return mMaxDeltaTime; }
         static void setMaxDeltaTime(const float maxDeltaTime) { mMaxDeltaTime = maxDeltaTime; }
@@ -54,7 +54,7 @@ namespace Kili
         static void setLoggingInterval(const float interval) { mLogInterval = interval; }
         
         static double time() { return static_cast<double>(mTime) / static_cast<double>(mSdlFrequency); } /* Return elapsed since app start */
-        static Uint32 frameCount() { return mFrameCount; } /* Return frame count since app start */
+        static uint32_t frameCount() { return mFrameCount; } /* Return frame count since app start */
         static float deltaTime() { return mDeltaTime; } /* Delta time in second */
         
         static float avgFrameTime() { return static_cast<float>(mTime) / static_cast<float>(mSdlFrequency) / static_cast<float>(mFrameCount); } /* Average frame time in second */

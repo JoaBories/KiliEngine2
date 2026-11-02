@@ -23,12 +23,18 @@ void Kili::OpenGlContext::init()
     
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+    //TODO ^^ need to move in a render command and be called before sdl window creation ^^
     
     mContext = SDL_GL_CreateContext(mWindowHandle);
     
     const int version = gladLoadGL(SDL_GL_GetProcAddress);
-    if (!version) LOG_ERROR("OpenGL could not initialize");
-    else LOG_LOADING("OpenGl initialized");
+    if (!version)
+    {
+        LOG_ERROR("OpenGL could not initialize");
+        return;
+    }
+    
+    LOG_LOADING("OpenGl initialized");
 
     const std::string openglVersion = std::to_string(GLAD_VERSION_MAJOR(version)) + "." + std::to_string(GLAD_VERSION_MINOR(version));
     const std::string glslVersion = std::string(reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION)));
@@ -36,7 +42,11 @@ void Kili::OpenGlContext::init()
     LOG_LOADING("OpenGL " + openglVersion + " with GLSL " + glslVersion);
     LOG_LOADING("Running on : " + std::string(reinterpret_cast<const char*>(glGetString(GL_RENDERER))));
     
+    glEnable(GL_DEPTH_TEST);
+    
+#if KL_DEBUG
     glDisable(GL_CULL_FACE);
+#endif
 }
 
 void Kili::OpenGlContext::close()

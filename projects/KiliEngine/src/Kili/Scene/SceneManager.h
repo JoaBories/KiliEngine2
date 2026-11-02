@@ -2,7 +2,7 @@
 #include "Scene.h"
 
 /**
- * Scene Manager, singleton that hold all the Scenes and is responsible for their
+ * Scene Manager, static class that hold all the Scenes and is responsible for their
  * loading, unloading.
 */
 

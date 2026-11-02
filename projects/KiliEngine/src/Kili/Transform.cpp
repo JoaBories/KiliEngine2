@@ -11,8 +11,7 @@ namespace Kili
 
     void Transform::rotate(const glm::vec3& axis, const float angle)
     {
-        const glm::quat increment(angle, axis);
-        mRotation = increment * mRotation;
+        mRotation = glm::angleAxis(angle, axis) * mRotation;
         mRotation = glm::normalize(mRotation);
     }
 

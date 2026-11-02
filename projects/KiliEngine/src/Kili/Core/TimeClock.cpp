@@ -3,17 +3,17 @@
 
 #include "Kili/Core/Logger/Log.h"
 
-Uint64 Kili::TimeClock::mFrameStart = 0;
+uint64_t Kili::TimeClock::mFrameStart = 0;
         
-Uint64 Kili::TimeClock::mFrameTime = 0;
-Uint64 Kili::TimeClock::mLastFrameStart = 0;
+uint64_t Kili::TimeClock::mFrameTime = 0;
+uint64_t Kili::TimeClock::mLastFrameStart = 0;
 
-Uint64 Kili::TimeClock::mSdlFrequency = 0;
-Uint32 Kili::TimeClock::mMaxFps = 0;
-Uint64 Kili::TimeClock::mTicksPerFrame = 0;
+uint64_t Kili::TimeClock::mSdlFrequency = 0;
+uint32_t Kili::TimeClock::mMaxFps = 0;
+uint64_t Kili::TimeClock::mTicksPerFrame = 0;
  
-Uint64 Kili::TimeClock::mTime = 0;
-Uint32 Kili::TimeClock::mFrameCount = 0;
+uint64_t Kili::TimeClock::mTime = 0;
+uint32_t Kili::TimeClock::mFrameCount = 0;
  
 float Kili::TimeClock::mMaxDeltaTime = 0.0f;
 float Kili::TimeClock::mDeltaTime = 0.0f;

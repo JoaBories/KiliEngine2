@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "Kili/Core/Core.h"
+
 /*
 *   Simple class for logging in the engine and other applications :
 *       -Use macros for logging at different levels.
@@ -63,11 +65,11 @@ namespace Kili
         static void log(LogLevel level, const std::string& message, const std::string& file, int line);
     };
 
-#define LOG_DEBUG(msg) Log::log(LogLevel::Debug, msg, __FILE__, __LINE__)
-#define LOG_INFO(msg) Log::log(LogLevel::Info, msg, __FILE__, __LINE__)
-#define LOG_LOADING(msg) Log::log(LogLevel::Loading, msg, __FILE__, __LINE__)
-#define LOG_WARNING(msg) Log::log(LogLevel::Warning, msg, __FILE__, __LINE__)
-#define LOG_ERROR(msg) Log::log(LogLevel::Error, msg, __FILE__, __LINE__)
+#define LOG_DEBUG(msg) Kili::Log::log(LogLevel::Debug, msg, __FILE__, __LINE__)
+#define LOG_INFO(msg) Kili::Log::log(LogLevel::Info, msg, __FILE__, __LINE__)
+#define LOG_LOADING(msg) Kili::Log::log(LogLevel::Loading, msg, __FILE__, __LINE__)
+#define LOG_WARNING(msg) Kili::Log::log(LogLevel::Warning, msg, __FILE__, __LINE__)
+#define LOG_ERROR(msg) Kili::Log::log(LogLevel::Error, msg, __FILE__, __LINE__)
     
 #define TEST_ALL_LOG LOG_DEBUG("Test Debug"); LOG_INFO("Test Info"); LOG_LOADING("Test Loading"); LOG_WARNING("Test Warning"); LOG_ERROR("Test Error");
 }

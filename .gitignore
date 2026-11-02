@@ -1,13 +1,13 @@
-﻿// Binaries
+﻿# Binaries
 /bin-int
 /bin
 
-// vs2022 solution
+# vs2022 solution
 *.sln
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
 
-// IDE files
+# IDE files
 .idea
 .vs

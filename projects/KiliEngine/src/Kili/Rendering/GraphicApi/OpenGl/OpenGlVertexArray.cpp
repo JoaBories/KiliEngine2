@@ -33,7 +33,7 @@ Kili::OpenGlIndexBuffer::OpenGlIndexBuffer(const uint32_t* indices, const uint32
     glCreateBuffers(1, &mId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mId);
 
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned long), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 }
 
 Kili::OpenGlIndexBuffer::~OpenGlIndexBuffer()

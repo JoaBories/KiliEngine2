@@ -14,9 +14,9 @@ uniform mat4 uViewProjMatrix;
 void main()
 {
     float speed = 0.5;
-    
-    gl_Position = vec4(vPos, 1.0) * uTransform * uViewProjMatrix;
-    
-    normal = (vec4(vNormal, 0.0) * uTransform).xyz;
+
+    gl_Position = uViewProjMatrix * uTransform * vec4(vPos, 1.0);
+
+    normal = (uTransform * vec4(vNormal, 0.0)).xyz;
     uv = vUv;
 }

@@ -21,7 +21,7 @@ int Kili::FilterModeToOpenGl(const TextureFilterMethod& filterMode, const bool u
 {
     switch (filterMode)
     {
-        case TextureFilterMethod::Linear : return useMipMap ? GL_NEAREST_MIPMAP_LINEAR : GL_LINEAR; break;
+        case TextureFilterMethod::Linear : return useMipMap ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR; break;
         case TextureFilterMethod::Nearest : return useMipMap ? GL_NEAREST_MIPMAP_NEAREST : GL_NEAREST; break;
     }
     
