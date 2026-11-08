@@ -1,6 +1,5 @@
 #pragma once
-
-#include "klpch.h"
+#include "Kili/Core/Core.h"
 
 namespace Kili
 {

@@ -1,5 +1,4 @@
 #pragma once
-#include "klpch.h"
 #include "Event.h"
 
 namespace Kili

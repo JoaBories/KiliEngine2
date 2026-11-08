@@ -1,5 +1,4 @@
 #pragma once
-#include "klpch.h"
 #include "Event.h"
 
 namespace Kili
@@ -7,12 +6,12 @@ namespace Kili
     class KeyboardEvent : public IEvent
     {
     protected:
-        SDL_Keycode mKey;
+        SDL_Scancode mKey;
         bool mIsDown;
         bool mIsRepeat;
         
     public:
-        KeyboardEvent(const SDL_Keycode keycode, const bool down, const bool repeat) : 
+        KeyboardEvent(const SDL_Scancode keycode, const bool down, const bool repeat) : 
             mKey(keycode), mIsDown(down), mIsRepeat(repeat) {}
 
         EVENT_CLASS_TYPE(InputKeyboard)
@@ -23,20 +22,20 @@ namespace Kili
             return "Key input event : " + std::to_string(mKey) + (mIsDown ? " Down" : " Up") + (mIsRepeat ? " Repeat" : "");
         }
         
-        [[nodiscard]] SDL_Keycode getKey() const { return mKey; }
+        [[nodiscard]] SDL_Scancode getScancode() const { return mKey; }
         [[nodiscard]] bool isDown() const { return mIsDown; }
     };
     
     class MouseButtonEvent : public IEvent
     {
     protected:
-        Uint8 mButton;
+        uint8_t mButton;
         bool mDown;
         glm::vec2 mMousePos;
-        Uint8 mClicks;
+        uint8_t mClicks;
 
     public:
-        MouseButtonEvent(const Uint8 button, const bool down, const glm::vec2 mousePos, const Uint8 clicks) :
+        MouseButtonEvent(const uint8_t button, const bool down, const glm::vec2 mousePos, const uint8_t clicks) :
             mButton(button), mDown(down), mMousePos(mousePos), mClicks(clicks) {}
         
         EVENT_CLASS_TYPE(InputMouseButton)
@@ -48,10 +47,10 @@ namespace Kili
         }
         
         /** Return an unsigned int with the index of the button.\n 1 is left, 2 is middle and 3 is right */
-        [[nodiscard]] Uint8 getButton() const { return mButton; }
+        [[nodiscard]] uint8_t getButton() const { return mButton; }
         [[nodiscard]] bool isDown() const { return mDown; }
         [[nodiscard]] glm::vec2 getMousePos() const { return mMousePos; }
-        [[nodiscard]] Uint8 getClicks() const { return mClicks; }
+        [[nodiscard]] uint8_t getClicks() const { return mClicks; }
     };
     
     class MouseMoveEvent : public IEvent
@@ -95,7 +94,7 @@ namespace Kili
             return "Mouse wheel input event : x : " + std::to_string(mMouseScrollX) + " y : " + std::to_string(mMouseScrollY) + " / " + std::format("({}, {})", mMousePos.x, mMousePos.y);
         }
         
-        [[nodiscard]] float getMouseScrollX() const { return mMouseScrollX; } /* Right positive, left negative. */
+        [[nodiscard]] float getMouseScrollX() const { return mMouseScrollX; } /* right positive, left negative. */
         [[nodiscard]] float getMouseScrollY() const { return mMouseScrollY; } /* Away from the user positive, toward the user negative. */
         [[nodiscard]] glm::vec2 getMousePos() const { return mMousePos; }
         [[nodiscard]] bool isFlipped() const { return mFlipped; }
@@ -108,7 +107,7 @@ namespace Kili
         bool mDown;
         
     public:
-        GamepadButtonEvent(const Uint8 button, const bool down) : 
+        GamepadButtonEvent(const uint8_t button, const bool down) : 
             mGamepadButton(static_cast<SDL_GamepadButton>(button)), mDown(down) {}
         
         EVENT_CLASS_TYPE(InputGamepadButton)
@@ -127,10 +126,10 @@ namespace Kili
     {
     protected:
         SDL_GamepadAxis mGamepadAxis;
-        Sint16 mGamepadAxisValue;
+        short mGamepadAxisValue;
         
     public:
-        GamepadAxisEvent(const Uint8 axis, const Sint16 axisValue) : 
+        GamepadAxisEvent(const uint8_t axis, const short axisValue) : 
             mGamepadAxis(static_cast<SDL_GamepadAxis>(axis)), mGamepadAxisValue(axisValue) {}
         
         EVENT_CLASS_TYPE(InputGamepadAxis)
@@ -142,8 +141,8 @@ namespace Kili
         }
         
         [[nodiscard]] SDL_GamepadAxis getGamepadAxis() const { return mGamepadAxis; }
-        /** Scaling from -32768 to 32768. (IDK this is a SDL3 thing)*/
-        [[nodiscard]] Sint16 getGamepadAxisValue() const { return mGamepadAxisValue; }
+        /** Scaling from -32768 to 32768. (IDK, this is a SDL3 thing)*/
+        [[nodiscard]] short getGamepadAxisValue() const { return mGamepadAxisValue; }
         [[nodiscard]] float getGamepadAxisValueNormalized() const { return static_cast<float>(mGamepadAxisValue) / 32768.0f; }
     };
 }

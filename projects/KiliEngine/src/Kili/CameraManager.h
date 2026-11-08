@@ -38,6 +38,8 @@ namespace Kili
         
         [[nodiscard]] float getFarPane() const { return mFarPane; }
         void setFarPane(const float far) { mFarPane = far; }
+        
+        Transform& getTransform() { return mTransform; }
     };
     
     class CameraManager

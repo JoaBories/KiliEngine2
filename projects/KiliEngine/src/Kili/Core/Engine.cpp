@@ -1,6 +1,7 @@
 ﻿#include "klpch.h"
 #include "Engine.h"
 
+#include "InputManager.h"
 #include "Kili/Core/TimeClock.h"
 
 #include "Kili/Core/EngineConfig.h"
@@ -27,11 +28,11 @@ namespace Kili
                     break;
                     
                 case SDL_EVENT_KEY_DOWN:
-                    onEvent(KeyboardEvent(event.key.key, true, event.key.repeat));
+                    onEvent(KeyboardEvent(event.key.scancode, true, event.key.repeat));
                     break;
                     
                 case SDL_EVENT_KEY_UP:
-                    onEvent(KeyboardEvent(event.key.key, false, event.key.repeat));
+                    onEvent(KeyboardEvent(event.key.scancode, false, event.key.repeat));
                     break;
                     
                 case SDL_EVENT_MOUSE_BUTTON_DOWN:
@@ -103,13 +104,14 @@ namespace Kili
     {
         // Catch window close event
         DispatchEvent<WindowCloseEvent>(event, [this](const WindowCloseEvent& e) { mIsRunning = false; });
-        DispatchEvent<KeyboardEvent>(event, [this](const KeyboardEvent& e) { if (e.getKey() == SDLK_ESCAPE) mIsRunning = false; } );
+        DispatchEvent<KeyboardEvent>(event, [this](const KeyboardEvent& e) { if (e.getScancode() == SDLK_ESCAPE) mIsRunning = false; } );
         
         DispatchEvent<WindowRestoredEvent>(event, [this](const WindowRestoredEvent& e) { mMinimized = false; } );
         DispatchEvent<WindowMinimizedEvent>(event, [this](const WindowMinimizedEvent& e) { mMinimized = true; });
         
         Renderer::onEvent(event);
         SceneManager::onEvent(event);
+        InputManager::onEvent(event);
         mWindow->onEvent(event);
         
         //Future possible usages of events :
@@ -196,6 +198,7 @@ namespace Kili
     {
         TimeClock::computeTime();
         
+        InputManager::beginFrame();
         pollEvents();
         
         //update

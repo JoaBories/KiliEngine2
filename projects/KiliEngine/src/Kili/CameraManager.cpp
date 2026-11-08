@@ -15,9 +15,9 @@ namespace Kili
 
     void Camera::recalculate()
     {
-        const glm::vec3 camPosition = mTransform.getPosition();
-        const glm::vec3 target = camPosition + mTransform.getForwardVector() * 100.0f;
-        mViewMatrix = glm::lookAt(camPosition, target, mTransform.getUpVector());
+        const glm::vec3 camPosition = mTransform.position();
+        const glm::vec3 target = camPosition + mTransform.forward() * 100.0f;
+        mViewMatrix = glm::lookAt(camPosition, target, mTransform.up());
 
         const glm::vec2 screenSize = Renderer::getScreenSize();
         mProjMatrix = glm::perspectiveFov(glm::radians(mFov), screenSize.x, screenSize.y, mNearPane, mFarPane);

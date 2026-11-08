@@ -19,8 +19,8 @@ namespace Kili
     {
         if (!mNeedUpdate) return;
         mNeedUpdate = false;
-        mTransformMatrix = glm::translate(glm::mat4(1.0f), mTransform.getPosition());
-        mTransformMatrix *= glm::mat4_cast(mTransform.getRotation());
-        mTransformMatrix = glm::scale(mTransformMatrix, mTransform.getScale());
+        mTransformMatrix = glm::translate(glm::mat4(1.0f), mTransform.position());
+        mTransformMatrix *= glm::mat4_cast(mTransform.rotation());
+        mTransformMatrix = glm::scale(mTransformMatrix, mTransform.scale());
     }
 }
